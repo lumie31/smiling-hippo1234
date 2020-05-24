@@ -500,6 +500,7 @@ export default {
       }
       // Define Form
       const docData = {};
+      // const docData = {};
       let newFormData = JSON.parse(JSON.stringify(this.formOutput));
 
       // Append compilation to form
