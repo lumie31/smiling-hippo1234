@@ -262,7 +262,7 @@
                 <div class="paragraphList">
                   <p>{{ item.paragraph }}</p>
                   <span class="addCTA">
-                    <v-icon size="30">error_outline</v-icon>
+                    <v-icon size="30">info</v-icon>
                     <span class="mx-2"></span>
                     <v-icon size="30">comment</v-icon>
                     <span class="mx-2"></span>
@@ -278,7 +278,9 @@
                 </div>
               </div>
               <p class="text-center">
-                <span class="addRemoveButtons" @click="addNewParagraph()">+</span>
+                <span class="addRemoveButtons" @click="addNewParagraph()"
+                  >+</span
+                >
               </p>
             </v-col>
           </v-row>
@@ -305,7 +307,7 @@
                   <p>{{ clause.title }}</p>
                   <p>{{ clause.details }}</p>
                   <span class="addCTA">
-                    <v-icon size="30">error_outline</v-icon>
+                    <v-icon size="30">info</v-icon>
                     <span class="mx-2"></span>
                     <v-icon size="30">comment</v-icon>
                     <span class="mx-2"></span>
@@ -325,6 +327,7 @@
           </v-row>
         </v-container>
         <v-snackbar
+      class="snackbar"
           :color="docSavedSnackbar.color"
           top
           right

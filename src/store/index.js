@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-
+import { uuid } from "vue-uuid";
 
 Vue.use(Vuex, axios);
 axios.defaults.baseURL = "https://legalbox-api.herokuapp.com";
@@ -9,11 +9,28 @@ axios.defaults.baseURL = "https://legalbox-api.herokuapp.com";
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem("access_token") || null,
+    setUUID: "LB_Paystack_" + uuid.v4(),
+    loginErrorMessage: "",
+    signUpSuccessStatus: "",
     profileUpdated: false,
     userDetailsReady: false,
     successMessage: "",
     documentSavedMessage: "",
-    snackBarDuration: 5000,
+    invalidSubmission: {
+      active: false,
+      text: "Invalid Entry. Please Crosscheck",
+      color: "red",
+      timeout: 3000,
+      multiLine: true
+    },
+    docSubmittedSuccessfuly: {
+      active: true,
+      text: "Document Successfully Saved",
+      color: "success",
+      timeout: 3000,
+      multiLine: true
+    },
+    snackBarDuration: 4000,
     isDocumentSaved: null,
     getUserDetailsStatusCode: null,
     isSignedIn: null,
@@ -21,10 +38,15 @@ export default new Vuex.Store({
     storedUserDetails: [],
     userDocuments: [{ a: 1 }],
     plans: [
-      { name: "Basic", price: 850, duration: "12" },
-      { name: "Premium", price: 1700, duration: "12" }
+      { name: "Basic", price: 850, duration: "12", LGAmount: "Two legalboxes" },
+      {
+        name: "Premium",
+        price: 1700,
+        duration: "12",
+        LGAmount: "Four legalboxes"
+      }
     ],
-    durationType: ["Monthly", "Annualy"],
+    durationType: ["Monthly", "Annually"],
     legalboxes: [
       {
         name: "General",
@@ -538,31 +560,36 @@ export default new Vuex.Store({
         name: "noncompete",
         background:
           "The Parties have agreed to enter into a Business Relationship that would be mutually beneficial to them.",
-        headline: "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
+        headline:
+          "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
       },
       {
         name: "noncircumvention",
         background:
           "The First Party has a business opportunity it intends to share with the Second Party and assist the Second Party in taking advantage off. This Opportunity and all other opportunities related to or derived from this opportunity shall be referred to as ‘Opportunity’ in this contract.",
-        headline: "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
+        headline:
+          "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
       },
       {
         name: "contractofsale",
         background:
           "The Seller wishes to sell the Goods to the Buyer, and the Buyer has agreed to buy the Goods from the Seller according to the terms of this contract.",
-        headline: "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
+        headline:
+          "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
       },
       {
         name: "memorandumofunderstanding",
         background:
           "The Parties intend to work together on the Purpose of this memorandum of understanding.",
-        headline: "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
+        headline:
+          "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
       },
       {
         name: "loancontract",
         background:
           "The Borrower needs funds and the Lender has agreed to give the Borrower a loan according the terms of this contract.",
-        headline: "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
+        headline:
+          "Confidential Information shall mean any website, document, information and know-how in whatever form relating to the Parties, even if it is not formally defined as confidential."
       }
     ],
     fashionAndBeautyHeaders: [
@@ -981,112 +1008,144 @@ export default new Vuex.Store({
         {
           paragraph:
             "This contract shall include and bind each Party’s Successor-in-title, Heirs, Administrators and Assigns.",
-          info: "",
+          info: "Info joke 1",
           comment: ""
         },
         {
           paragraph:
             "The Parties shall not disclose, and shall make reasonable efforts to keep and protect the confidentiality of, the Confidential Information of each Party or of third parties to whom they owe a duty of confidentiality and non-disclosure.",
-          info: "",
+          info: "Info joke 2",
           comment: ""
         },
         {
           paragraph:
             "The Parties shall return to the provider of any Confidential Information such Confidential Information in their possession after this contract elapses.",
-          info: "",
+          info: "Info joke 3",
           comment: ""
         },
         {
           paragraph:
             "The Parties shall execute a non-disclosure contract with the same terms in this contract with any person to whom they might disclose any Confidential Information to.",
-          info: "",
+          info: "Info joke 4",
           comment: ""
         }
       ],
       nonDisclosureClauseList: [
         {
           title: "Scope of Contract",
-          details:
-            "This contract shall include and bind each Party’s Successor-in-title, Heirs, Administrators and Assigns."
+          detail:
+            "This contract shall include and bind each Party’s Successor-in-title, Heirs, Administrators and Assigns.",
+          info: "Info joke 4",
+          comment: "dsds"
         },
         {
           title: "Authority",
-          details:
-            "Each Party represents and warrants that it has full rights, powers and authority to enter into this contract without violating any obligation to any entity or person."
+          detail:
+            "Each Party represents and warrants that it has full rights, powers and authority to enter into this contract without violating any obligation to any entity or person.",
+          info: "Info joke 4",
+          comment: "sdsd"
         },
         {
           title: "Intellectual Property",
-          details:
-            "All intellectual property materials developed or produced under this contract for either Party shall be the sole property of that Party. A Party shall not use or permit a third party to use the other Party’s intellectual property without that other Party’s prior written consent."
+          detail:
+            "All intellectual property materials developed or produced under this contract for either Party shall be the sole property of that Party. A Party shall not use or permit a third party to use the other Party’s intellectual property without that other Party’s prior written consent.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Non-Circumvention",
-          details:
-            "The Parties shall not contact in anyway, at anytime and for any purpose, a third party concerning the Confidential Information, or any person related to the Confidential Information, without the prior written consent of the other Party to this contract. A Party shall not use any property revealed through the efforts of the other Party, without the prior written consent of that other Party."
+          detail:
+            "The Parties shall not contact in anyway, at anytime and for any purpose, a third party concerning the Confidential Information, or any person related to the Confidential Information, without the prior written consent of the other Party to this contract. A Party shall not use any property revealed through the efforts of the other Party, without the prior written consent of that other Party.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Remedy",
-          details:
-            "A breach of this contract will cause financial and other loss to either Party. Each Party shall be compensated by any party in breach of this contract for all expenses incurred or loss and damages suffered as a result of a breach of this contract."
+          detail:
+            "A breach of this contract will cause financial and other loss to either Party. Each Party shall be compensated by any party in breach of this contract for all expenses incurred or loss and damages suffered as a result of a breach of this contract.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Indemnity",
-          details:
-            "Each Party shall be compensated by the other Party for all suits, damages, liabilities and expenses from any act or omission connected to this contract and committed by the other Party."
+          detail:
+            "Each Party shall be compensated by the other Party for all suits, damages, liabilities and expenses from any act or omission connected to this contract and committed by the other Party.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Unavoidable Circumstances",
-          details:
-            "No Party shall be liable for any failure to fulfil or perform any term of this contract, if such failure is due to circumstances beyond such Party’s control."
+          detail:
+            "No Party shall be liable for any failure to fulfil or perform any term of this contract, if such failure is due to circumstances beyond such Party’s control.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Waiver",
-          details:
-            "Failure to exercise any right in this contract shall not be interpreted as a waiver. The right or remedies in this contract are cumulative and not exclusive of any right or remedies provided by law."
+          detail:
+            "Failure to exercise any right in this contract shall not be interpreted as a waiver. The right or remedies in this contract are cumulative and not exclusive of any right or remedies provided by law.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Non-Assignment",
-          details:
-            "No party shall assign any of its obligations or duties under this contract without the prior written consent of the other Party."
+          detail:
+            "No party shall assign any of its obligations or duties under this contract without the prior written consent of the other Party.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Entire Agreement",
-          details:
-            "This is the entire agreement between the Parties and it supersedes all other agreements. It cannot be amended without the written consent of both Parties."
+          detail:
+            "This is the entire agreement between the Parties and it supersedes all other agreements. It cannot be amended without the written consent of both Parties.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Counterparts",
-          details:
-            "This contract may be executed in several counterparts, all of which constitutes a single agreement by the Parties."
+          detail:
+            "This contract may be executed in several counterparts, all of which constitutes a single agreement by the Parties.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Severability",
-          details:
-            "If any portion of this contract is held by any court or law to be invalid or unenforceable, that part shall be cut off. It shall not make any other part of this contract invalid or unenforceable."
+          detail:
+            "If any portion of this contract is held by any court or law to be invalid or unenforceable, that part shall be cut off. It shall not make any other part of this contract invalid or unenforceable.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Applicable Law",
-          details:
-            "This contract shall be governed and interpreted by the laws of the Federal Republic of Nigeria."
+          detail:
+            "This contract shall be governed and interpreted by the laws of the Federal Republic of Nigeria.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Dispute Resolution",
-          details:
-            "The Parties shall make reasonable efforts to settle all disputes amicably. Reasonable efforts must have been made to settle all disputes by negotiation or agreement before Parties can seek any other means to settle their dispute."
+          detail:
+            "The Parties shall make reasonable efforts to settle all disputes amicably. Reasonable efforts must have been made to settle all disputes by negotiation or agreement before Parties can seek any other means to settle their dispute.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Arbitration",
-          details:
-            "If the Parties are unable to settle any dispute by negotiation or mutual agreement, such dispute shall be referred to Arbitration and governed by the Arbitration and Conciliation Act. The findings of the Arbitrator(s) shall be binding."
+          detail:
+            "If the Parties are unable to settle any dispute by negotiation or mutual agreement, such dispute shall be referred to Arbitration and governed by the Arbitration and Conciliation Act. The findings of the Arbitrator(s) shall be binding.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Electronic Notices",
-          details:
-            "All notices or communication to be given under this assignment shall be sent by electronic email to the email addresses provided in this contract."
+          detail:
+            "All notices or communication to be given under this assignment shall be sent by electronic email to the email addresses provided in this contract.",
+          info: "Info joke 4",
+          comment: ""
         },
         {
           title: "Termination of Confidentiality",
-          details:
+          detail:
             "The Parties’ obligations under this contract shall be terminated with regards to any information which:" +
             "\n" +
             "i. Are or become public knowledge through no act or omission of the other Party;" +
@@ -1095,13 +1154,15 @@ export default new Vuex.Store({
             "\n" +
             "iii. Are disclosed according to the laws of the Federal Republic of Nigeria;" +
             "\n" +
-            "iv. The Proprietor of such information has permitted by written consent to be publicly disclosed."
+            "iv. The Proprietor of such information has permitted by written consent to be publicly disclosed.",
+          info: "Info joke 4",
+          comment: ""
         }
       ],
       nonCompeteParagraphs: [
         {
           paragraph:
-          "For the entire duration of this contract, the Second Party shall not serve or work in any capacity for an entity competing with the First Party or engage in any business reasonably considered to be in competition with the First Party.",
+            "For the entire duration of this contract, the Second Party shall not serve or work in any capacity for an entity competing with the First Party or engage in any business reasonably considered to be in competition with the First Party.",
           info: "",
           comment: ""
         }
@@ -1109,87 +1170,87 @@ export default new Vuex.Store({
       nonCompeteClauseList: [
         {
           title: "Scope of Contract",
-          details:
+          detail:
             "This contract shall include and bind each Party’s Successor-in-title, Heirs, Administrators and Assigns."
         },
         {
           title: "Authority",
-          details:
+          detail:
             "Each Party represents and warrants that it has full rights, powers and authority to enter into this contract without violating any obligation to any entity or person."
         },
         {
           title: "Confidentiality",
-          details:
+          detail:
             "A Party shall not disclose, and shall make reasonable efforts to keep and protect the confidentiality of, any information, materials and property of the other Party or of third parties to whom they owe a duty of confidentiality and non-disclosure."
         },
         {
           title: "Intellectual Property",
-          details:
+          detail:
             "All intellectual property materials developed or produced under this contract for either Party shall be the sole property of that Party. A Party shall not use or permit a third party to use the other Party’s intellectual property without that other Party’s prior written consent."
         },
         {
           title: "Remedy",
-          details:
+          detail:
             "A breach of this contract will cause financial and other loss to either Party. Each Party shall be compensated by any party in breach of this contract for all expenses incurred or loss and damages suffered as a result of a breach of this contract."
         },
         {
           title: "Indemnity",
-          details:
+          detail:
             "Each Party shall be compensated by the other Party for all suits, damages, liabilities and expenses from any act or omission connected to this contract and committed by the other Party."
         },
         {
           title: "Unavoidable Circumstances",
-          details:
+          detail:
             "No Party shall be liable for any failure to fulfil or perform any term of this contract, if such failure is due to circumstances beyond such Party’s control."
         },
         {
           title: "Waiver",
-          details:
+          detail:
             "Failure to exercise any right in this contract shall not be interpreted as a waiver. The right or remedies in this contract are cumulative and not exclusive of any right or remedies provided by law."
         },
         {
           title: "Non-Assignment",
-          details:
+          detail:
             "No Party shall assign any of its obligations or duties under this contract without the prior written consent of the other Party."
         },
         {
           title: "Entire Assignment",
-          details:
+          detail:
             "This is the entire agreement between the Parties and it supersedes all other agreements. It cannot be amended without the written consent of both Parties."
         },
         {
           title: "Counterparts",
-          details:
+          detail:
             "This contract may be executed in several counterparts, all of which constitutes a single agreement by the Parties."
         },
         {
           title: "Severability",
-          details:
+          detail:
             "If any portion of this contract is held by any court or law to be invalid or unenforceable, that part shall be cut off. It shall not make any other part of this contract invalid or unenforceable."
         },
         {
           title: "Applicable Law",
-          details:
+          detail:
             "This contract shall be governed and interpreted by the laws of the Federal Republic of Nigeria."
         },
         {
           title: "Dispute Resolution",
-          details:
+          detail:
             "The Parties shall make reasonable efforts to settle all disputes amicably. Reasonable efforts must have been made to settle all disputes by negotiation or agreement before Parties can seek any other means to settle their dispute."
         },
         {
           title: "Arbitration",
-          details:
+          detail:
             "If the Parties are unable to settle any dispute by negotiation or mutual agreement, such dispute shall be referred to Arbitration and governed by the Arbitration and Conciliation Act. The findings of the Arbitrator(s) shall be binding."
         },
         {
           title: "Electronic Notices",
-          details:
+          detail:
             "All notices or communication to be given under this assignment shall be sent by electronic email to the email addresses provided in this contract."
         },
         {
           title: "Electronic Notices",
-          details:
+          detail:
             "This contract can be terminated in the following ways:" +
             "\n" +
             "i. By mutual agreement between both parties;" +
@@ -1214,17 +1275,17 @@ export default new Vuex.Store({
       loanContractClauseList: [
         {
           title: "Scope of Contract",
-          details:
+          detail:
             "This contract shall include and bind each Party’s Successor-in-title, Heirs, Administrators and Assigns."
         },
         {
           title: "Authority",
-          details:
+          detail:
             "Each Party represents and warrants that it has full rights, powers and authority to enter into this contract without violating any obligation to any entity or person."
         },
         {
           title: "Event of Default",
-          details:
+          detail:
             "If any of the following events happen, the Lender may demand from the Borrower in writing the immediate payment of the Principal and Interest:" +
             "\n" +
             "i.	If the Business Owner has not paid the Principal and/or Interest 15 days after the due date;" +
@@ -1235,72 +1296,72 @@ export default new Vuex.Store({
         },
         {
           title: "Confidentiality",
-          details:
+          detail:
             "The Parties shall not disclose, and shall make reasonable efforts to keep and protect the confidentiality of, all information, materials and property of each other or of third parties to whom they owe a duty of confidentiality and non-disclosure."
         },
         {
           title: "Remedy",
-          details:
+          detail:
             "A breach of this contract will cause financial and other loss to either Party. Each Party shall be compensated by any party in breach of this contract for all expenses incurred or loss and damages suffered as a result of a breach of this contract."
         },
         {
           title: "Unavoidable Circumstances",
-          details:
+          detail:
             "No Party shall be liable for any failure to fulfil or perform any term of this contract, if such failure is due to circumstances beyond such Party’s control."
         },
         {
           title: "Waiver",
-          details:
+          detail:
             "Failure to exercise any right in this contract shall not be interpreted as a waiver. The right or remedies in this contract are cumulative and not exclusive of any right or remedies provided by law."
         },
         {
           title: "Non-Assignment",
-          details:
+          detail:
             "No party shall assign any of its obligations or duties under this contract without the prior written consent of the other party."
         },
         {
           title: "Entire Agreement",
-          details:
+          detail:
             "This is the entire agreement between the Parties and it supersedes all other agreements. It cannot be amended without the written consent of both Parties."
         },
         {
           title: "Entire Agreement",
-          details:
+          detail:
             "This is the entire agreement between the Parties and it supersedes all other agreements. It cannot be amended without the written consent of both Parties."
         },
         {
           title: "Counterparts",
-          details:
+          detail:
             "This contract may be executed in several counterparts, all of which constitutes a single contract by the Parties."
         },
         {
           title: "Severability",
-          details:
+          detail:
             "If any portion of this contract is held by any court or law to be invalid or unenforceable, that part shall be cut off. It shall not affect the validity or enforceability of any other part of this contract."
         },
         {
           title: "Applicable Law",
-          details:
+          detail:
             "This contract shall be governed and interpreted by the laws of the Federal Republic of Nigeria."
         },
         {
           title: "Dispute Resolution",
-          details:
+          detail:
             "The Parties shall make reasonable efforts to settle all disputes amicably. Reasonable efforts must have been made to settle all disputes by negotiation or mutual contract before Parties can seek any other means to settle their dispute."
         },
         {
           title: "Arbitration",
-          details:
+          detail:
             "If the Parties are unable to settle any dispute by negotiation or mutual agreement, such dispute shall be referred to Arbitration and governed by the Arbitration and Conciliation Act. The findings of the Arbitrator(s) shall be binding."
         },
         {
           title: "Electronic Notices",
-          details:
+          detail:
             "All notices or communication to be given under this contract shall be sent by electronic email to the email addresses provided in this contract."
         },
         {
           title: "Termination",
-          details:
+          detail:
             "This contract can be terminated in the following ways:" +
             "\n" +
             "i.	By mutual agreement between both parties;" +
@@ -1559,7 +1620,27 @@ export default new Vuex.Store({
           })
           .catch(error => {
             localStorage.removeItem("access_token");
+
+            const isSignedIn = false;
+            context.commit("isSignedIn", isSignedIn);
+
+            if (error.response.data.message) {
+              console.log("Error oooo");
+              const errorMessage = error.response.data.message;
+              console.log("errorMessage", errorMessage);
+
+              this.state.loginErrorMessage = errorMessage;
+
+              console.log("loginErrorMessage", this.state.loginErrorMessage);
+            } else if (error.response && !error.response.data.message) {
+              this.state.loginErrorMessage = "Oops! Something went wrong";
+            }
+
             console.log(error);
+            console.log(error.response);
+            console.log(error.response.data.message);
+            console.log(error.response.data);
+            console.log(error.response.status);
             reject(error);
           });
       });
@@ -1579,10 +1660,25 @@ export default new Vuex.Store({
           { headers: { "Content-Type": "application/json" } }
         )
         .then(response => {
+          this.state.signUpSuccessStatus = true;
+          // alert(this.state.signUpSuccessStatus);
           console.log(response);
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.headers);
         })
         .catch(error => {
+          this.state.signUpSuccessStatus = false;
+          // alert(this.state.signUpSuccessStatus);
+
+          this.state.signUpMesssage = error.response.data.message;
+          this.state.signUpMesssage;
+
           console.log(error);
+          console.log(error.response);
+          console.log(error.response.data.message);
+          console.log(error.response.data);
+          console.log(error.response.status);
         });
     },
     dummy() {
@@ -1675,7 +1771,8 @@ export default new Vuex.Store({
           console.log(error.response.status);
 
           let savedDocumentMessage = {};
-          savedDocumentMessage.message = "Oops! Something went wrong. Document might not be saved";
+          savedDocumentMessage.message =
+            "Oops! Something went wrong. Document might not be saved";
           savedDocumentMessage.color = "error";
 
           const savedStatus = false;

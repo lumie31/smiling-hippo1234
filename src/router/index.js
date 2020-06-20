@@ -11,6 +11,7 @@ import FAQs from "../views/FAQs";
 import Subscription from "../views/Subscription";
 import Login from "../views/auth/login";
 import SignUp from "../views/auth/signup";
+import Activate from "../views/auth/activate";
 import Dashboard from "../views/backAuth/dashboard";
 import Messages from "../views/backAuth/messages";
 import MyDocuments from "../views/backAuth/MyDocuments";
@@ -160,7 +161,10 @@ const routes = [
   {
     path: "/subscription",
     name: "Subscription",
-    component: Subscription
+    component: Subscription,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/login",
@@ -187,6 +191,11 @@ const routes = [
     }
   },
   // User Backend Pages
+  {
+    path: "/activate/:activateFromEmail",
+    name: "Activate",
+    component: Activate
+  },
   {
     path: "/dashboard",
     name: "Dashboard",

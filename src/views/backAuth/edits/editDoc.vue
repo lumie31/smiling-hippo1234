@@ -270,7 +270,7 @@
                     <div class="paragraphList">
                       <p>{{ item.paragraph }}</p>
                       <span class="addCTA">
-                        <v-icon size="30">error_outline</v-icon>
+                        <v-icon size="30">info</v-icon>
                         <span class="mx-2"></span>
                         <v-icon size="30">comment</v-icon>
                         <span class="mx-2"></span>
@@ -353,7 +353,7 @@
                       <p>{{ clause.title }}</p>
                       <p>{{ clause.details }}</p>
                       <span class="addCTA">
-                        <v-icon size="30">error_outline</v-icon>
+                        <v-icon size="30">info</v-icon>
                         <span class="mx-2"></span>
                         <v-icon size="30">comment</v-icon>
                         <span class="mx-2"></span>
@@ -493,7 +493,7 @@
 
                   <hr class="my-12" />
                   <v-row
-                    class="invoiceFigures"
+                    class="invoiceReceiptFigures"
                     v-for="(inputRows, index) in priceBreakdown"
                     :key="index"
                   >

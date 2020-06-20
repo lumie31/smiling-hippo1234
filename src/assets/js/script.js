@@ -6,9 +6,9 @@ import $ from "jquery"; //import jQuery
 
 export function somethingWithjQuery() {
   console.log($);
-  if (top.location.pathname === "/general/docs/receipts"){
-    $("body").hide();
-  }
+  // if (top.location.pathname === "/general/docs/receipts") {
+  //   $("body").hide();
+  // }
 }
 
 export function backPage() {

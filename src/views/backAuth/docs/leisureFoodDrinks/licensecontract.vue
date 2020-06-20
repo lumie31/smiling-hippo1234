@@ -169,7 +169,7 @@
                 <div class="paragraphList">
                   <p>{{ paragraph }}</p>
                   <span class="addCTA">
-                    <v-icon size="30">error_outline</v-icon>
+                    <v-icon size="30">info</v-icon>
                     <span class="mx-2"></span>
                     <v-icon size="30">comment</v-icon>
                     <span class="mx-2"></span>

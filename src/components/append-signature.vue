@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <div class="text-center my-12" style="width: 100%;"><b>SIGNATURE COMPONENT GOES HERE</b></div>
-    <!-- <v-col cols="6" class="d-flex flex-column align-center">
+    <v-col cols="6" class="d-flex flex-column align-center">
       <div class="formSectionTitle">Signatures (First Party)</div>
       <div class="d-flex justify-center">
         <div class="d-flex align-center mr-6">
@@ -54,6 +54,6 @@
           image-format="jpeg"
         />
       </div>
-    </v-col> -->
+    </v-col>
   </v-row>
 </template>

@@ -53,6 +53,7 @@
           </v-btn>
         </v-form>
         <v-snackbar
+          class="snackbar"
           :color="loginSnackbar.color"
           top
           right
@@ -135,15 +136,26 @@ export default {
           })
           .then(() => {
             setTimeout(() => {
-              this.$router.push("/dashboard").catch(error => {
-                if (error.name != "NavigationDuplicated") {
-                  throw error;
-                }
-              });
-              this.loginSnackbar.active = false;
-              this.loginLoader = false;
+              this.$router
+                .push(
+                  localStorage.getItem("pathToLoadAfterLogin") || "/messages"
+                )
+                .catch(error => {
+                  if (error.name != "NavigationDuplicated") {
+                    throw error;
+                  }
+                });
+              console.log(localStorage.getItem("pathToLoadAfterLogin"));
             }, 1000);
           });
+
+        // Improve code re-structure code later
+        if (this.signedIn === false) {
+          this.loginSnackbar.active = true;
+          this.loginSnackbar.text = this.$store.state.loginErrorMessage;
+          this.loginSnackbar.color = "error";
+          this.loginLoader = false;
+        }
       }
     }
   },
@@ -157,19 +169,32 @@ export default {
   watch: {
     // let success = this.loginSuccessful;
     signedIn(val) {
+      console.log(val);
+
       if (val == true) {
         console.log("Should be signed in");
         this.loginSnackbar.active = true;
         this.loginSnackbar.text = "Welcome! You are successfully logged in";
         this.loginSnackbar.color = "success";
-        // this.loginSnackbar.active = this.false;
+      } else if (val !== true) {
+        console.log("Something went wrong");
+        this.loginSnackbar.active = true;
+        this.loginSnackbar.text = this.$store.state.loginErrorMessage;
+        this.loginSnackbar.color = "error";
       }
+    },
+    isSignedIn(val) {
+      console.log(val);
+
+      if (val == false) {
+        console.log("Something went wrong");
+        this.loginSnackbar.active = true;
+        this.loginSnackbar.text = this.$store.state.loginErrorMessage;
+        this.loginSnackbar.color = "error";
+      }
+      this.loginLoader = false;
     }
   },
-  mounted() {
-    // console.log("iSifnedIn2 DEFAULT :", this.isSignedIn);
-    console.log("signedIn DEFAULT2 :", this.$store.getters.signedIn);
-    console.log("signedIn DEFAULT2 :", this.$store.state.isSignedIn);
-  }
+  mounted() {}
 };
 </script>

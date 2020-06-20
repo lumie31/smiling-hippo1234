@@ -94,6 +94,7 @@
       <v-row>
         <v-col col="12" sm="4">
           <p class="display-1">
+            <span v-if="!userDetailsReady">sdscccd</span>
             {{ storedUserDetails.firstName }}
             <br />{{ storedUserDetails.lastName }}
           </p>
@@ -153,7 +154,6 @@ export default {
       typing: false,
       noResultFound: false,
       docss: [],
-      sample2: [],
       sample: [
         { name: "John", age: 30, car: null },
         { name: "Kunle", age: 40, car: null },
@@ -175,9 +175,11 @@ export default {
     legalboxes() {
       return this.$store.state.legalboxes;
     },
-    ...mapState(
-      ["storedUserDetails", "getUserDetailsStatusCode", "userDocuments"],
-    ),
+    ...mapState([
+      "storedUserDetails",
+      "getUserDetailsStatusCode",
+      "userDocuments"
+    ]),
     // documents() {
     //   return this.$store.state.userDocuments;
     // },
@@ -329,5 +331,162 @@ export default {
   padding: 4px;
   border-radius: 6px;
   float: right;
+}
+
+/* Grid style */
+.display-posts-listing.grid {
+  display: none;
+  grid-gap: 16px;
+}
+
+.display-posts-listing.grid .title {
+  display: block;
+}
+
+.display-posts-listing.grid img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 40px;
+}
+
+@media (min-width: 600px) {
+  .display-posts-listing.grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .display-posts-listing.grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===================== */
+
+.rt-tpg-container .rt-equal-height:nth-of-type(2) {
+  margin-top: 33px !important;
+}
+
+/* LEFT START*/
+.blog-landing .rt-equal-height:nth-of-type(odd) h4.entry-title {
+  text-align: right;
+}
+
+.blog-landing .read-more a:after {
+  margin-left: 9px;
+}
+
+.rt-tpg-container .rt-equal-height:nth-of-type(3) {
+  margin-top: -38px !important;
+}
+
+.blog-landing .rt-equal-height:nth-of-type(odd) .post-content {
+  text-align: right !important;
+}
+/* LEFT END */
+
+/* RIGHT START */
+.rt-detail .read-more a {
+  padding-left: 0;
+}
+/* RIGHT END */
+
+.blog-landing h4.entry-title {
+  font-size: 16px !important;
+}
+
+.blog-landing .read-more a {
+  background: none !important;
+}
+
+.blog-landing .read-more a {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.blog-landing .read-more a:after {
+  content: "";
+  display: block;
+  background: url(https://blog.legalbox.ng/wp-content/uploads/arrow_right.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 30px;
+  bottom: -5px;
+  height: 30px;
+  float: right;
+  margin-top: 5px;
+}
+
+.rt-tpg-container .rt-equal-height:nth-of-type(odd) .rt-col-sm-6.rt-col-xs-12 {
+  float: right;
+}
+
+.rt-tpg-container .rt-equal-height:nth-of-type(even) .read-more a {
+  float: left;
+}
+
+.rt-tpg-container .rt-equal-height .rt-img-holder {
+  border-radius: 10px;
+}
+
+/* CHANGE ICON OF SEARCH BUTTON */
+.ds-icon-search:before {
+  content: "\24";
+  color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  font-family: "ETModules";
+  z-index: 1;
+  right: 0;
+  font-size: 40px;
+  padding: 16px 20px;
+  background-color: #1ca092;
+}
+
+#top-menu {
+  padding-bottom: 33px !important;
+}
+
+.login-nav {
+  line-height: 0em !important;
+}
+.login-nav a {
+  color: #fff !important;
+  background-color: #29c4a9;
+  padding: 25px 20px !important;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px 0px rgba(28, 160, 146, 0.5);
+}
+
+/* CUSTOM NAVIGATION */
+#post-nav {
+  clear: both;
+  height: 100px;
+  margin: 0 0 70px;
+}
+#post-nav .nav-box {
+  background: #e9e9e9;
+  padding: 10px;
+}
+#post-nav img {
+  float: left;
+  margin: 0 10px 0 0;
+}
+#post-nav p {
+  margin: 0 10px;
+  font-size: 11px;
+  vertical-align: middle;
+}
+#post-nav .previous {
+  float: left;
+  vertical-align: middle;
+  width: 300px;
+  height: 120px;
+}
+#post-nav .next {
+  float: right;
+  width: 300px;
+  height: 120px;
 }
 </style>

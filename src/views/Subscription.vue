@@ -10,7 +10,7 @@ import Vue from "vue";
     </div>
 
     <div class="bodyWrapper">
-      <v-container id="section-8">
+      <v-container fluid id="section-8">
         <div id="plan-parent">
           <h2 class="display-2 text-center secondary--text">
             We have a plan that
@@ -18,24 +18,19 @@ import Vue from "vue";
           </h2>
           <div id="plan-holder">
             <div class="d-flex justify-center">
-              <div class="plan-child">
-                <p class="display-2 secondary--text">Basic</p>
+              <div
+                class="plan-child"
+                v-for="(plan, index) in plans"
+                :key="index"
+              >
+                <p class="display-2 secondary--text">{{ plan.name }}</p>
                 <p class="subtitle secondary--text">
-                  Two legalboxes
+                  {{ plan.LGAmount }}
                   <br />Unlimited Downloads
                 </p>
-                <p class="subtitle secondary--text pricing">850 NGN/month*</p>
-
-                <div class="d-flex justify-center plan-btn"></div>
-              </div>
-
-              <div class="plan-child">
-                <p class="display-2 secondary--text">Premium</p>
-                <p class="subtitle secondary--text">
-                  Four legalboxes
-                  <br />Unlimited Downloads
+                <p class="subtitle secondary--text pricing">
+                  {{ plan.price }} NGN/month*
                 </p>
-                <p class="subtitle secondary--text pricing">850 NGN/month*</p>
 
                 <div class="d-flex justify-center plan-btn"></div>
               </div>
@@ -43,18 +38,23 @@ import Vue from "vue";
           </div>
         </div>
 
-        <v-row class="justify-center">
+        <v-row
+          class="justify-center mt-12 mb-10"
+          style="width: 80%; margin: 0 auto;"
+        >
           <v-col cols="12" sm="6">
+            <p>{{ currentPlan }}</p>
             <v-select
               label="Select Plan"
+              v-model="currentPlan"
+              @change="updateCurrentPlan"
               :items="plans"
-              v-validate="'required'"
               item-text="name"
               autocomplete
               offset-y
             ></v-select>
             <div class="d-flex justify-space-around durationTypeHolder">
-              <span v-for="duration in durationType" :key="duration">
+              <span v-for="duration in durationType" :key="duration.index">
                 <input type="radio" name="duration-type" />
                 {{ duration }}
               </span>
@@ -63,43 +63,164 @@ import Vue from "vue";
         </v-row>
 
         <div id="legalboxParent">
-          <p v-if="selectedLegalbox.length">
+          <!-- <p v-if="selectedLegalbox.length">
             Your Selection:
             <br />
             <b>{{ selectedLegalbox.join(", ") }}</b>
-          </p>
+          </p> -->
+          <div class="text-center pt-8">
+            <h2 class="display-2">Select Legalboxes</h2>
+            <p class="">
+              Select any 3 for (Premium) or any 2 for (Basic) <br />
+              <em>General is Compulsory</em>
+            </p>
+            <p
+              class="resetSelection white--text"
+              @click="resetSelection"
+              v-if="currentLegalboxSelection.length > 1"
+            >
+              Reset Selection
+            </p>
+          </div>
           <v-row class="legalboxesWrapper">
-            <v-col cols="12" sm="6" id="legalbox-first-half">
-              <div v-for="legalbox in legalboxes.slice(0, 4)" :key="legalbox">
-                <v-checkbox
-                  v-model="selectedLegalbox"
-                  :label="legalbox.name"
-                  :value="legalbox.name"
-                >
-                </v-checkbox>
-              </div>
-            </v-col>
-            <v-col cols="12" sm="6" id="legalbox-second-half">
+            <v-col cols="12" sm="12" class="legalbox-subscription-halves">
               <div
-                v-for="legalbox in legalboxes.slice(4, 8)"
-                :key="legalbox.name"
+                v-for="(legalbox, index) in legalboxesFilteredGeneral"
+                :key="legalbox.name + index"
+                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
-                <v-checkbox
-                  v-model="selectedLegalbox"
-                  :label="legalbox.name"
-                  :value="legalbox.name"
-                ></v-checkbox>
+                <div class="d-flex align-center">
+                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                  <v-checkbox
+                    class="legalboxSubscribeCheckbox"
+                    v-model="selectedLegalbox"
+                    @change="updateSelectedLegalbox"
+                    :value="legalbox.name"
+                    disabled
+                  >
+                  </v-checkbox>
+                  <p class="title mt-2">{{ legalbox.name }}</p>
+                  <v-spacer></v-spacer>
+                  <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon> -->
+                </div>
+                <v-container>
+                  <v-expansion-panels flat>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header
+                        class="legalbox-info-ellipsis transparent"
+                      >
+                        more info...
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content class="faq-answers">
+                        {{ legalbox.info }}
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-container>
+              </div>
+
+              <div
+                v-for="(legalbox, index) in legalboxes"
+                :key="index"
+                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
+              >
+                <div class="d-flex align-center">
+                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                  <v-checkbox
+                    class="legalboxSubscribeCheckbox"
+                    v-model="selectedLegalbox"
+                    @change="updateSelectedLegalbox"
+                    :value="legalbox.name"
+                    :disabled="disableCheckbox"
+                  >
+                  </v-checkbox>
+                  <p class="title mt-2">{{ legalbox.name }}</p>
+                  <v-spacer></v-spacer>
+                  <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon> -->
+                </div>
+                <v-container>
+                  <v-expansion-panels flat>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header
+                        class="legalbox-info-ellipsis transparent"
+                      >
+                        more info...
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content class="faq-answers">
+                        {{ legalbox.info }}
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-container>
               </div>
             </v-col>
           </v-row>
-          <div class="d-flex justify-center">
+          <div class="text-center">
             <v-btn
               x-large
+              :disabled="disableSubscribeButton"
               color="accent"
               height="80"
               style="padding: 10px 100px; border-radius: 10px;"
             >
-              <span class="headline text-capitalize">Subscribe & Pay</span>
+              <span class="headline text-capitalize">Start 14 Days Trial</span>
+              <!-- <span class="headline text-capitalize">Subscribe & Pay</span> -->
+            </v-btn>
+            <p class="mt-2">
+              By clicking on ‘Subscribe & Pay’, you have agreed to our
+              <router-link to="/terms-of-service">terms of service </router-link
+              >and
+              <router-link to="/privacy-policy">privacy policy</router-link>
+            </p>
+            <h3 class="uuid">{{ uuid }}</h3>
+            <!-- <div class="paystack-payment-wrapper">
+              <paystack
+                :amount="amount"
+                :email="email"
+                :paystackkey="paystackkey"
+                :reference="reference"
+                :callback="callback"
+                :close="close"
+                :embed="true"
+              >
+                <i class="fas fa-money-bill-alt"></i>
+                Make Payment
+              </paystack>
+            </div> -->
+
+            <v-btn
+              x-large
+              class="mt-8"
+              color="accent"
+              height="80"
+              style="padding: 10px 100px; border-radius: 10px;"
+              @click="callOnPaystack"
+            >
+              <span class="headline text-capitalize">Pay</span>
+            </v-btn>
+            <v-btn
+              x-large
+              class="mt-8"
+              color="accent"
+              height="80"
+              style="padding: 10px 100px; border-radius: 10px;"
+              @click="callOnPaystack2"
+            >
+              <span class="headline text-capitalize">Pay2</span>
             </v-btn>
           </div>
         </div>
@@ -111,20 +232,155 @@ import Vue from "vue";
 </template>
 
 <script>
+// import Paystack from "vue-paystack";
+import { uuid } from "vue-uuid";
 import Navbar from "@/components/Nav-Gen";
 import General_Footer from "@/components/footer";
+import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      selectedLegalbox: []
+      paymentInitiated: true,
+      uuid: "LB_Paystack_" + uuid.v4(),
+      currentPlan: "",
+      disableCheckbox: false,
+      disableSubscribeButton: true,
+      selectedLegalbox: ["General"],
+      paystackkey: process.env.VUE_APP_paystack_publicKey,
+      amount: 10000,
+      email: "mayor@email.com",
+      reference: "LB_Paystack_" + uuid.v4()
     };
   },
+  methods: {
+    callback: function(response) {
+      console.log(response);
+    },
+    close: function() {
+      console.log("Payment closed");
+    },
+    updateCurrentPlan() {
+      // this.disableCheckbox = false;
+      if (this.currentPlan == "Basic") {
+        // alert(this.currentPlan);
+        // this.updateSelectedLegalbox();
+      } else if (this.currentPlan == "Premium") {
+        if (this.currentLegalboxSelection < 4) {
+          // alert(this.currentPlan);
+          this.disableSubscribeButton = true;
+          this.disableCheckbox = false;
+        }
+        // alert(this.currentPlan);
+        // this.updateSelectedLegalbox();
+      }
+    },
+    updateSelectedLegalbox() {
+      if (this.selectedLegalbox.length == 3 && this.currentPlan == "Basic") {
+        // alert("BASIC MODE");
+        this.disableCheckbox = true;
+        this.disableSubscribeButton = false;
+        // this.disableCheckbox = true;
+        // this.disableSubsribeButton = false;
+      } else if (this.selectedLegalbox.length == 4) {
+        // alert("PREMIUM MODE");
+        this.disableSubscribeButton = false;
+        this.disableCheckbox = true;
+      } else if (this.selectedLegalbox > 4) {
+        alert("Other");
+        this.disableCheckbox = true;
+      }
+    },
+    resetSelection() {
+      this.selectedLegalbox = ["General"];
+      this.currentPlan = "";
+      this.disableSubscribeButton = true;
+    },
+    // removeSelection(index) {
+    //   this.selectedLegalbox.splice(index, 1);
+    //   this.selectedLegalbox[0] = ["General"];
+    //   console.log(this.selectedLegalbox);
+    // }
+    callOnPaystack() {
+      // this.paymentInitiated = true;
+
+      axios
+        .post(
+          "https://api.paystack.co/transaction/initialize",
+          {
+            email: this.email,
+            reference: this.reference,
+            amount: this.amount,
+            plan: "PLN_37fzyfh8920h35f",
+            callback_url: "https://blog.legalbox.ng"
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.VUE_APP_paystack_secretKey}`,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          const auth_URL = response.data.data.authorization_url;
+          // console.log(auth_URL);
+          // this.$router.push(auth_URL);
+          window.open(auth_URL, "_blank");
+
+          console.log(response);
+          console.log(response.data);
+          console.log(response.status);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+        });
+    },
+    callOnPaystack2() {
+      // const route = "https://google.com";
+      // window.open(route.href, "_blank");
+    }
+  },
+  watch: {
+    currentPlan(val) {
+      if (val.length > 1) {
+        this.disableCheckbox = false;
+
+        if (val == "Premium") {
+          // alert("Premium");
+          if (this.selectedLegalbox.length < 4) {
+            this.disableSubscribeButton = true;
+            this.disableCheckbox = false;
+          }
+        } else if (val == "Basic") {
+          // alert("basic 2");
+          if (this.selectedLegalbox.length > 3) {
+            this.selectedLegalbox.pop();
+            console.log(this.disableCheckbox);
+            this.disableCheckbox = true;
+          }
+        }
+      }
+    }
+    // storedUserDetails(val) {
+    //   if (val.length > 0) {
+    //     console.log(val);
+    //   }
+    // }
+  },
   components: {
+    // paystack: Paystack,
     "nav-one": Navbar,
     "general-footer": General_Footer
   },
   computed: {
+    ...mapState(["storedUserDetails"]),
+    currentLegalboxSelection() {
+      return this.selectedLegalbox;
+    },
     plans() {
       return this.$store.state.plans;
     },
@@ -132,8 +388,60 @@ export default {
       return this.$store.state.durationType;
     },
     legalboxes() {
-      return this.$store.state.legalboxes;
+      return this.$store.state.legalboxes.filter(i => i.name != "General");
+    },
+    legalboxesFilteredGeneral() {
+      return this.$store.state.legalboxes.filter(i => i.name == "General");
     }
+  },
+  mounted() {
+    // console.log(this.storedUserDetails)
+    // let list = document.getElementsByClassName("legalboxSubscribeCheckbox");
+    // console.log(list);
+
+    // let list2 = list[0].getElementsByTagName("input");
+    // list2.disabled = false;
+    // console.log(list2);
+
+    this.disableCheckbox = true;
   }
 };
 </script>
+
+<style scoped>
+.resetSelection {
+  cursor: pointer;
+  padding: 4px;
+  padding-bottom: 6px;
+  margin: 0 auto;
+  margin-top: 12px;
+  width: 9%;
+  border-radius: 50px;
+  font-weight: 700;
+  background: red;
+}
+
+.subscribe-legalbox {
+  border-radius: 25px;
+}
+
+.subscribe-legalbox {
+  margin-bottom: 40px;
+}
+
+.legalboxSubscribeCheckbox {
+  transform: scale(1.5);
+}
+
+.legalbox-subscription-halves {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.subscribe-legalbox {
+  width: 40%;
+}
+</style>

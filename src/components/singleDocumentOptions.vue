@@ -409,7 +409,7 @@
                       </v-btn>
                     </div>
                     <div
-                      v-if="(documentData.status === 'draft')"
+                      v-if="documentData.status === 'draft'"
                       class="metaChild"
                     >
                       <p class="caption">

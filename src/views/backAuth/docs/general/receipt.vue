@@ -1,292 +1,416 @@
 <template>
   <div class="dashboard receiptInvoice page back-page">
     <back-nav></back-nav>
-    <div class="bodyWrapper">
-      <v-container class="">
-        <v-row>
-          <v-col cols="12" sm="12" class="legalbox-wrapper d-flex align-center">
-            <img
-              src="@/assets/general-icon.png"
-              class="legalbox-icons"
-              width="40"
-            />
-            <h2 class="display-1 ml-4">{{ parent }}</h2>
-              
-            
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" class="legalbox-wrapper">
-            
-            <h2 class="headline" style="margin-left: 60px;">{{ category }}</h2>
-              
-            
-          </v-col>
-        </v-row>
-      </v-container>
-      
-      <v-container fluid class="docParent pb-12">
-        <v-container>
-          <v-form id="myForm" @click.prevent="">
+    <v-form ref="documentPass" @submit.prevent="submitDocument">
+      <div class="bodyWrapper">
+        <v-container class="">
           <v-row>
-            <v-col cols="12" sm="6">
-              <!-- {{ formOutput.formDupper }} -->
-              <div class="mb-4">Short Description of Project/Job/Sale</div>
-              <v-textarea
-                outlined
-                background-color="white"
-                v-model="formOutput.projectDescription"
-              ></v-textarea>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col cols="12" sm="6">
-              <div class="mb-4">Customer Details</div>
-              <v-text-field
-                outlined
-                background-color="white"
-                label="Name"
-                v-model="formOutput.customerName"
-              ></v-text-field>
-              <v-text-field
-                outlined
-                background-color="white"
-                label="Email Address"
-                v-model="formOutput.customerEmail"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-              <div class="mb-4">Your Details</div>
-              <v-text-field
-                outlined
-                background-color="white"
-                label="Name"
-                placeholder="user.fullname"
-                disabled
-              ></v-text-field>
-              <v-text-field
-                outlined
-                background-color="white"
-                label="Email Address"
-                placeholder="user.email"
-                disabled
-              ></v-text-field>
-            </v-col>
-            <v-spacer></v-spacer>
-
-            <v-col cols="12" sm="6">
-              <div class="mb-4">Receipt Number</div>
-              <v-text-field
-                outlined
-                background-color="white"
-                label="Name"
-                placeholder="Auto Generated"
-                disabled
-              ></v-text-field>
-
-              <v-menu
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    :label="formOutput.date"
-                    :value="formOutput.date"
-                    hint="YYYY/MM/DD format"
-                    persistent-hint
-                    prepend-icon="event"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="formOutput.date"
-                  no-title
-                  @input="menu1 = false"
-                ></v-date-picker>
-              </v-menu>
-            </v-col>
-          </v-row>
-
-          <hr class="my-12" />
-
-          <!-- Receipt Figures -->
-          {{ test }}
-          <v-row class="receiptFigures">
             <v-col
               cols="12"
-              :sm="form.colSize"
-              v-for="(form, index) in formSection"
-              :key="index"
+              sm="12"
+              class="legalbox-wrapper d-flex align-center"
             >
-              <div class="mb-4 receiptFigures-title">{{ form.title }}</div>
-              <input
-                type="text"
-                value="You!"
-                :id="form.textId"
-                :name="form.textId"
-                :ref="form.textId"
+              <img
+                src="@/assets/general-icon.png"
+                class="legalbox-icons"
+                width="40"
               />
-              <!-- Radios -->
-              <div v-if="form.radioId1 || form.radioId2">
-                <div class="d-flex align-center ml-5">
-                  <input
-                    type="radio"
-                    :name="form.textId"
-                    :value="form.radioId1"
-                    :ref="form.radioId1"
-                    checked
-                    :id="form.radioId1"
-                  />
-                  <label :for="form.radioId1" class="overline ml-2 mr-1 mt-2">
-                    {{ form.radioId1 }}
-                  </label>
-                </div>
-                <div class="d-flex align-center ml-5">
-                  <input
-                    type="radio"
-                    :name="form.textId"
-                    :value="form.radioId2"
-                    :ref="form.radioId2"
-                    :id="form.radioId2"
-                  />
-                  <label :for="form.radioId2" class="overline ml-2 mr-3 mt-2">
-                    {{ form.radioId2 }}
-                  </label>
-                </div>
-              </div>
-            </v-col>
-
-            <v-col cols="12" sm="2">
-              <div class="mb-4">Duplicate/Remove</div>
-              <v-btn color="accent" @click="duplicateInputs()">
-                <b>+</b>
-              </v-btn>
-              <span class="mx-2"></span>
-              <v-btn color="accent" @click="removeDuplicateInputs(index)">
-                <b>-</b>
-              </v-btn>
-            </v-col>
-          </v-row>
-
-          <!-- DUPLICATED Receipt Figures -->
-
-          <v-row
-            v-for="(form1, parentIndex) in formSectionNew"
-            :key="parentIndex"
-            class="receiptFigures"
-          >
-            <!-- {{ formSectionNew }} -->
-            <v-col
-              cols="12"
-              :sm="form.colSize"
-              v-for="(form, index) in form1"
-              :key="index"
-            >
-              <!-- {{ form }} -->
-              <div class="mb-4 receiptFigures-title">{{ form.title }}</div>
-              <input
-                v-if="form.title"
-                class="receiptFigures-inputs"
-                :id="form.textId"
-                :name="form.textId"
-                :value="form.value"
-                :ref="form.textId"
-              />
-              <v-btn
-                v-if="form.type"
-                color="accent"
-                @click="removeDuplicateInputs(parentIndex)"
-              >
-                <b>-</b>
-              </v-btn>
-              <!-- Radios -->
-              <div v-if="form.radioId1 || form.radioId2">
-                <div class="d-flex align-center ml-5">
-                  <input
-                    type="radio"
-                    :name="form.textId"
-                    :value="form.radioId1"
-                    :ref="form.radioId1"
-                    :id="form.radioId1"
-                  />
-                  <label :for="form.radioId1" class="overline ml-2 mr-1 mt-2">
-                    {{ form.radioId1 }}
-                  </label>
-                </div>
-                <div class="d-flex align-center ml-5">
-                  <input
-                    type="radio"
-                    :name="form.textId"
-                    :value="form.radioId2"
-                    :ref="form.radioId2"
-                    :id="form.radioId2"
-                  />
-                  <label :for="form.radioId2" class="overline ml-2 mr-3 mt-2">
-                    {{ form.radioId2 }}
-                  </label>
-                </div>
-              </div>
+              <h2 class="display-1 ml-4">{{ parent }}</h2>
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <v-btn large color="secondary">Get Total</v-btn>
+            <v-col cols="12" sm="4" class="legalbox-wrapper">
+              <h2 class="headline" style="margin-left: 60px;">
+                {{ category }}
+              </h2>
+              <v-text-field
+                label="Document Title"
+                v-model="formOutput.title"
+                :rules="[rules.required]"
+                autofocus
+                required
+                class="mt-4"
+                outlined
+                hint="Add or Change the title of this document"
+                prepend-icon="insert_drive_file"
+              ></v-text-field>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12" sm="4" class="d-flex">
-              <div class="mr-7">Sub-Total:</div>
-              <div>
-                <span>&#8358;</span> SUBTOTAL
-              </div>
-            </v-col>
-            <v-col cols="12" sm="4" class="d-flex">
-              <div class="mr-7">Tax:</div>
-              <div>
-                <span>&#8358;</span> Total Tax
-              </div>
-            </v-col>
-            <v-col cols="12" sm="4" class="d-flex">
-              <div class="mr-7">Discount:</div>
-              <div>
-                <span>&#8358;</span> Total Discount
-              </div>
-            </v-col>
-          </v-row>
-          <hr />
-          <v-row>
-            <v-col cols="12" sm="4" class="d-flex display-1 mb-12">
-              <div class="mr-7">Total:</div>
-              <div>
-                <span>&#8358;</span> TOTAL
-              </div>
-            </v-col>
-          </v-row>
-          <hr />
-
-          <v-row>
-            <v-col cols="12" sm="5">
-              <h3 class="mb-4">Tax Information</h3>
-              <v-textarea solo></v-textarea>
-              <v-btn class="accent submit-document" id="submitForm" @click="submit">
-                Save Document
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-form>
         </v-container>
-        
-        
-      </v-container>
 
-      <!-- Dashboard footer -->
-      <v-container>
+        <v-container fluid class="docParent pb-12">
+          <v-container>
+            <v-row class="my-8">
+              <v-col cols="12" sm="6"><h2>LOGO</h2></v-col>
+              <v-col cols="12" sm="6"
+                ><p class="display-2 text-center">{{ category }}</p></v-col
+              >
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <!-- {{ formOutput.formDupper }} -->
+                <div class="mb-4">Short Description of Project/Job/Sale</div>
+                <v-textarea
+                  outlined
+                  background-color="white"
+                  v-model="formOutput.projectDescription"
+                ></v-textarea>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="12" sm="6">
+                <div class="mb-4">Customer Details</div>
+                <v-text-field
+                  outlined
+                  :rules="[rules.required]"
+                  background-color="white"
+                  label="Name"
+                  v-model="formOutput.customerDetails.customerName"
+                ></v-text-field>
+                <v-text-field
+                  outlined
+                  :rules="[rules.required, rules.email]"
+                  background-color="white"
+                  label="Email Address"
+                  v-model="formOutput.customerDetails.customerEmail"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <div class="mb-4">Your Details</div>
+                <v-text-field
+                  outlined
+                  background-color="white"
+                  label="Name"
+                  :value="
+                    storedUserDetails.firstName +
+                      ' ' +
+                      storedUserDetails.lastName
+                  "
+                  disabled
+                ></v-text-field>
+                <v-text-field
+                  outlined
+                  background-color="white"
+                  label="Email Address"
+                  :value="storedUserDetails.email"
+                  disabled
+                ></v-text-field>
+              </v-col>
+              <v-spacer></v-spacer>
+
+              <v-col cols="12" sm="6">
+                <div class="mb-4">Receipt Number</div>
+                <v-text-field
+                  outlined
+                  background-color="white"
+                  label="Name"
+                  placeholder="Auto Generated"
+                  disabled
+                ></v-text-field>
+
+                <div class="mb-4">Receipt Date</div>
+                <v-menu
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      :label="formOutput.receiptDate"
+                      :value="formOutput.receiptDate"
+                      hint="YYYY/MM/DD format"
+                      persistent-hint
+                      prepend-icon="event"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="formOutput.receiptDate"
+                    no-title
+                    @input="menu1 = false"
+                  ></v-date-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
+
+            <hr class="my-12" />
+
+            <v-row
+              class="invoiceReceiptFigures"
+              v-for="(inputRows, index) in formOutput.priceBreakdown"
+              :key="index"
+            >
+              <v-col cols="2" sm="2">
+                <p>Product/Service</p>
+                <v-text-field
+                  v-model="inputRows.productService"
+                  autocomplete="off"
+                  class="mt-4"
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="1" sm="1">
+                <p>Qty/Hours</p>
+                <v-text-field
+                  v-model="inputRows.quantityHour"
+                  autocomplete="off"
+                  class="mt-4"
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="2" sm="2">
+                <p>Price/Rate</p>
+                <v-text-field
+                  v-model="inputRows.priceRate.priceRate"
+                  autocomplete="off"
+                  class="mt-4"
+                  :rules="[rules.number]"
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+                <div class="d-flex align-start justify-center">
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      :name="'priceRate' + (index + 1)"
+                      value="price"
+                      v-model="inputRows.priceRate.priceRateSelection"
+                    />
+                    Price
+                  </label>
+
+                  <span class="mx-2"></span>
+
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      :name="'priceRate' + (index + 1)"
+                      value="rate"
+                      v-model="inputRows.priceRate.priceRateSelection"
+                    />
+                    Rate
+                  </label>
+                </div>
+              </v-col>
+              <v-col cols="2" sm="2">
+                <p>Discount</p>
+                <v-text-field
+                  v-model="inputRows.discount.discount"
+                  autocomplete="off"
+                  class="mt-4"
+                  :rules="[rules.number]"
+                  top
+                  right
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+
+                <div class="d-flex align-start justify-center">
+                  <label
+                    class="overline d-flex align-center"
+                  >
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      :name="'discount' + (index + 1)"
+                      value="percent"
+                      style="margin-right: 0px;"
+                      v-model="inputRows.discount.discountSelection"
+                    />
+                    Percent
+                  </label>
+
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      :name="'discount' + (index + 1)"
+                      value="flatAmount"
+                      v-model="inputRows.discount.discountSelection"
+                    />
+                    Flat Amount
+                  </label>
+                </div>
+              </v-col>
+              <v-col cols="1" sm="1">
+                <p>Tax</p>
+                <v-text-field
+                  v-model="inputRows.tax.tax"
+                  autocomplete="off"
+                  class="mt-4"
+                  :rules="[rules.number]"
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+                <div class="d-flex align-start justify-center flex-column">
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      :name="'tax' + (index + 1)"
+                      value="vat"
+                      v-model="inputRows.tax.taxSelection"
+                    />
+                    VAT
+                  </label>
+
+                  <span class="mx-2"></span>
+
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      :name="'tax' + (index + 1)"
+                      value="others"
+                      v-model="inputRows.tax.taxSelection"
+                    />
+                    Others
+                  </label>
+                </div>
+              </v-col>
+              <v-col cols="2" sm="2">
+                <p>Amount</p>
+                <v-text-field
+                  v-model="inputRows.amount.amount"
+                  autocomplete="off"
+                  class="mt-4"
+                  :rules="[rules.number]"
+                  single-line=""
+                  solo
+                  flat
+                  outlined
+                ></v-text-field>
+                <div class="d-flex align-start justify-center" v-if="index < 1">
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      name="currency"
+                      value="naira"
+                      v-model="inputRows.currency"
+                    />
+                    Naira
+                  </label>
+
+                  <span class="mx-2"></span>
+
+                  <label class="overline d-flex align-center">
+                    <input
+                      type="radio"
+                      class="mr-1"
+                      name="currency"
+                      value="dollar"
+                      v-model="inputRows.currency"
+                    />
+                    Dollar
+                  </label>
+                </div>
+              </v-col>
+              <v-col cols="2" sm="2">
+                <p v-if="index < 1" class="mb-6">Duplicate</p>
+                <p v-if="index >= 1" :class="{ 'mb-12': index >= 1 }"></p>
+                <v-btn
+                  color="accent"
+                  @click="duplicateInputs()"
+                  v-if="index < 1"
+                >
+                  <v-icon dark>mdi-plus</v-icon>
+                </v-btn>
+                <span v-if="index < 1" class="mx-2"></span>
+                <v-btn color="accent" @click="removeduplicateInputs(index)">
+                  <v-icon dark>mdi-minus</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+
+            <!-- ================================ -->
+
+            <hr />
+            <v-row>
+              <v-col cols="12" sm="4" class="d-flex display-1 mb-12">
+                <div class="mr-7">Total:</div>
+                <div><span>&#8358;</span> TOTAL</div>
+              </v-col>
+            </v-row>
+            <hr />
+
+            <v-row>
+              <v-col cols="12" sm="12" class="d-flex justify-center">
+                <v-btn
+                  large
+                  class="accent submit-document"
+                  @click="submitDocument('continueEdit')"
+                  :loading="loadingContinue"
+                  :disabled="disableContinue"
+                >
+                  Save and Continue
+                </v-btn>
+                <v-btn
+                  large
+                  class="accent submit-document"
+                  id="saveAndSend"
+                  style="top: 50%;"
+                  :loading="loadingSend"
+                  :disabled="disableSend"
+                  @click="submitDocument('redirectMe')"
+                >
+                  Save and Send
+                </v-btn>
+              </v-col>
+            </v-row>
+
+            <v-snackbar
+      class="snackbar"
+              :color="docSavedSnackbar.color"
+              top
+              right
+              v-model="docSavedSnackbar.active"
+              :multi-line="docSavedSnackbar.multiLine"
+              :timeout="docSavedSnackbar.timeout"
+            >
+              {{ docSavedSnackbar.text }}
+              <v-btn
+                color="secondary"
+                text
+                @click="docSavedSnackbar.active = false"
+              >
+                <b>x</b>
+              </v-btn>
+            </v-snackbar>
+          </v-container>
+        </v-container>
+
+        <!-- Dashboard footer -->
+        <v-container>
           <products-footer></products-footer>
-      </v-container>
-    </div>
+        </v-container>
+      </div>
+    </v-form>
+
+    <!-- Throw error if foprm is not validated -->
+    <v-snackbar
+      class="snackbar"
+      :color="invalidSubmission.color"
+      top
+      right
+      v-model="invalidSubmission.active"
+      :multi-line="invalidSubmission.multiLine"
+      :timeout="invalidSubmission.timeout"
+    >
+      {{ invalidSubmission.text }}
+      <v-btn color="secondary" text @click="invalidSubmission.active = false">
+        <b>x</b>
+      </v-btn>
+    </v-snackbar>
 
     <general-footer></general-footer>
   </div>
@@ -298,141 +422,241 @@ import General_Footer from "@/components/footer";
 import Products_Footer from "@/components/products-general-footer";
 // import VRuntimeTemplate from "v-runtime-template";
 
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
+      loadingContinue: false,
+      disableContinue: false,
+      loadingSend: false,
+      disableSend: false,
       category: "Receipt",
-      test: this.formSection,
-      counter: 2,
-      date: "",
-      formOutput: {
-        projectDescription: "",
-        customerName: "",
-        customerEmail: "",
-        date: "",
-        formDupper: [this.receiptValues]
+      parent: "General",
+      status: null,
+      subOfCategoryGeneral: "receipt",
+      tagName: "receipt",
+      andContinueValidator: null, // if andContinue is = to this
+      rules: {
+        required: value => !!value || "Required.",
+        email: value =>
+          !value ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+          "Invalid E-mail",
+        number: value =>
+          !value || /^[0-9]*$/.test(value) || "Only numbers are allowed"
       },
-      formSection: [
-        { title: "Product/Service", textId: "productService", colSize: 2 },
-        { title: "Quantity/Hours", textId: "quantityHour", colSize: 1 },
-        {
-          title: "Price/Rate",
-          textId: "priceRate1",
-          radioId1: "price1",
-          radioId2: "rate1",
-          colSize: 2
+      formOutput: {
+        title: "",
+        projectDescription: "",
+        customerDetails: {
+          customerName: "",
+          customerEmail: ""
         },
-        {
-          title: "Discount",
-          textId: "discount1",
-          radioId1: "percent1",
-          radioId2: "flat-Amount1",
-          colSize: 2
-        },
-        {
-          title: "Tax",
-          textId: "tax1",
-          radioId1: "vat1",
-          radioId2: "others1",
-          colSize: 1
-        },
-        {
-          title: "Amount",
-          textId: "amount1",
-          radioId1: "naira1",
-          radioId2: "dollar1",
-          colSize: 2
-        }
-      ],
-      formSectionNew: []
+        receiptDate: "",
+        currency: "",
+        priceBreakdown: [
+          {
+            productService: "",
+            quantityHour: "",
+            priceRate: {
+              priceRate: "",
+              priceRateSelection: ""
+            },
+            discount: {
+              discount: "",
+              discountSelection: ""
+            },
+            tax: {
+              tax: "",
+              taxSelection: ""
+            },
+            amount: {
+              amount: ""
+            }
+          }
+        ]
+      },
+      docSavedSnackbar: {
+        active: false,
+        text: "Something went wrong [-Last Fallback-]",
+        multiLine: true,
+        color: null,
+        timeout: this.$store.state.snackBarDuration
+      }
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.redirecttoEditID);
+    console.log(this.storedUserDetails);
+  },
   methods: {
     duplicateInputs() {
-      //
-      this.formSectionNew.push([
-        {
-          title: "Product/Service",
-          // type: "text",
-          textId: `productService${this.counter}`,
-          colSize: 2
+      this.formOutput.priceBreakdown.push({
+        productService: "",
+        quantityHour: "",
+        priceRate: {
+          priceRate: "",
+          price: "",
+          rate: ""
         },
-        {
-          title: "Quantity/Hours",
-          textId: `quantityHour${this.counter}`,
-          colSize: 1
+        discount: {
+          discount: "",
+          percent: "",
+          flatRate: ""
         },
-        {
-          title: "Price/Rate",
-          // type: "text",
-          textId: `priceRate${this.counter}`,
-          radioId1: `price${this.counter}`,
-          radioId2: `rate${this.counter}`,
-          colSize: 2
+        tax: {
+          tax: "",
+          vat: "",
+          others: ""
         },
-        {
-          title: "Discount",
-          // type: "text",
-          textId: `discount${this.counter}`,
-          radioId1: `percent${this.counter}`,
-          radioId2: `flat-Amount${this.counter}`,
-          colSize: 2
-        },
-        {
-          title: "Tax",
-          // type: "text",
-          textId: `tax${this.counter}`,
-          radioId1: `vat${this.counter}`,
-          radioId2: `others${this.counter}`,
-          colSize: 1
-        },
-        {
-          title: "Amount",
-          // type: "text",
-          textId: `amount${this.counter}`,
-          radioId1: `naira${this.counter}`,
-          radioId2: `dollar${this.counter}`,
-          colSize: 2
-        },
-        {
-          title: "",
-          type: "button",
-          textId: "",
-          value: "",
-          click: "",
-          colSize: 2
+        amount: {
+          amount: "",
+          naira: "",
+          dollar: ""
         }
-      ]);
-      this.counter++;
-      console.log("Counter is:" + this.counter);
-      console.log(this.formSectionNew);
+      });
     },
-    removeDuplicateInputs(index) {
-      // if(this.formSectionNew.length !=0)
-      // this.$delete(this.formSectionNew, index);
-      this.formSectionNew.splice(index, 1);
-      //
-      console.log(this.formSectionNew.index);
-    },
-    // SUBMIT FORM
-    submit() {
-      var receiptValues = [];
-      for (var key in this.$refs) {
-        receiptValues.push(this.$refs[key][0].value);
-        // receiptValues[0].value;
-        // console.log(receiptValues);
+    removeduplicateInputs(index) {
+      if (this.formOutput.priceBreakdown.length > 1) {
+        this.formOutput.priceBreakdown.splice(index, 1);
       }
+    },
+    // SUBMIT DOCUMENT
+    submitDocument(andContinue) {
+      // Validate before processing submission
+      if (this.$refs.documentPass.validate()) {
+        // Check What Button was clciked
+        if (andContinue === "continueEdit") {
+          this.loadingContinue = true;
 
-      // while (receiptValues.length) {
-      //   console.log(receiptValues.splice(0, 10));
-      // }
+          // disable other button
+          this.disableSend = true;
+        } else if (andContinue === "redirectMe") {
+          this.loadingSend = true;
 
-      console.log(receiptValues);
-      console.log(this.formOutput);
-      console.log(this.$refs);
-      // console.log(Object.keys(this.$refs));
+          // disable other button
+          this.disableContinue = true;
+        }
+        // Define Form
+        const docData = {};
+        // const docData = {};
+        let newFormData = JSON.parse(JSON.stringify(this.formOutput));
+
+        // Append compilation to form
+        newFormData.projectDescription = this.formOutput.projectDescription;
+        newFormData.customerDetails = this.formOutput.customerDetails;
+        newFormData.receiptDate = this.formOutput.receiptDate;
+
+        console.log("Before Submission", newFormData);
+        // Append Document Content
+        docData.docContent = newFormData;
+
+        // Append other document metadatas
+        // docData.docSummary = this.formOutput.title + " : " + this.category;
+        docData.status = "draft";
+        docData.title = this.formOutput.title;
+        docData.legalboxParent = this.parent;
+        docData.category = this.category;
+        docData.subOfCategoryGeneral = this.subOfCategoryGeneral;
+        console.log(docData);
+        // this.andContinueValidator = andContinue;
+
+        this.$store.dispatch("submitDocument", docData).then(() => {
+          this.andContinueValidator = andContinue;
+          console.log(andContinue);
+          console.log(this.redirecttoEditID);
+
+          console.log("andContinue Activated");
+          console.log(this.$store.state.redirecttoEditID);
+        });
+        // End of logics, submission done
+      } else {
+        this.invalidSubmission.active = true;
+      }
     }
+  },
+  watch: {
+    redirecttoEditID(val) {
+      if (typeof val == "number") {
+        console.log(val);
+        console.log("Gets here");
+        
+        this.docSavedSnackbar.active = this.docSubmittedSuccessfuly.active;
+        this.docSavedSnackbar.text = this.docSubmittedSuccessfuly.text;
+        this.docSavedSnackbar.color = this.docSubmittedSuccessfuly.color;
+        this.docSavedSnackbar.timeout = this.docSubmittedSuccessfuly.timeout;
+        this.docSavedSnackbar.multiLine = this.docSubmittedSuccessfuly.multiLine;
+
+        console.log("Re-Route");
+        if (this.andContinueValidator === "redirectMe") {
+
+          this.loadingSend = true;
+
+          setTimeout(() => {
+            this.$router.push("/docs/more/" + val);
+            // console.log("To MORE Page");
+            this.loadingSend = false;
+          }, this.$store.state.snackBarDuration);
+        } else if (this.andContinueValidator === "continueEdit") {
+          this.loadingContinue = true;
+
+          setTimeout(() => {
+            this.$router.push("/docs/edit/" + val);
+            // console.log("To EDIT Page");
+            this.loadingContinue = false;
+          }, this.$store.state.snackBarDuration);
+        }
+        // this.andContinueValidator = val;
+
+        // this.$router.push("/docs/edit/" + val);
+      } else {
+        this.docSavedSnackbar.active = true;
+        this.docSavedSnackbar.text =
+          "Oops! Something went wrong. Document might not be saved";
+        this.docSavedSnackbar.color = "error";
+      }
+    },
+    isDocumentSaved(val) {
+      if (val == true) {
+        console.log("Here");
+
+        this.docSavedSnackbar.active = true;
+        this.docSavedSnackbar.text = this.documentSavedMessage;
+        this.docSavedSnackbar.color = "success";
+
+        console.log("Re-Route");
+        if (this.andContinueValidator === "redirectMe") {
+          setTimeout(() => {
+            // this.$router.push("/docs/more/" + val);
+            console.log("To MORE Page");
+          }, this.$store.state.snackBarDuration);
+        } else if (this.andContinueValidator === "continueEdit") {
+          setTimeout(() => {
+            // this.$router.push("/docs/edit/" + val);
+            console.log("To EDIT Page");
+          }, this.$store.state.snackBarDuration);
+        }
+        // this.andContinueValidator = val;
+
+        // this.$router.push("/docs/edit/" + val);
+      } else {
+        this.docSavedSnackbar.active = true;
+        this.docSavedSnackbar.text =
+          "Oops! Something went wrong. Document might not be saved";
+        this.docSavedSnackbar.color = "error";
+      }
+    }
+  },
+  computed: {
+    ...mapState([
+      "storedUserDetails",
+      "redirecttoEditID",
+      "documentSavedMessage",
+      "isDocumentSaved",
+      "invalidSubmission",
+      "docSubmittedSuccessfuly"
+    ])
   },
   components: {
     "back-nav": Back_Navbar,

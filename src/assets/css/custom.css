@@ -10,8 +10,20 @@
       color: #707070;
   }
 
-.shadow-me{
+  body {
+      position: relative;
+  }
+
+
+.snackbar {
+    margin-top: 90px !important;
+}
+
+  .shadow-me {
     box-shadow: 0 0 4px 0px rgb(162, 162, 162)
+}
+.shadow-me-light {
+    box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.11);
 }
 
 .l-rounded-card{
@@ -52,6 +64,14 @@
 
 .pad-top{
     padding-top: 150px;
+}
+.width80-center {
+    width: 80%;
+    margin: 0 auto;
+}
+.width50-center {
+    width: 50%;
+    margin: 0 auto;
 }
 
 
@@ -137,6 +157,9 @@
 }
 
 #footer{
+    /* position: absolute;
+    bottom: 0;
+    min-height: 300px; */
     padding: 15px 50px 100px 50px;
 }
 
@@ -270,13 +293,18 @@ a{
     margin: 0 auto !important;
     padding: 50px 0;
 }
-#legalboxParent p:first-of-type{
+/* #legalboxParent p:first-of-type{
     width: 70%;
     margin: 0 auto;
+} */
+
+.legalbox-subscription-halves {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
 }
 
-#legalbox-second-half{
-    padding-left: 130px;
+.l-hero {
+    margin-top: 100px;
 }
 
 /* Login */
@@ -301,6 +329,12 @@ a{
 .login i.mdi-eye,
 .signup i.mdi-eye{
     margin-top: 20px;
+}
+
+/* ACTIVATE PAGE */
+
+.activate .bodyWrapper {
+    min-height: 300px;
 }
 
 /* Signup */
@@ -619,17 +653,53 @@ input[type=checkbox] {
     background-color: #fff;
 }
 
-.appendSignature2{
+.signatureWrapper{
     border-radius: 12px;
     background-color: #fff;
+    width: 80%;
+}
+
+.signature .v-text-field__slot {
+    border-radius: 12px;
+    width: 100%;
+    height: 200px;
+}
+
+.signature .v-text-field__details,
+.signature .v-input__append-inner,
+.signature .v-input__prepend-outer {
+    display: none !important;
+}
+
+.signature .v-input__slot {
+    padding: 0 !important;
 }
 
 .sigUpload{
     display: block !important;
 }
 
+
 .testFloat {
     position: fixed;
     left: 0;
     top: 0%;
+}
+
+/* Paystack */
+#paystackEmbedContainer {
+    border-radius: 10px !important;
+    box-shadow: 0px 0px 16px 3px #d8d8e4;
+    width: 50% !important;
+    margin: 0 auto;
+}
+
+.paymentContainer {
+    height: 100%;
+}
+
+.paymentFrame {
+    width: 50%;
+    height: 500px;
+    border: none
 }

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import UUID from "vue-uuid";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
@@ -56,6 +57,7 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
+  UUID,
   router,
   store,
   vuetify,

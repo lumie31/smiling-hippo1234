@@ -10,7 +10,21 @@
 
         <div>
           <div class="settings-tab-parent">
-            <v-tabs fixed-tabs class="settings-tab py-5" height="90">
+            <p class="text-center mt-10" v-if="!storedUserDetails.email">
+              Loading.....
+              <v-text-field
+                style="width: 40%; margin: 0 auto;"
+                color="success"
+                loading
+                disabled
+              ></v-text-field>
+            </p>
+            <v-tabs
+              fixed-tabs
+              class="settings-tab py-5"
+              height="90"
+              v-if="storedUserDetails.email"
+            >
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start first-title settings-tab-title"
                 >Profile</v-tab
@@ -32,7 +46,7 @@
                     >
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
-                          <!-- {{ storedUserDetails }} -->
+                          <pre class="testFloat">{{ storedUserDetails }}</pre>
                           <p class="headline">Profile Picture</p>
                           <p class="caption">
                             The avatar on your profile.
@@ -52,7 +66,7 @@
                             <template v-slot:activator="{ on }">
                               <div
                                 v-on="on"
-                                title="Chnage Image"
+                                title="Change Image"
                                 :style="{
                                   backgroundImage:
                                     'url(' + previewProfileImage + ')'
@@ -64,6 +78,17 @@
                                   v-if="!previewProfileImage"
                                   id="no-avatar"
                                 ></span>
+                                <!-- <div
+                                  v-if="storedUserDetails.profilePicture.url"
+                                  :style="{
+                                    backgroundImage:
+                                      'url(' +
+                                      storedUserDetails.profilePicture.url +
+                                      ')'
+                                  }"
+                                  id="avatar"
+                                ></div> -->
+                                <span v-if="previewProfileImage2">VIEW</span>
                               </div>
                             </template>
                             <span>Profile Picture</span>
@@ -266,6 +291,7 @@
                             Update Profile
                           </v-btn>
                           <v-snackbar
+      class="snackbar"
                             :color="updatedSnackbar.color"
                             top
                             right
@@ -527,7 +553,9 @@ export default {
   data() {
     return {
       updateProfileLoader: false,
+      currentProfileImage: this.storedUserDetails.profilePicture.url,
       previewProfileImage: null,
+      previewProfileImage2: null,
       previewCompanyLogo: null,
       previewUserSignature: null,
       profilePicture: null,
@@ -601,6 +629,7 @@ export default {
       reader.readAsDataURL(previewer);
     },
     uploadProfilePicture() {
+      console.log("INIT");
       let formData = new FormData();
       this.profilePicture = this.$refs.profilePicker.files[0];
 
@@ -859,7 +888,7 @@ export default {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
-#previewCompanyLogo{
+#previewCompanyLogo {
   background-size: contain;
 }
 #previewUserSignature {
@@ -886,6 +915,18 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 70%;
+}
+#avatar {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background-color: rgba(205, 203, 203, 0.6);
+  background-image: url(../../assets/user.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #no-signature {
   text-align: center;
