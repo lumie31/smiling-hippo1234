@@ -712,6 +712,17 @@
               </v-col>
             </v-row> -->
           </v-container>
+          <div class="text-center">
+            <p>below</p>
+            <template>
+              <v-file-input
+                v-model="previewSignature2"
+                multiple
+                label="File input"
+              ></v-file-input>
+            </template>
+            <v-btn @click="tryCLD">CLD</v-btn>
+          </div>
 
           <append-signature></append-signature>
           <v-row>
@@ -749,7 +760,7 @@
       </div>
     </v-form>
 
-    <!-- Throw error if foprm is not validated -->
+    <!-- Throw error if form is not validated -->
     <v-snackbar
       class="snackbar"
       :color="invalidSubmission.color"
@@ -775,14 +786,18 @@ import General_Footer from "@/components/footer";
 import Products_Footer from "@/components/products-general-footer";
 // import VRuntimeTemplate from "v-runtime-template";
 import Append_Signature from "@/components/append-signature";
+import axios from "axios";
 
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+      cloudName: process.env.VUE_APP_cloudinary_cloudName,
+      cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
       testData: "",
       previewSignature: null,
+      previewSignature2: null,
       ab: [1, 2, 3],
       bc: [{ info: "aa" }, { info: "bb" }, { info: "cc" }],
       cd: ["rr", "dd", "ks"],
@@ -1091,6 +1106,26 @@ export default {
 
       console.log(collection);
       this.testData = collection;
+    },
+    tryCLD() {
+      console.log(this.previewSignature2);
+
+      axios
+        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+          file: this.previewSignature2,
+          upload_preset: this.cloudSigPath
+        })
+        .then(response => {
+          console.log(response.data.docs);
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.headers);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          console.log(error.response.data);
+        });
     }
   },
   watch: {

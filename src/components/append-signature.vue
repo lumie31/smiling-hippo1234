@@ -1,6 +1,8 @@
 <template>
   <v-row>
-    <div class="text-center my-12" style="width: 100%;"><b>SIGNATURE COMPONENT GOES HERE</b></div>
+    <div class="text-center my-12" style="width: 100%;">
+      <b>SIGNATURE COMPONENT GOES HERE</b>
+    </div>
     <v-col cols="6" class="d-flex flex-column align-center">
       <div class="formSectionTitle">Signatures (First Party)</div>
       <div class="d-flex justify-center">
@@ -27,6 +29,7 @@
           image-format="jpeg"
         />
       </div>
+      <cld-image cloudName="demo" publicId="sample" crop="scale" width="300" />
     </v-col>
     <v-col cols="6" class="d-flex flex-column align-center">
       <div class="formSectionTitle">Signatures (First Party)</div>

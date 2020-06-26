@@ -8,7 +8,9 @@ import vuetify from "./plugins/vuetify";
 window.$ = window.jQuery = require("jquery"); //import JQuery
 import VImageInput from "vuetify-image-input";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-import axios from "axios";
+import Cloudinary from "./plugins/cloudinary";
+
+// import axios from "axios";
 
 Vue.config.productionTip = false;
 Vue.component("VImageInput", VImageInput);
@@ -16,23 +18,29 @@ Vue.component("VImageInput", VImageInput);
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // check for valid auth token
-    axios
-      .get("/api/v1/user/userdash", {
-        headers: { Authorization: store.state.token }
-      })
-      .then(response => {
-        if (response.status === 200) {
-          // Token is valid, so continue
-          next();
-        }
-      })
-      .catch(error => {
-        if (error.response.status === 400) {
-          store.dispatch("destroyToken");
-          // There was an error so redirect
-          window.location.href = "/login";
-        }
-      });
+    // axios
+    //   .get("/api/v1/user/userdash", {
+    //     headers: { Authorization: store.state.token }
+    //   })
+    //   .then(response => {
+    //     if (response.status === 200) {
+    //       // Token is valid, so continue
+    //       next();
+    //     }
+    //   })
+    //   .catch(error => {
+    //     // console.log(error);
+    //     // console.log(error.response);
+    //     // console.log(error.response.data.message);
+    //     // console.log(error.response.data);
+    //     // console.log(error.response.status);
+
+    //     if (error.response.status === 400) {
+    //       store.dispatch("destroyToken");
+    //       // There was an error so redirect
+    //       window.location.href = "/login";
+    //     }
+    //   });
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!store.getters.signedIn) {
@@ -61,5 +69,7 @@ new Vue({
   router,
   store,
   vuetify,
+  VImageInput,
+  Cloudinary,
   render: h => h(App)
 }).$mount("#app");
