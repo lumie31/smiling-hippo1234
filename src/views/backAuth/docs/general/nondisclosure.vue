@@ -285,6 +285,7 @@
                         class="tooler"
                         color="blue"
                       >
+                        <!-- Paragraph -->
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             icon
@@ -293,7 +294,7 @@
                             @click="
                               index < origParagraphLength
                                 ? null
-                                : activateInfoCommentDialog(index);
+                                : activateInfoCommentDialog(index, 'info');
                               isParagraphInfo = true;
                             "
                           >
@@ -315,7 +316,7 @@
                             v-bind="attrs"
                             v-on="on"
                             @click="
-                              activateInfoCommentDialog(index);
+                              activateInfoCommentDialog(index, 'comment');
                               isParagraphComment = true;
                             "
                           >
@@ -345,15 +346,15 @@
                 </p>
               </v-col>
 
-              <v-dialog v-model="addClauseParagraphINIT" width="700">
+              <v-dialog v-model="addCommentINIT" width="700">
                 <v-card>
                   <v-card-title class="headline secondary white--text">
-                    Add Comment
+                    Add/Change Comment
                   </v-card-title>
 
                   <v-card-text>
                     <v-textarea
-                      v-model="addOwnClauseParagraphComment"
+                      v-model="addOwnClauseParagraphCommentInfo"
                       class="mt-8"
                       auto-grow=""
                       label="Comment"
@@ -376,18 +377,18 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <!-- <v-dialog v-model="addClauseParagraphINIT" width="700">
+              <v-dialog v-model="addInfoINIT" width="700">
                 <v-card>
                   <v-card-title class="headline secondary white--text">
-                    Add Comment
+                    Add/Change Information
                   </v-card-title>
 
                   <v-card-text>
                     <v-textarea
-                      v-model="addOwnClauseParagraphComment"
+                      v-model="addOwnClauseParagraphCommentInfo"
                       class="mt-8"
                       auto-grow=""
-                      label="Comment"
+                      label="Information"
                       min-height="110"
                       outlined
                       ref=""
@@ -400,13 +401,13 @@
                       color="white"
                       text
                       class="accent"
-                      @click="ee()"
+                      @click="addClauseParagraphInfo()"
                     >
                       Add
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-              </v-dialog> -->
+              </v-dialog>
             </v-row>
 
             <!-- PARAPGRAPH DIALOG -->
@@ -460,6 +461,14 @@
                       >
                         Add
                       </v-btn>
+                      <v-btn
+                        color="white"
+                        text
+                        class="accent"
+                        @click="cancelDialog()"
+                      >
+                        Cancel
+                      </v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -505,8 +514,8 @@
                             @click="
                               index < origClauseLength
                                 ? null
-                                : activateInfoCommentDialog(index);
-                              isParagraphInfo = true;
+                                : activateInfoCommentDialog(index, 'info');
+                              isClauseInfo = true;
                             "
                           >
                             <v-icon size="30">info</v-icon>
@@ -527,7 +536,7 @@
                             v-bind="attrs"
                             v-on="on"
                             @click="
-                              activateInfoCommentDialog(index);
+                              activateInfoCommentDialog(index, 'comment');
                               isClauseComment = true;
                             "
                           >
@@ -638,93 +647,10 @@
               <b>x</b>
             </v-btn>
           </v-snackbar>
-          <v-container>
-            <!-- <v-row>
-              <div class="text-center my-12" style="width: 100%;">
-                <b>SIGNATURE COMPONENT GOES HERE</b>
-              </div>
-              <v-col cols="6" class="">
-                <div class="formSectionTitle">Signatures (First Party)</div>
-                <div class="d-flex justify-center">
-                  <div class="d-flex align-center mr-6">
-                    <input
-                      type="radio"
-                      name="company"
-                      value="Person"
-                      id="company"
-                    />
-                    <label for="form.radioId1" class="ml-2">Company</label>
-                  </div>
-                  <div class="d-flex align-center">
-                    <input
-                      type="radio"
-                      autofocus
-                      name="company"
-                      value="Person"
-                      id="company"
-                    />
-                    <label for="form.radioId1" class="ml-2">Person</label>
-                  </div>
-                </div>
-                <div> {{ previewSignature }} </div>
-                <v-btn @click="submitIMG">Image</v-btn>
-                <div
-                  class="signatureWrapper mt-12"
-                  :style="{
-                    backgroundImage: 'url(' + previewSignature + ')'
-                  }"
-                >
-                  <v-file-input
-                    v-model="previewSignature"
-                    class="signature"
-                    accept="image/png, image/jpeg"
-                    prepend-icon="none"
-                    flat
-                    solo
-                  >
-                  </v-file-input>
-                </div>
-              </v-col>
-              <v-col cols="6" class="d-flex flex-column align-center">
-                <div class="formSectionTitle">Signatures (Second Party)</div>
-                <div class="d-flex justify-center">
-                  <div class="d-flex align-center mr-6">
-                    <input
-                      type="radio"
-                      name="company"
-                      value="Person"
-                      id="company"
-                    />
-                    <label for="form.radioId1" class="ml-2">Company</label>
-                  </div>
-                  <div class="d-flex align-center">
-                    <input
-                      type="radio"
-                      name="company"
-                      value="Person"
-                      id="company"
-                    />
-                    <label for="form.radioId1" class="ml-2">Person</label>
-                  </div>
-                </div>
-                <div class="appendSignature"></div>
-                <div class="signatureWrapper mt-12"></div>
-              </v-col>
-            </v-row> -->
+          <v-container class="contractsignatory">
+            <append-signature></append-signature>
           </v-container>
-          <div class="text-center">
-            <p>below</p>
-            <template>
-              <v-file-input
-                v-model="previewSignature2"
-                multiple
-                label="File input"
-              ></v-file-input>
-            </template>
-            <v-btn @click="tryCLD">CLD</v-btn>
-          </div>
 
-          <append-signature></append-signature>
           <v-row>
             <v-col cols="12" sm="12" class="d-flex justify-center">
               <!-- <v-btn large class="accent submit-document" @click="processLoop">
@@ -784,15 +710,17 @@
 import Back_Navbar from "@/components/back-nav";
 import General_Footer from "@/components/footer";
 import Products_Footer from "@/components/products-general-footer";
-// import VRuntimeTemplate from "v-runtime-template";
 import Append_Signature from "@/components/append-signature";
-import axios from "axios";
+
+// import VRuntimeTemplate from "v-runtime-template";
+// import axios from "axios";
 
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+      holderTemp1: "https://res.cloudinary.com/djw3g8meb/image/upload/v1593167822/fga2wjubbghorprszstp.gif",
       cloudName: process.env.VUE_APP_cloudinary_cloudName,
       cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
       testData: "",
@@ -822,6 +750,7 @@ export default {
       andContinueValidator: null, // if andContinue is = to this
       addOwnParagraphDialog: false,
       isParagraphComment: false,
+      isParagraphInfo: false,
       addOwnClauseDialog: false,
       rules: {
         required: value => !!value || "Required."
@@ -831,15 +760,17 @@ export default {
       ownParagraphInfo: "",
       ownParagraphComment: "",
       allInfos: "",
-      addClauseParagraphINIT: false,
+      addCommentINIT: false,
+      addInfoINIT: false,
       addClauseParagraphINDEX: "",
       selectedParagraphs: [],
       ownClauseTitle: "",
       ownClauseDetail: "",
       ownClauseInfo: "",
       ownClauseComment: "",
-      addOwnClauseParagraphComment: "",
+      addOwnClauseParagraphCommentInfo: "",
       isClauseComment: false,
+      isClauseInfo: false,
       selectedClauses: [],
       origParagraphLength: this.$store.state.general.nonDisclosureParagraphs
         .length,
@@ -928,11 +859,11 @@ export default {
         console.log(docData);
         // this.andContinueValidator = andContinue;
 
-        // this.$store.dispatch("submitDocument", docData).then(() => {
-        //   this.andContinueValidator = andContinue;
-        //   console.log(this.$store.state.redirecttoEditID);
-        //   console.log(andContinue);
-        // });
+        this.$store.dispatch("submitDocument", docData).then(() => {
+          this.andContinueValidator = andContinue;
+          console.log(this.$store.state.redirecttoEditID);
+          console.log(andContinue);
+        });
         // End of logics, submission done
       } else {
         this.invalidSubmission.active = true;
@@ -988,9 +919,16 @@ export default {
     //   this.paragraphList.splice(index, 1);
     //   console.log(this.paragraphList);
     // },
-    activateInfoCommentDialog(index) {
-      this.addClauseParagraphINIT = true;
+    activateInfoCommentDialog(index, clickKind) {
+      if (clickKind == "comment") {
+        this.addCommentINIT = true;
+      } else if (clickKind == "info") {
+        this.addInfoINIT = true;
+      }
       this.addClauseParagraphINDEX = index;
+      console.log("index", index);
+      console.log("proto", this.addClauseParagraphINDEX);
+      
     },
     addClauseParagraphComment() {
       let index = this.addClauseParagraphINDEX;
@@ -998,33 +936,39 @@ export default {
         // check if it was clause's comment button that was clicked
         console.log("Clause");
 
-        this.clauseList[index].comment = this.addOwnClauseParagraphComment;
+        this.clauseList[index].comment = this.addOwnClauseParagraphCommentInfo;
       } else if (this.isParagraphComment === true) {
         console.log("Paragraph");
-        this.paragraphList[index].comment = this.addOwnClauseParagraphComment;
+        this.paragraphList[index].comment = this.addOwnClauseParagraphCommentInfo;
       }
-      this.addClauseParagraphINIT = false;
-      this.addOwnClauseParagraphComment = "";
+      this.addCommentINIT = false;
+      this.addOwnClauseParagraphCommentInfo = "";
       this.isClauseComment = false; // IMPORTANT
+      this.isParagraphComment = false; // IMPORTANT
     },
     addParagraphInfoDialog(index) {
-      this.addClauseParagraphINIT = true;
+      this.addInfoINIT = true;
       this.addClauseParagraphINDEX = index;
+      console.log(this.isClauseInfo);
+      
     },
     addClauseParagraphInfo() {
       let index = this.addClauseParagraphINDEX;
-      if (this.isClauseComment === true) {
-        // check if it was clause's comment button that was clicked
+      if (this.isClauseInfo === true) {
+        // check if it was clause's info button that was clicked
         console.log("Clause");
 
-        this.clauseList[index].comment = this.addOwnClauseParagraphComment;
-      } else if (this.isParagraphComment === true) {
+        this.clauseList[index].info = this.addOwnClauseParagraphCommentInfo;
+      } else if (this.isParagraphInfo === true) {
+        // check if it was paragraph's info button that was clicked
         console.log("Paragraph");
-        this.paragraphList[index].comment = this.addOwnClauseParagraphComment;
+
+        this.paragraphList[index].comment = this.addOwnClauseParagraphCommentInfo;
       }
-      this.addClauseParagraphINIT = false;
-      this.addOwnClauseParagraphComment = "";
-      this.isClauseComment = false; // IMPORTANT
+      this.addInfoINIT = false;
+      this.addOwnClauseParagraphCommentInfo = "";
+      this.isClauseInfo = false; // IMPORTANT
+      this.isParagraphInfo = false; // IMPORTANT
     },
     addNewClause() {
       let ownClauseTitle = this.ownClauseTitle;
@@ -1108,24 +1052,27 @@ export default {
       this.testData = collection;
     },
     tryCLD() {
-      console.log(this.previewSignature2);
+      console.log(this.holderTemp1);
+      // let uri =
+      //   "data:image/gif;base64,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";
 
-      axios
-        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
-          file: this.previewSignature2,
-          upload_preset: this.cloudSigPath
-        })
-        .then(response => {
-          console.log(response.data.docs);
-          console.log(response.data);
-          console.log(response.status);
-          console.log(response.headers);
-        })
-        .catch(error => {
-          console.log(error);
-          console.log(error.response);
-          console.log(error.response.data);
-        });
+      // axios
+      //   .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+      //     file: uri,
+      //     upload_preset: this.cloudSigPath
+      //   })
+      //   .then(response => {
+      //     console.log(response.data.docs);
+      //     console.log(response.data);
+      //     console.log(response.data.secure_url);
+      //     console.log(response.status);
+      //     console.log(response.headers);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     console.log(error.response);
+      //     console.log(error.response.data);
+      //   });
     }
   },
   watch: {
@@ -1142,7 +1089,7 @@ export default {
           this.loadingSend = true;
 
           setTimeout(() => {
-            // this.$router.push("/docs/more/" + val);
+            this.$router.push("/docs/more/" + val);
             // console.log("To MORE Page");
             this.loadingSend = false;
           }, this.$store.state.snackBarDuration);
@@ -1150,7 +1097,7 @@ export default {
           this.loadingContinue = true;
 
           setTimeout(() => {
-            // this.$router.push("/docs/edit/" + val);
+            this.$router.push("/docs/edit/" + val);
             // console.log("To EDIT Page");
             this.loadingContinue = false;
           }, this.$store.state.snackBarDuration);
@@ -1212,8 +1159,9 @@ export default {
     "back-nav": Back_Navbar,
     "general-footer": General_Footer,
     "products-footer": Products_Footer,
-    // "v-runtime-template": VRuntimeTemplate
     "append-signature": Append_Signature
+
+    // "v-runtime-template": VRuntimeTemplate
   },
   computed: {
     ...mapState([

@@ -10,7 +10,8 @@
 
         <div>
           <div class="settings-tab-parent">
-            <p class="text-center mt-10" v-if="!storedUserDetails.email">
+            <!-- <p class="text-center mt-10" v-if="storedUserDetails.email"> -->
+            <!-- <p class="text-center mt-10">
               Loading.....
               <v-text-field
                 style="width: 40%; margin: 0 auto;"
@@ -18,13 +19,14 @@
                 loading
                 disabled
               ></v-text-field>
-            </p>
-            <v-tabs
+            </p> -->
+            <!-- <v-tabs
               fixed-tabs
               class="settings-tab py-5"
               height="90"
-              v-if="storedUserDetails.email"
-            >
+              v-if="!storedUserDetails.email"
+            > -->
+            <v-tabs fixed-tabs class="settings-tab py-5" height="90">
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start first-title settings-tab-title"
                 >Profile</v-tab
@@ -37,6 +39,7 @@
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
                 >Card</v-tab
               >
+              <!-- Profile -->
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
@@ -54,46 +57,44 @@
                           </p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex align-center">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            name="profilePicture"
-                            style="display: none;"
-                            ref="profilePicker"
-                            @change="onProfilePicturePicked"
-                          />
-                          <v-tooltip top>
-                            <template v-slot:activator="{ on }">
-                              <div
-                                v-on="on"
-                                title="Change Image"
-                                :style="{
-                                  backgroundImage:
-                                    'url(' + previewProfileImage + ')'
-                                }"
-                                id="previewProfilePicture"
-                                @click="onProfilePicturePick"
-                              >
-                                <span
-                                  v-if="!previewProfileImage"
-                                  id="no-avatar"
-                                ></span>
-                                <!-- <div
-                                  v-if="storedUserDetails.profilePicture.url"
-                                  :style="{
-                                    backgroundImage:
-                                      'url(' +
-                                      storedUserDetails.profilePicture.url +
-                                      ')'
-                                  }"
-                                  id="avatar"
-                                ></div> -->
-                                <span v-if="previewProfileImage2">VIEW</span>
-                              </div>
-                            </template>
-                            <span>Profile Picture</span>
-                          </v-tooltip>
+                          <div class="uploadItemParent">
+                            <image-uploader
+                              id="profilePicture"
+                              :preview="false"
+                              :maxSize="0.2"
+                              :className="[
+                                'fileinput',
+                                { 'fileinput--loaded': profileHasImage }
+                              ]"
+                              capture="environment"
+                              :debug="1"
+                              doNotResize="gif"
+                              :autoRotate="true"
+                              outputFormat="verbose"
+                              @input="setProfileImage"
+                            >
+                              <label for="profilePicture" slot="upload-label">
+                                <figure>
+                                  <div
+                                    class="uploadItem profileImageHolder"
+                                    :style="{
+                                      backgroundImage:
+                                        'url(' + profilePicture + ')'
+                                    }"
+                                  ></div>
+                                </figure>
+                              </label>
+                            </image-uploader>
+                          </div>
+                          <!-- <div
+                            class="profileImageHolder"
+                            :style="{
+                              backgroundImage: 'url(' + profilePicture + ')'
+                            }"
+                          ></div> -->
                           <v-btn
+                            :loading="updateProfileLoader"
+                            :disabled="profilePicture == null"
                             class="ml-12 accent"
                             @click="uploadProfilePicture"
                           >
@@ -116,35 +117,38 @@
                           </p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex align-center">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            name="profilePicture"
-                            style="display: none;"
-                            ref="companyLogoPicker"
-                            @change="onCompanyLogoPicked"
-                          />
-                          <v-tooltip top>
-                            <template v-slot:activator="{ on }">
-                              <div
-                                v-on="on"
-                                title="Chnage Image"
-                                :style="{
-                                  backgroundImage:
-                                    'url(' + previewCompanyLogo + ')'
-                                }"
-                                id="previewCompanyLogo"
-                                @click="onCompanyLogoPick"
-                              >
-                                <span
-                                  v-if="!previewCompanyLogo"
-                                  id="no-avatar"
-                                ></span>
-                              </div>
-                            </template>
-                            <span>Company Logo</span>
-                          </v-tooltip>
+                          <div class="uploadItemParent">
+                            <image-uploader
+                              id="companyLogo"
+                              :preview="false"
+                              :maxSize="0.2"
+                              :className="[
+                                'fileinput',
+                                { 'fileinput--loaded': companyHasImage }
+                              ]"
+                              capture="environment"
+                              :debug="1"
+                              doNotResize="gif"
+                              :autoRotate="true"
+                              outputFormat="verbose"
+                              @input="setCompanyLogo"
+                            >
+                              <label for="companyLogo" slot="upload-label">
+                                <figure>
+                                  <div
+                                    class="uploadItem companyLogoHolder"
+                                    :style="{
+                                      backgroundImage:
+                                        'url(' + companyLogo + ')'
+                                    }"
+                                  ></div>
+                                </figure>
+                              </label>
+                            </image-uploader>
+                          </div>
                           <v-btn
+                            :loading="companyLogoLoading"
+                            :disabled="companyLogo == null"
                             class="ml-12 accent"
                             @click="uploadCompanyLogo"
                           >
@@ -229,7 +233,6 @@
                         </v-col>
                         <v-col cols="12" sm="8">
                           <v-menu
-                            v-model="menu1"
                             :close-on-content-click="false"
                             max-width="290"
                           >
@@ -290,8 +293,8 @@
                           >
                             Update Profile
                           </v-btn>
-                          <v-snackbar
-      class="snackbar"
+                          <!-- <v-snackbar
+                            class="snackbar"
                             :color="updatedSnackbar.color"
                             top
                             right
@@ -307,13 +310,15 @@
                             >
                               <b>x</b>
                             </v-btn>
-                          </v-snackbar>
+                          </v-snackbar> -->
                         </v-col>
                       </v-row>
                     </v-form>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+
+              <!-- Account -->
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
@@ -393,36 +398,35 @@
                           </p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex align-center">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            name="profilePicture"
-                            style="display: none;"
-                            ref="signaturePicker"
-                            @change="onSignaturePicked"
-                          />
-                          <v-tooltip top>
-                            <template v-slot:activator="{ on }">
-                              <div
-                                v-on="on"
-                                title="Chnage Image"
-                                :style="{
-                                  backgroundImage:
-                                    'url(' + previewUserSignature + ')'
-                                }"
-                                id="previewUserSignature"
-                                @click="onSignaturePick"
-                              >
-                                <span
-                                  v-if="!previewUserSignature"
-                                  id="no-signature"
-                                  >No Signature <br />
-                                  Click to append</span
-                                >
-                              </div>
-                            </template>
-                            <span>Your Signature</span>
-                          </v-tooltip>
+                          <div class="uploadItemParent">
+                            <image-uploader
+                              id="userSignature"
+                              :preview="false"
+                              :maxSize="0.2"
+                              :className="[
+                                'fileinput',
+                                { 'fileinput--loaded': companyHasImage }
+                              ]"
+                              capture="environment"
+                              :debug="1"
+                              doNotResize="gif"
+                              :autoRotate="true"
+                              outputFormat="verbose"
+                              @input="setUserSignature"
+                            >
+                              <label for="userSignature" slot="upload-label">
+                                <figure>
+                                  <div
+                                    class="uploadItem userSignatureHolder"
+                                    :style="{
+                                      backgroundImage:
+                                        'url(' + userSignature + ')'
+                                    }"
+                                  ></div>
+                                </figure>
+                              </label>
+                            </image-uploader>
+                          </div>
                           <v-btn
                             class="ml-12 accent"
                             @click="uploadUserSignature"
@@ -438,6 +442,12 @@
 
               <!-- Card Tab -->
               <v-tab-item class="transparent legalbox-body-text">
+                <v-tabs class="paymentChildren">
+                  <v-tab class="text-capitalize">Bank Accounts</v-tab>
+                  <v-tab class="text-capitalize">Cards</v-tab>
+                  <v-tab-item>a</v-tab-item>
+                  <v-tab-item>b</v-tab-item>
+                </v-tabs>
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
                     <v-form>
@@ -547,20 +557,36 @@ import parseISO from "date-fns/parseISO";
 // import VImageInput from "vuetify-image-input";
 import axios from "axios";
 
+import $ from "jquery"; //import jQuery
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+      profileHasImage: false,
+      companyHasImage: false,
+      UserSignatureHasImage: false,
+      // currentProfilePicture: this.storedUserDetails.profilePicture.url,
+      image: null,
+      clearable: false,
+      cloudName: process.env.VUE_APP_cloudinary_cloudName,
+      cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
+      companyLogoLoading: false,
       updateProfileLoader: false,
-      currentProfileImage: this.storedUserDetails.profilePicture.url,
-      previewProfileImage: null,
-      previewProfileImage2: null,
       previewCompanyLogo: null,
       previewUserSignature: null,
+      isSrofilePictureSet: false,
+      isProfilePictureSetDATA:
+        "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
+      fetchProfilePictureFromServer:
+        "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
+      newSelectedProfilePicture: null,
       profilePicture: null,
+      profilePictureDATA: {},
+      profilePictureCloudinaryData: null,
       companyLogo: null,
       userSignature: null,
+      companyLogoDATA: {},
       profileData: {
         firstName: "",
         lastName: "",
@@ -579,7 +605,7 @@ export default {
       show1: false,
       show2: false,
       show3: false,
-      image: "",
+      // image: "",
       rules: {
         required: value => !!value || "Required.",
         imgValidation: value =>
@@ -607,144 +633,160 @@ export default {
     };
   },
   methods: {
-    onProfilePicturePick() {
-      this.$refs.profilePicker.click();
+    setProfileImage: function(output) {
+      this.profileHasImage = true;
+      this.profilePicture = output.dataUrl;
+      this.image = output;
+      console.log("data", output.dataUrl);
+      console.log("Info", output.info);
+      console.log("Exif", output.exif);
     },
-    onProfilePicturePicked(event) {
-      if (event) {
-        let previewer = event.target.files;
-        if (!previewer.length) return;
-        this.imagePreviewer(previewer[0]);
-      }
+    setCompanyLogo: function(output) {
+      this.companyHasImage = true;
+      this.companyLogo = output.dataUrl;
+      this.image = output;
+      console.log("data", output.dataUrl);
+      console.log("Info", output.info);
+      console.log("Exif", output.exif);
     },
-    imagePreviewer(previewer) {
-      // eslint-disable-next-line no-unused-vars
-      let image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = e => {
-        vm.previewProfileImage = e.target.result;
-      };
-      reader.readAsDataURL(previewer);
+    setUserSignature: function(output) {
+      this.UserSignatureHasImage = true;
+      this.userSignature = output.dataUrl;
+      this.image = output;
+      console.log("data", output.dataUrl);
+      console.log("Info", output.info);
+      console.log("Exif", output.exif);
     },
+    showStoredUserDetails() {
+      let newObj = JSON.parse(JSON.stringify(this.storedUserDetails));
+      console.log(newObj);
+      console.log(this.storedUserDetails);
+    },
+    // Profile image
     uploadProfilePicture() {
-      console.log("INIT");
-      let formData = new FormData();
-      this.profilePicture = this.$refs.profilePicker.files[0];
+      this.updateProfileLoader = true;
 
-      if (this.profilePicture) {
-        // for (let file in this.profilePicture) {
-        //   formData.append("profilePicture", file);
-        // }
-        formData.append("profilePicture", this.profilePicture);
+      if (this.profilePicture == null) {
+        this.updateProfileLoader = false;
+        return alert("Breakout");
+      }
+      console.log("Dont Breakout");
 
-        // this.$store.dispatch("uploadProfilePicture", {});
+      axios
+        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+          tags: "user avatar",
+          file: this.profilePicture,
+          upload_preset: this.cloudSigPath
+        })
+        .then(response => {
+          this.profilePictureDATA.url = response.data.secure_url;
+          this.profilePictureDATA.createdAt = response.data.created_at;
+          this.profilePictureDATA.id = response.data.public_id;
+          console.log(response.data);
+          console.log(response.data.secure_url);
+          console.log(response.status);
+          console.log(response.headers);
 
-        console.log(formData.getAll("profilePicture"));
-        console.log(this.profilePicture);
-        console.log(this.previewProfileImage);
-        axios
-          .put("/api/v1/user/update", formData, {
+          // Upload REPONSE to server
+          this.sendProfilePictureToServer();
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          this.updateProfileLoader = false;
+        });
+    },
+    sendProfilePictureToServer() {
+      console.log("profilePictureDATA", this.profilePictureDATA);
+      axios
+        .put(
+          "/api/v1/user/update",
+          { profilePicture: this.profilePictureDATA },
+          {
             headers: {
               Authorization: this.$store.state.token,
-              "Content-Type": "multipart/form-data"
+              "Content-Type": "application/json"
             }
-          })
-          .then(response => {
-            console.log("Success!");
-            console.log({ response });
-          })
-          .catch(error => {
-            console.log({ error });
-            console.log(error.response);
-            console.log(error.response.data);
-            console.log(error.response.status);
-          });
-      } else {
-        console.log("there are no files.");
-      }
+          }
+        )
+        .then(response => {
+          console.log("Profile Picture successfully sent to server!");
+          console.log({ response });
+
+          this.profilePicture = null;
+          this.updateProfileLoader = false;
+        })
+        .catch(error => {
+          console.log({ error });
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          this.updateProfileLoader = false;
+        });
     },
     // COMPANY LOGO UPLOAD
-    onCompanyLogoPick() {
-      this.$refs.companyLogoPicker.click();
-    },
-    onCompanyLogoPicked(event) {
-      if (event) {
-        let previewer = event.target.files;
-        if (!previewer.length) return;
-        this.companyLogoPreviewer(previewer[0]);
-      }
-    },
-    companyLogoPreviewer(previewer) {
-      // eslint-disable-next-line no-unused-vars
-      let image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = e => {
-        vm.previewCompanyLogo = e.target.result;
-      };
-      reader.readAsDataURL(previewer);
-    },
     uploadCompanyLogo() {
-      let formData = new FormData();
-      this.companyLogo = this.$refs.companyLogoPicker.files[0];
+      this.companyLogoLoading = true;
 
-      if (this.companyLogo) {
-        // for (let file in this.profilePicture) {
-        //   formData.append("profilePicture", file);
-        // }
-        formData.append("companyLogo", this.companyLogo);
-
-        // this.$store.dispatch("uploadProfilePicture", {});
-
-        console.log(formData.getAll("profilePicture"));
-        console.log(this.companyLogo);
-        console.log(this.previewCompanyLogo);
-        // axios
-        //   .put("/api/v1/user/update", formData, {
-        //     headers: {
-        //       Authorization: this.$store.state.token,
-        //       "Content-Type": "multipart/form-data"
-        //     }
-        //   })
-        //   .then(response => {
-        //     console.log("Success!");
-        //     console.log({ response });
-        //   })
-        //   .catch(error => {
-        //     console.log({ error });
-        //     console.log(error.response);
-        //     console.log(error.response.data);
-        //     console.log(error.response.status);
-        //   });
-      } else {
-        console.log("there are no files.");
+      if (this.companyLogo == null) {
+        this.companyLogoLoading = false;
+        return alert("Breakout");
       }
+      console.log("Dont Breakout");
+
+      axios
+        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+          tags: "company logo",
+          file: this.companyLogo,
+          upload_preset: this.cloudSigPath
+        })
+        .then(response => {
+          this.companyLogoDATA.url = response.data.secure_url;
+          this.companyLogoDATA.createdAt = response.data.created_at;
+          this.companyLogoDATA.id = response.data.public_id;
+          console.log(response.data);
+          console.log(response.data.secure_url);
+          console.log(response.status);
+          console.log(response.headers);
+
+          // Upload REPONSE to server
+          this.sendCompanyLogoToServer();
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          this.companyLogoLoading = false;
+        });
+    },
+    sendCompanyLogoToServer() {
+      console.log("profilePictureDATA", this.profilePictureDATA);
+      axios
+        .put(
+          "/api/v1/user/update",
+          { companyLogo: this.companyLogoDATA },
+          {
+            headers: {
+              Authorization: this.$store.state.token,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          console.log("Company Logo successfully sent to server!");
+          console.log({ response });
+
+          this.companyLogo = null;
+          this.companyLogoLoading = false;
+        })
+        .catch(error => {
+          console.log({ error });
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          this.companyLogoLoading = false;
+        });
     },
     // User Signature
-    onSignaturePick() {
-      this.$refs.signaturePicker.click();
-    },
-    onSignaturePicked(event) {
-      if (event) {
-        let previewer = event.target.files;
-        if (!previewer.length) return;
-        this.signaturePreviewer(previewer[0]);
-      }
-    },
-    signaturePreviewer(previewer) {
-      // eslint-disable-next-line no-unused-vars
-      let image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = e => {
-        vm.previewUserSignature = e.target.result;
-      };
-      reader.readAsDataURL(previewer);
-    },
     uploadUserSignature() {
       let formData = new FormData();
       this.companyLogo = this.$refs.signaturePicker.files[0];
@@ -810,8 +852,21 @@ export default {
       ["storedUserDetails", "profileUpdated", "successMessage"],
       ["token"]
     )
+    // currentProfilePicture() {
+    //   let currentProfilePicture = this.storedUserDetails.profilePicture.url;
+    //   console.log(currentProfilePicture);
+    //   return currentProfilePicture;
+    // }
   },
   watch: {
+    newSelectedProfilePicture(val) {
+      if (val.length > 1) {
+        $(".changeImageDecoyWrapper");
+        $(".changeImageDecoyWrapper").hide();
+
+        this.isProfilePictureSetDATA = this.newSelectedProfilePicture;
+      }
+    },
     successMessage(updateStatus) {
       // If profile update have a minimum of 1 valid successful submission
       if (updateStatus === "success") {
@@ -858,12 +913,21 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("getUserDetails").then(() => {});
+    this.$store.dispatch("getUserDetails").then(() => {
+      // alert(this.storedUserDetails);
+    });
   },
   mounted() {
-    // console.log(this.successMessage);
-    // let newObj = JSON.parse(JSON.stringify(this.storedUserDetails));
-    // console.log(newObj);
+    // this.showStoredUserDetails();
+    // console.log(this.currentProfilePicture);
+    // if (
+    //   this.currentProfilePicture === undefined ||
+    //   this.currentProfilePicture.length <= 1
+    // ) {
+    //   console.log("profilePicture is null");
+    // } else {
+    //   console.log(this.currentProfilePicture);
+    // }
   },
   components: {
     "back-nav": Back_Navbar,
@@ -874,6 +938,23 @@ export default {
 </script>
 
 <style scoped>
+.avatar {
+  border-radius: 100px;
+}
+
+.serverAvatar {
+  /* position: relative; */
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  transition: ease-in-out;
+}
+
+/* ============= */
 :required {
   background: red;
 }

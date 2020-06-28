@@ -13,7 +13,7 @@ export default new Vuex.Store({
     loginErrorMessage: "",
     signUpSuccessStatus: "",
     profileUpdated: false,
-    userDetailsReady: false,
+    userDetailsReady: "",
     successMessage: "",
     documentSavedMessage: "",
     invalidSubmission: {
@@ -1686,6 +1686,9 @@ export default new Vuex.Store({
     },
     // Fetch user details
     getUserDetails({ commit }) {
+      // Set status of USER DETAILS to PENDING at the beginnning of each fetch (Page refresh)
+      // If status is pending, Page Loader should run
+      this.state.userDetailsReady = "pending";
       axios
         .get("/api/v1/user/userdash", {
           headers: { Authorization: this.state.token }
@@ -1693,12 +1696,22 @@ export default new Vuex.Store({
         .then(response => {
           // if (response.data) {}
           commit("retrieveUserDetails", response.data.data);
+          console.log(this.state.token);
+
+
+          // Set state of USER DETAILS  to True
+          this.state.userDetailsReady = true;
+
           // console.log(response.data);
           // console.log(response.status);
           // console.log(response.headers);
           // return response.data.data;
         })
         .catch(error => {
+          // Set state of USER DETAILS  to False
+          // Fallback error screen should activate
+          this.state.userDetailsReady = false;
+
           console.log(error);
           console.log(error.response);
           console.log(error.response.data);

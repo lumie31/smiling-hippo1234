@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import IMG from "../components/imgPond";
 import Home from "../views/Home.vue";
 import pageNotFound from "../views/404.vue";
 import test from "../views/test";
@@ -113,6 +114,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home
+  },
+  {
+    path: "/img",
+    name: "img",
+    component: IMG
   },
   {
     path: "*",

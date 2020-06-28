@@ -1,6 +1,17 @@
 <template>
   <div>
-    <div v-if="userDetailsReady" class="loader"></div>
+    <!-- <div v-if="pageLoader" class="loader"></div>
+
+    <v-dialog
+      v-model="fallbackError"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="fallbackError">
+        <v-container></v-container>
+      </v-card>
+    </v-dialog> -->
     <nav>
       <v-toolbar height="200" class="nav-tool back-nav" elevation="3 ">
         <router-link to="/dashboard">
@@ -89,12 +100,70 @@
         </div>
       </v-toolbar>
     </nav>
+    <v-container
+      class="EmailNotActivated .width80-center"
+      v-if="!storedUserDetails.isActivated"
+    >
+      <v-alert prominent type="error">
+        <v-row align="center">
+          <v-col class="grow text-center">
+            Your account has not been activated. Please verify your account to
+            avoid stories that touch in future.
+          </v-col>
+          <v-col class="shrink">
+            <v-btn @click="toReset = true">Verify Email</v-btn>
+          </v-col>
+        </v-row>
+      </v-alert>
+
+      <v-dialog
+        v-model="toReset"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <v-toolbar dark color="secondary text-right">
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="toReset = false">
+            <v-icon x-large>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-card class="d-flex flex-column align-center justify-center">
+          <!-- <v-container class="l-hero d-flex align-center justify-center mb-10">
+            <router-link to="/">
+              <img width="420" alt="Legalbox logo" src="@/assets/logo.svg" />
+            </router-link>
+          </v-container> -->
+
+          <v-container class="d-flex flex-column align center">
+            <h2 class="py-7 text-center display-2 secondary--text">
+              Check your Email
+            </h2>
+            <div class="width50-center text-center body-1 accent--text">
+              <p>
+                To get started with your account, please check your email for a
+                validation request. Within the email you will find a link which
+                you must click in order to activate your account.
+              </p>
+              <p>
+                <b>
+                  If the email doesn't appear shortly, please be sure to check
+                  your spam / junk mail folder. Some anti-spam filters modify
+                  the email, so first copy any spam message to your inbox before
+                  clicking the link.
+                </b>
+              </p>
+            </div>
+          </v-container>
+        </v-card>
+      </v-dialog>
+    </v-container>
 
     <v-container id="user-hero" class="secondary white--text py-5 px-12">
       <v-row>
         <v-col col="12" sm="4">
           <p class="display-1">
-            <span v-if="!userDetailsReady">sdscccd</span>
+            <span v-if="!userDetailsReady"></span>
             {{ storedUserDetails.firstName }}
             <br />{{ storedUserDetails.lastName }}
           </p>
@@ -126,14 +195,30 @@
         <v-col col="2" class="d-flex justify-end align-start">
           <!-- <span>3</span> -->
           <!-- <v-icon dark small class="mt-1">star_border</v-icon> -->
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn id="addDoc" color="accent" dark v-on="on">
-                <v-icon dark x-large>post_add</v-icon>
-              </v-btn>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on: menu, attrs }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-btn
+                    id="addDoc"
+                    color="accent"
+                    v-bind="attrs"
+                    v-on="{ ...tooltip, ...menu }"
+                  >
+                    <img src="@/assets/quickMenu.png" width="40" />
+                  </v-btn>
+                </template>
+                <span>Quick Menu</span>
+              </v-tooltip>
             </template>
-            <span>Add New Document</span>
-          </v-tooltip>
+            <v-list>
+              <v-list-item v-for="(menu, index) in quickMenu" :key="index">
+                <router-link :to="menu.link">
+                  <v-list-item-title>{{ menu.name }}</v-list-item-title>
+                </router-link>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-col>
       </v-row>
     </v-container>
@@ -147,10 +232,18 @@ import axios from "axios";
 export default {
   data() {
     return {
+      toReset: false,
       //data components below
       user: this.$store.state.storedUserDetails,
-      userDetailsReady: true,
+      quickMenu: [
+        { name: "Create Receipt", link: "/dashboard" },
+        { name: "Create Invoice", link: "/dashboard" },
+        { name: "Tax Calculator", link: "/dashboard" },
+        { name: "Regulatory Updates", link: "/dashboard" }
+      ],
       searchDocument: "",
+      pageLoader: true,
+      fallbackError: false,
       typing: false,
       noResultFound: false,
       docss: [],
@@ -169,6 +262,28 @@ export default {
         console.log("code gets to this stage");
         this.$router.push("/login");
       });
+    },
+    verifyEmail() {
+      axios
+        .post("/api/v1/activate/" + this.email)
+        .then(response => {
+          this.resetSuccesful = true;
+
+          console.log(response);
+          console.log(response.data);
+          console.log(response.status);
+
+          this.loading = false;
+        })
+        .catch(error => {
+          this.resetNotSuccesful = true;
+
+          console.log(error);
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          this.loading = false;
+        });
     }
   },
   computed: {
@@ -177,6 +292,7 @@ export default {
     },
     ...mapState([
       "storedUserDetails",
+      "userDetailsReady",
       "getUserDetailsStatusCode",
       "userDocuments"
     ]),
@@ -200,9 +316,9 @@ export default {
   },
   created() {
     this.$store.dispatch("getUserDetails").then(() => {
-      setTimeout(() => {
-        this.userDetailsReady = false;
-      }, 0);
+      // setTimeout(() => {
+      //   this.userDetailsReady = false;
+      // }, 500);
     });
     axios
       .get("/api/v1/doc/userdocs", {
@@ -221,18 +337,46 @@ export default {
         console.log(error.response.data);
         console.log(error.response.status);
       });
+
+    axios.interceptors.request.use(
+      config => {
+        this.setLoading(true);
+        return config;
+      },
+      error => {
+        this.setLoading(false);
+        return Promise.reject(error);
+      }
+    );
+
+    axios.interceptors.response.use(
+      response => {
+        this.setLoading(false);
+        return response;
+      },
+      error => {
+        this.setLoading(false);
+        return Promise.reject(error);
+      }
+    );
   },
   watch: {
-    // userDetailsReady(val) {
-    //   if (val === true) {
-    //     setTimeout(() => {
-    //       this.userDetailsReady = false;
-    //     }, 0);
-    //   }
-    // },
+    // Check for Change state of USER DETAILS fetch
     userDetailsReady(val) {
       if (val === true) {
-        this.userDetailsReady = false;
+        // Close loader if user USER DETAILS has sucessfully fetched
+        this.pageLoader = false;
+      } else if (val === false) {
+        console.log("WATCH Ran!!");
+        
+        // Activate fallback view if fetch states ever "CHANGES" USER DETAILS ever fails
+        // If state was FALSE before (connection returns), code will not run
+        this.fallbackError = true;
+        // setTimeout(() => {
+        //   this.fallbackError = true;
+        // }, 500);
+        console.log("SHOW LOADER");
+        this.pageLoader = true;
       }
     },
     searchDocument(newVal) {
@@ -251,7 +395,16 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+    this.pageLoader = this.userDetailsReady;
+    if (this.userDetailsReady == "pending") {
+      this.pageLoader = true;
+    } else if (this.userDetailsReady == false) {
+      console.log("I ran");
+      
+      this.fallbackError = true;
+    }
+  }
 };
 </script>
 
@@ -261,12 +414,26 @@ export default {
 }
 .loader {
   content: "";
-  z-index: 9999999999999;
+  z-index: 9;
   position: fixed;
   display: block;
   width: 100%;
   height: 100%;
   background: url(../assets/loader.gif);
+  background-position: center;
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-color: #fff;
+}
+/* For when USER DETAILS load ever fails */
+.fallbackError {
+  content: "";
+  z-index: 9999999999 !important;
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/fallbackError.png);
   background-position: center;
   background-size: 30%;
   background-repeat: no-repeat;

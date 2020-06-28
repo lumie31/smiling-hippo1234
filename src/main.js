@@ -6,7 +6,8 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 window.$ = window.jQuery = require("jquery"); //import JQuery
-import VImageInput from "vuetify-image-input";
+import VImageInput from "vuetify-image-input/a-la-carte";
+import ImageUploader from "./plugins/ImageUploader";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import Cloudinary from "./plugins/cloudinary";
 
@@ -70,6 +71,7 @@ new Vue({
   store,
   vuetify,
   VImageInput,
+  ImageUploader,
   Cloudinary,
   render: h => h(App)
 }).$mount("#app");
