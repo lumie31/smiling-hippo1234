@@ -1698,7 +1698,6 @@ export default new Vuex.Store({
           commit("retrieveUserDetails", response.data.data);
           console.log(this.state.token);
 
-
           // Set state of USER DETAILS  to True
           this.state.userDetailsReady = true;
 

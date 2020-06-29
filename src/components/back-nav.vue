@@ -368,7 +368,7 @@ export default {
         this.pageLoader = false;
       } else if (val === false) {
         console.log("WATCH Ran!!");
-        
+
         // Activate fallback view if fetch states ever "CHANGES" USER DETAILS ever fails
         // If state was FALSE before (connection returns), code will not run
         this.fallbackError = true;
@@ -401,7 +401,7 @@ export default {
       this.pageLoader = true;
     } else if (this.userDetailsReady == false) {
       console.log("I ran");
-      
+
       this.fallbackError = true;
     }
   }

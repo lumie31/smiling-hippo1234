@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-content>
+    <v-main>
       <router-view></router-view>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     //
   }),
   mounted() {
-    // console.log = function() {};
+    console.log = function() {};
     console.log("Populating dropdown with cities"); // prints nothing
   }
 };

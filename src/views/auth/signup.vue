@@ -209,8 +209,7 @@ export default {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
-
+      confirmPassword: ""
     };
   },
   methods: {
