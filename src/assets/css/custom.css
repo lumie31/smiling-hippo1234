@@ -501,8 +501,6 @@ a{
 }
 
 /* Settings Tab */
-.settings-tab-card{
-}
 .settings-tab .v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text{
     background: rgb(209, 205, 205);
 }
@@ -599,9 +597,6 @@ input.receiptFigures-inputs[type="button"]{
 
 .paraClauseHolder{
     width: 80% !important;
-}
-.paraCheck {
-    /* float: left; */
 }
 input[type=checkbox] {
     transform: scale(1.5);
@@ -716,9 +711,6 @@ input#companyLogo,
     background-size: 7%;
 }
 
-.changeImageParent{
-    /* position: relative; */
-}
 .changeImageDecoyWrapper {
     height: 100% !important;
     width: 100% !important;
@@ -727,9 +719,6 @@ input#companyLogo,
     background-color: rgba(51, 51, 51, 0.653) !important;
 }
 
-.changeImageDecoy {
-    /* opacity: 0.1; */
-}
 
 /* .serverAvatar:hover .changeImageDecoyWrapper {
     display: block !important;

@@ -720,7 +720,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      holderTemp1: "https://res.cloudinary.com/djw3g8meb/image/upload/v1593167822/fga2wjubbghorprszstp.gif",
+      holderTemp1:
+        "https://res.cloudinary.com/djw3g8meb/image/upload/v1593167822/fga2wjubbghorprszstp.gif",
       cloudName: process.env.VUE_APP_cloudinary_cloudName,
       cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
       testData: "",
@@ -928,7 +929,6 @@ export default {
       this.addClauseParagraphINDEX = index;
       console.log("index", index);
       console.log("proto", this.addClauseParagraphINDEX);
-      
     },
     addClauseParagraphComment() {
       let index = this.addClauseParagraphINDEX;
@@ -939,7 +939,9 @@ export default {
         this.clauseList[index].comment = this.addOwnClauseParagraphCommentInfo;
       } else if (this.isParagraphComment === true) {
         console.log("Paragraph");
-        this.paragraphList[index].comment = this.addOwnClauseParagraphCommentInfo;
+        this.paragraphList[
+          index
+        ].comment = this.addOwnClauseParagraphCommentInfo;
       }
       this.addCommentINIT = false;
       this.addOwnClauseParagraphCommentInfo = "";
@@ -950,7 +952,6 @@ export default {
       this.addInfoINIT = true;
       this.addClauseParagraphINDEX = index;
       console.log(this.isClauseInfo);
-      
     },
     addClauseParagraphInfo() {
       let index = this.addClauseParagraphINDEX;
@@ -963,7 +964,9 @@ export default {
         // check if it was paragraph's info button that was clicked
         console.log("Paragraph");
 
-        this.paragraphList[index].comment = this.addOwnClauseParagraphCommentInfo;
+        this.paragraphList[
+          index
+        ].comment = this.addOwnClauseParagraphCommentInfo;
       }
       this.addInfoINIT = false;
       this.addOwnClauseParagraphCommentInfo = "";

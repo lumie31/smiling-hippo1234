@@ -11,10 +11,10 @@
       <!-- Section 1 -->
       <v-container>
         <v-row>
-          <v-col cols="12" sm="5" class="about-lady d-flex justify-center">
+          <v-col cols="12" sm="5" class="about-lady d-flex justify-center pb-0">
             <div id="lady-decoy"></div>
             <img
-              src="../assets/about-lady.png"
+              src="../assets/about.gif"
               alt="smiling lady with tape rule"
               width="370"
             />
@@ -23,11 +23,11 @@
           <v-col cols="12" sm="7">
             <v-card flat color="transparent">
               <v-card-text>
-                <h2>
+                <h2 class="display-1">
                   We are providing simple legal solutions and collections for
                   everyday transactions and business.
                 </h2>
-                <p>
+                <p class="body-1">
                   We see small businesses grow, scale and become all they dream
                   about. We see them using our solutions on their journey to
                   greatness. We see them build strong and healthy business

@@ -240,9 +240,7 @@
                 ></v-text-field>
 
                 <div class="d-flex align-start justify-center">
-                  <label
-                    class="overline d-flex align-center"
-                  >
+                  <label class="overline d-flex align-center">
                     <input
                       type="radio"
                       class="mr-1"
@@ -616,7 +614,6 @@ export default {
 
         console.log("Re-Route");
         if (this.andContinueValidator === "redirectMe") {
-
           this.loadingSend = true;
 
           setTimeout(() => {
