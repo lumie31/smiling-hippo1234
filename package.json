@@ -62,6 +62,7 @@
   "eslintConfig": {
     "rules": {
       "no-console": "off"
-    }
+    },
+    "resolutions": { "eslint-loader": "2.1.2" }
   }
 }
