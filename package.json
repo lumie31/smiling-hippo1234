@@ -63,10 +63,8 @@
     "env": {
       "node": true
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
+    "extends": 
+      "eslint:recommended",
     "rules": {
         "no-console": "off"
     },
