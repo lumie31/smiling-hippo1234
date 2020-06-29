@@ -21,7 +21,6 @@
     "jquery": "^3.5.1",
     "material-icons": "^0.3.1",
     "register-service-worker": "^1.7.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.6.10",
     "vue-avatar-editor-improved": "^1.0.5",
@@ -62,7 +61,6 @@
   "eslintConfig": {
     "rules": {
       "no-console": "off"
-    },
-    "resolutions": { "eslint-loader": "2.1.2" }
+    }
   }
 }
