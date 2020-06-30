@@ -14,6 +14,7 @@ export default new Vuex.Store({
     signUpSuccessStatus: "",
     profileUpdated: false,
     userDetailsReady: "",
+    storedUserSignature: "",
     successMessage: "",
     documentSavedMessage: "",
     invalidSubmission: {
@@ -1696,7 +1697,9 @@ export default new Vuex.Store({
         .then(response => {
           // if (response.data) {}
           commit("retrieveUserDetails", response.data.data);
-          console.log(this.state.token);
+          // console.log(this.state.token);
+
+          this.state.storedUserSignature = response.data.data.companyLogo.url;
 
           // Set state of USER DETAILS  to True
           this.state.userDetailsReady = true;

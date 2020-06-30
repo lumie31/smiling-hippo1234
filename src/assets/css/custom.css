@@ -650,10 +650,7 @@ input[type=checkbox] {
 
 
 /* Image Uploader */
-#fileInput,
-input#profilePicture,
-input#companyLogo,
-#userSignature {
+.uploadItemParent input[type="file"] {
     display: none;
 }
 

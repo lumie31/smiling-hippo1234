@@ -36,16 +36,6 @@
           ></v-text-field>
           <div class="backPageSearchResult" v-if="typing">
             <ul class="backPageSearchResultPARENT">
-              <!-- <li
-                class="searchList"
-                v-for="(doc, index) in sample"
-                :key="index"
-              >
-                <b>{{ doc.title }}</b> : {{ doc.category }}
-                <span class="searchStatus" style="float: right;">{{
-                  doc.status
-                }}</span>
-              </li> -->
               <li
                 class="searchList"
                 v-for="(doc, index) in filteredDocumentResult"
@@ -246,14 +236,7 @@ export default {
       fallbackError: false,
       typing: false,
       noResultFound: false,
-      docss: [],
-      sample: [
-        { name: "John", age: 30, car: null },
-        { name: "Kunle", age: 40, car: null },
-        { name: "Busa", age: 70, car: null },
-        { name: "Mary", age: 80, car: null },
-        { name: "Wolapo", age: 10, car: null }
-      ]
+      docss: []
     };
   },
   methods: {

@@ -33,8 +33,7 @@
     "vue-uuid": "^2.0.2",
     "vuetify": "^2.3.2",
     "vuetify-image-input": "^19.1.0",
-    "vuex": "^3.4.0",
-    "webpack": "^4.43.0"
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.6",
@@ -50,12 +49,24 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "material-design-icons-iconfont": "^5.0.1",
-    "prettier": "^1.19.1",
     "remove-console-plugin": "0.0.1",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.6",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.5.0"
-  }
+    "vuetify-loader": "^1.5.0",
+    "webpack": "^4.43.0"
+  },
+  "description": "## Project setup ``` npm install ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayunited12/legalbox-front-end.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayunited12/legalbox-front-end/issues"
+  },
+  "homepage": "https://github.com/mayunited12/legalbox-front-end#readme"
 }

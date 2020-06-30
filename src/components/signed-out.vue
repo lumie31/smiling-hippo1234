@@ -52,7 +52,7 @@
         <div>
           <br />
           <p>
-            <router-link to="#">Forgot your password? Reset it</router-link>
+            <router-link to="/reset-password">Forgot your password? Reset it</router-link>
           </p>
           <p>
             <router-link to="/signup">Don't have an account? Sign Up</router-link>

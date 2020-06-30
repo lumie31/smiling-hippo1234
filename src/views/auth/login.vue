@@ -62,15 +62,12 @@
           :timeout="loginSnackbar.timeout"
         >
           {{ loginSnackbar.text }}
-          <v-btn color="secondary" text @click="loginSnackbar.active = false">
-            <b>x</b>
-          </v-btn>
         </v-snackbar>
 
         <div>
           <br />
           <p>
-            <router-link to="#">Forgot your password? Reset it</router-link>
+            <router-link to="/reset-password">Forgot your password? Reset it</router-link>
           </p>
           <p>
             <router-link to="/signup"

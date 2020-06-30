@@ -11,6 +11,8 @@ import PrivacyPolicy from "../views/PrivacyPolicy";
 import FAQs from "../views/FAQs";
 import Subscription from "../views/Subscription";
 import Login from "../views/auth/login";
+import ResetPassword from "../views/auth/resetPassword";
+import ChangePassword from "../views/auth/changePassword";
 import SignUp from "../views/auth/signup";
 import Activate from "../views/auth/activate";
 import Dashboard from "../views/backAuth/dashboard";
@@ -179,6 +181,19 @@ const routes = [
     meta: {
       requiresVisitor: true
     }
+  },
+  {
+    path: "/reset-password",
+    name: "ResetPassword",
+    component: ResetPassword,
+    meta: {
+      requiresVisitor: true
+    }
+  },
+  {
+    path: "/reset/:resetpassword",
+    name: "ChangePassword",
+    component: ChangePassword
   },
   // {
   //   path: "/logout",
