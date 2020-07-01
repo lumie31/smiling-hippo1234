@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div v-if="pageLoader" class="loader"></div> -->
+    <div v-if="pageLoader" class="loader"></div>
 
-    <!-- <v-dialog
+    <v-dialog
       v-model="fallbackError"
       fullscreen
       hide-overlay
@@ -11,7 +11,7 @@
       <v-card class="fallbackError">
         <v-container></v-container>
       </v-card>
-    </v-dialog> -->
+    </v-dialog>
     <nav>
       <v-toolbar height="200" class="nav-tool back-nav" elevation="3 ">
         <router-link to="/dashboard">

@@ -7,11 +7,11 @@
       <div class="formSectionTitle">Signatures (First Party)</div>
       <div class="d-flex justify-center">
         <div class="d-flex align-center mr-6">
-          <input type="radio" name="company" value="Person" id="company" />
+          <input type="radio" name="firstPartyCompany" value="Person" id="firstPartyCompany" />
           <label for="form.radioId1" class="ml-2">Company</label>
         </div>
         <div class="d-flex align-center">
-          <input type="radio" name="company" value="Person" id="company" />
+          <input type="radio" name="firstPartyPerson" value="Person" id="firstPartyPerson" />
           <label for="form.radioId1" class="ml-2">Person</label>
         </div>
       </div>
@@ -42,19 +42,25 @@
               <figure>
                 <div
                   class="uploadItem userSignatureHolder"
-                  :style="{
-                    backgroundImage: 'url(' + userSignature + ')'
-                  }"
+                  :style="[userSignatureHasImage ? {
+                      backgroundImage:
+                        'url(' + userSignature  + ')'
+                    } : {
+                      backgroundImage:
+                        'url(' + storedUserSignature + ')'
+                    }]"
                 ></div>
               </figure>
             </label>
           </image-uploader>
         </div>
-        <v-btn class="mt-12 accent" @click="uploadUserSignature">
+        <v-btn class="mt-12 accent" @click="emitDocumentSignature()" :loading="uploadSignatureLoader">
           <span>Update Signature</span>
         </v-btn>
-        <div class="testFloat">{{ getUserSignature}}</div>
-        <img :src="getUserSignature.url" alt="">
+        <span class="mx-4"></span>
+        <v-btn class="mt-12 success" @click="updateDefaultSignature" v-if="userSignatureHasImage" :loading="uploadSignatureLoader">
+          <span>Set As Default</span>
+        </v-btn>
       </v-container>
     </v-col>
 
@@ -62,11 +68,11 @@
       <div class="formSectionTitle">Signatures (Second Party)</div>
       <div class="d-flex justify-center">
         <div class="d-flex align-center mr-6">
-          <input type="radio" name="company" value="Person" id="company" />
+          <input type="radio" name="secondPartyCompany" value="Person" id="secondPartyCompany" />
           <label for="form.radioId1" class="ml-2">Company</label>
         </div>
         <div class="d-flex align-center">
-          <input type="radio" name="company" value="Person" id="company" />
+          <input type="radio" name="secondPartyPerson" value="Person" id="secondPartyPerson" />
           <label for="form.radioId1" class="ml-2">Person</label>
         </div>
       </div>
@@ -81,8 +87,9 @@
       ></v-text-field>
       
       <v-container class="contractSignatory text-center">
-        <div class="uploadItemParent">
+        <div class="uploadItemParent" v-if="secondPartySignatureACTIVE">
           <image-uploader
+          disabled
             id="secondPartySignature"
             :preview="false"
             :maxSize="0.2"
@@ -106,7 +113,8 @@
             </label>
           </image-uploader>
         </div>
-        <v-btn class="mt-12 accent" @click="uploadSecondPartySignature">
+        <div class="uploadItem userSignatureHolder" v-if="!secondPartySignatureACTIVE"></div>
+        <v-btn class="mt-12 accent" @click="uploadSecondPartySignature" :disabled="!secondPartySignatureACTIVE">
           <span>Update Signature</span>
         </v-btn>
       </v-container>
@@ -116,55 +124,103 @@
 
 <script>
 import { mapState } from "vuex";
+import axios from "axios"
+
 export default {
   data() {
     return {
       userSignature: null,
       secondPartySignature: null,
-      defaultSignature: null,
+      documentSignature: null,
       userSignatureHasImage: null,
+      uploadSignatureLoader: false,
+      userSignatureDATA: {},
+      secondPartySignatureACTIVE: false,
       secondPartySignatureHasImage: null
     };
   },
   methods: {
     // User Signature
     setUserSignature: function(output) {
-      this.UserSignatureHasImage = true;
+      this.userSignatureHasImage = true;
       this.userSignature = output.dataUrl;
-      this.image = output;
+      // this.image = output;
       console.log("data", output.dataUrl);
       console.log("Info", output.info);
       console.log("Exif", output.exif);
     },
-    uploadUserSignature() {
-      let formData = new FormData();
-      this.companyLogo = this.$refs.signaturePicker.files[0];
+    emitDocumentSignature() {
+      this.documentSignature = this.userSignature;
+      console.log(this.documentSignature);
 
-      if (this.companyLogo) {
-        // for (let file in this.profilePicture) {
-        //   formData.append("profilePicture", file);
-        // }
-        formData.append("userSignature", this.userSignature);
+      this.$emit("emitDocumentSignature")
+    },
+    updateDefaultSignature() {
+      this.uploadSignatureLoader = true;
 
-        // this.$store.dispatch("uploadProfilePicture", {});
-
-        console.log(formData.getAll("profilePicture"));
-        console.log(this.companyLogo);
-        console.log(this.previewCompanyLogo);
-      } else {
-        console.log("there are no files.");
+      if (this.userSignature == null) {
+        this.uploadSignatureLoader = false;
+        return alert("Break");
       }
+      console.log("Continue");
+
+      axios
+        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+          tags: "user signature",
+          file: this.userSignature,
+          upload_preset: this.cloudSigPath
+        })
+        .then(response => {
+          this.userSignatureDATA.url = response.data.secure_url;
+          this.userSignatureDATA.createdAt = response.data.created_at;
+          this.userSignatureDATA.id = response.data.public_id;
+
+          console.log(response.data);
+          console.log(response.data.secure_url);
+          console.log(response.status);
+          console.log(response.headers);
+
+          // Upload RESPONSE to server
+          this.sendUserSignatureToServer();
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          this.uploadSignatureLoader = false;
+        });
     },
-    // Second Party User Signature
-    setSecondPartySignature: function(output) {
-      this.secondPartySignatureHasImage = true;
-      this.secondPartySignature = output.dataUrl;
-      this.image = output;
-      console.log("data", output.dataUrl);
-      console.log("Info", output.info);
-      console.log("Exif", output.exif);
+    sendUserSignatureToServer() {
+      console.log("userSignatureDATA", this.userSignatureDATA);
+      axios
+        .put(
+          "/api/v1/user/update",
+          { signature: this.userSignatureDATA },
+          {
+            headers: {
+              Authorization: this.$store.state.token,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          console.log("User Signature successfully sent to server!");
+          console.log({ response });
+
+          this.uploadSignatureLoader = false;
+        })
+        .catch(error => {
+          console.log({ error });
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          this.updateProfileLoader = false;
+        });
     },
+
+    // Second Party Signature
     uploadSecondPartySignature() {
+      console.log("CTA for Second Party");
+      
     }
   },
   created() {
@@ -175,10 +231,8 @@ export default {
     });
   },
   computed: {
-    ...mapState(["storedUserDetails", "userDetailsReady"]),
-    getUserSignature() {
-      return this.storedUserDetails.profilePicture
-    }
+    ...mapState(["storedUserDetails", "userDetailsReady", "storedUserSignature"]),
+    
   }
 };
 </script>
@@ -205,5 +259,8 @@ export default {
   background-size: contain;
   box-shadow: none;
   cursor: pointer;
+}
+.container.contractSignatory {
+  padding: 0;
 }
 </style>

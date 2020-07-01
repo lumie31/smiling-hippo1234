@@ -85,12 +85,6 @@
                               </label>
                             </image-uploader>
                           </div>
-                          <!-- <div
-                            class="profileImageHolder"
-                            :style="{
-                              backgroundImage: 'url(' + profilePicture + ')'
-                            }"
-                          ></div>-->
                           <v-btn
                             :loading="updateProfileLoader"
                             :disabled="profilePicture == null"
