@@ -430,6 +430,41 @@ a{
     color: #fff !important;
 }
 
+.back-page .legalbox-tabs:hover,
+.back-page .legalbox-tabs:hover .v-card__text,
+.back-page .legalbox-tabs:hover .v-card__subtitle{
+    background: #1CA092;
+    color: #fff !important;
+}
+
+.back-page .legalbox-wrapper {
+    position: relative;
+}
+
+.back-page .legalbox-wrapper-coming-soon .legalbox-tabs{
+    background: #EAEAEA; 
+}
+/* .back-page .legalbox-wrapper-coming-soon .legalbox-tabs:hover{
+    background: #1CA092; 
+} */
+
+.back-page .legalbox-wrapper-coming-soon .legalbox-tabs:hover,
+.back-page .legalbox-wrapper-coming-soon .legalbox-tabs:hover .v-card__text,
+.back-page .legalbox-wrapper-coming-soon .legalbox-tabs:hover .v-card__subtitle{
+    background: #EAEAEA;
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.back-page .legalbox-wrapper-coming-soon .show-coming-soon{
+    background: #fff;
+    color: #BABABA;
+    border-radius: 7px !important;
+    padding: 5px 20px;
+    position: absolute;
+    bottom: 29px;
+    right: 20px;
+}
+
 /* Messages */
 .tableUI{
     margin-top: 40px;

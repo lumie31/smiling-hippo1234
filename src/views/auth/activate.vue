@@ -1,23 +1,14 @@
 <template>
-  <div class="activate page" id="">
-    <v-container class="l-hero d-flex align-center justify-center ">
+  <div class="activate page" id>
+    <v-container class="l-hero d-flex align-center justify-center">
       <router-link to="/">
         <img width="220" alt="Legalbox logo" src="@/assets/logo.svg" />
       </router-link>
     </v-container>
 
-    <v-container
-      class="text-center"
-      style="margin: 130px auto 200px auto;"
-      v-if="responseNotReady"
-    >
+    <v-container class="text-center" style="margin: 130px auto 200px auto;" v-if="responseNotReady">
       Veryifying.....
-      <v-text-field
-        style="width: 40%; margin: 0 auto;"
-        color="success"
-        loading
-        disabled
-      ></v-text-field>
+      <v-text-field style="width: 40%; margin: 0 auto;" color="success" loading disabled></v-text-field>
     </v-container>
 
     <div class="bodyWrapper" v-if="!responseNotReady">
@@ -37,7 +28,7 @@
             </div>
 
             <!-- FAILED ACTIVATION -->
-            <div v-if="activationNotSuccessful == 'failed' && !resetSuccesful">
+            <div v-if="activationNotSuccessful == 'failed' && !resetSuccessful">
               <h1 class="display-3">Oops</h1>
               <h1 class="title py-5">
                 <em>{{ responseText }}</em>
@@ -61,12 +52,10 @@
                   class="accent"
                   @click="resendActivationMail"
                   :loading="loading"
-                >
-                  Resend Activation Mail
-                </v-btn>
+                >Resend Activation Mail</v-btn>
               </v-form>
             </div>
-            <div v-if="resetSuccesful">
+            <div v-if="resetSuccessful">
               <p>Activation email has been successfully sent to your mailbox</p>
             </div>
           </v-col>
@@ -92,7 +81,7 @@ export default {
       activationNotSuccessful: false,
       responseText: "",
       email: "",
-      resetSuccesful: false,
+      resetSuccessful: false,
       resetNotSuccesful: false,
       loading: false,
       rules: {
@@ -112,7 +101,7 @@ export default {
         axios
           .post("/api/v1/activate/" + this.email)
           .then(response => {
-            this.resetSuccesful = true;
+            this.resetSuccessful = true;
 
             console.log(response);
             console.log(response.data);

@@ -52,7 +52,7 @@
         <v-spacer></v-spacer>
         <div class="user-glimpse d-flex justify-center align-center">
           <span>
-            <img :src="[storedUserProfilePicture ? storedUserProfilePicture : '../assets/user.png']" />
+            <img :src="[storedUserProfilePicture ? storedUserProfilePicture : '/img/user.0f16ef6a.png']" />
           </span>
           <p class="ml-4">Hi {{ storedUserDetails.firstName }}</p>
           <v-menu offset-y>
@@ -101,13 +101,13 @@
             avoid stories that touch in future.
           </v-col>
           <v-col class="shrink">
-            <v-btn @click="toReset = true">Verify Email</v-btn>
+            <v-btn @click="verifyEmail" :loading="resetLoader">Verify Email</v-btn>
           </v-col>
         </v-row>
       </v-alert>
 
       <v-dialog
-        v-model="toReset"
+        v-model="resetSuccessful"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
@@ -222,7 +222,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      toReset: false,
+      resetLoader: false,
+      resetSuccessful: false,
       //data components below
       user: this.$store.state.storedUserDetails,
       quickMenu: [
@@ -247,16 +248,18 @@ export default {
       });
     },
     verifyEmail() {
+      this.resetLoader = true;
+
       axios
-        .post("/api/v1/activate/" + this.email)
+        .post("/api/v1/activate/" + this.userEmail)
         .then(response => {
-          this.resetSuccesful = true;
+          this.resetSuccessful = true;
 
           console.log(response);
           console.log(response.data);
           console.log(response.status);
 
-          this.loading = false;
+          this.resetLoader = false;
         })
         .catch(error => {
           this.resetNotSuccesful = true;
@@ -265,7 +268,7 @@ export default {
           console.log(error.response);
           console.log(error.response.data);
           console.log(error.response.status);
-          this.loading = false;
+          this.resetLoader = false;
         });
     }
   },
@@ -296,6 +299,10 @@ export default {
           return item;
         }
       });
+    },
+    userEmail() {
+      let email = this.storedUserDetails.email;
+      return email;
     }
   },
   created() {

@@ -17,7 +17,7 @@
                 <img :src="legalbox.icon" class="legalbox-icons" width="40" />
               </v-card-title>
               <v-card-text class="headline">{{ legalbox.name }}</v-card-text>
-              <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle>
+              <!-- <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle> -->
             </v-card>
           </router-link>
             

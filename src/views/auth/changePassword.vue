@@ -1,23 +1,14 @@
 <template>
-  <div class="activate page" id="">
-    <v-container class="l-hero d-flex align-center justify-center ">
+  <div class="activate page" id>
+    <v-container class="l-hero d-flex align-center justify-center">
       <router-link to="/">
         <img width="220" alt="Legalbox logo" src="@/assets/logo.svg" />
       </router-link>
     </v-container>
 
-    <v-container
-      class="text-center"
-      style="margin: 130px auto 200px auto;"
-      v-if="responseNotReady"
-    >
+    <v-container class="text-center" style="margin: 130px auto 200px auto;" v-if="responseNotReady">
       Veryifying.....
-      <v-text-field
-        style="width: 40%; margin: 0 auto;"
-        color="success"
-        loading
-        disabled
-      ></v-text-field>
+      <v-text-field style="width: 40%; margin: 0 auto;" color="success" loading disabled></v-text-field>
     </v-container>
 
     <div class="bodyWrapper" v-if="!responseNotReady">
@@ -62,25 +53,21 @@
                   @click="changePassword"
                   :loading="passwordSubmitted"
                   :disabled="disableForm"
-                >
-                  Reset Password
-                </v-btn>
+                >Reset Password</v-btn>
               </v-form>
             </div>
             <v-snackbar
-                class="snackbar"
-                :color="changePasswordSnackbar.color"
-                top
-                right
-                v-model="changePasswordSnackbar.active"
-                :multi-line="changePasswordSnackbar.multiLine"
-                :timeout="changePasswordSnackbar.timeout"
-            >
-                {{ changePasswordSnackbar.text }}
-            </v-snackbar>
+              class="snackbar"
+              :color="changePasswordSnackbar.color"
+              top
+              right
+              v-model="changePasswordSnackbar.active"
+              :multi-line="changePasswordSnackbar.multiLine"
+              :timeout="changePasswordSnackbar.timeout"
+            >{{ changePasswordSnackbar.text }}</v-snackbar>
 
             <!-- FAILED ACTIVATION -->
-            <div v-if="activationNotSuccessful == 'failed' && resetSuccesful === false">
+            <div v-if="activationNotSuccessful == 'failed' && resetSuccessful === false">
               <h1 class="display-3">Oops</h1>
               <h1 class="title py-5">
                 <em>{{ responseText }}</em>
@@ -113,7 +100,7 @@ export default {
       activationSuccessful: false,
       activationNotSuccessful: false,
       responseText: "",
-      resetSuccesful: false,
+      resetSuccessful: false,
       resetNotSuccesful: false,
       passwordSubmitted: false,
       disableForm: false,
@@ -149,14 +136,12 @@ export default {
         this.disableForm = true;
 
         axios
-          .post("/api/v1/resetpassword/" + this.resetFromEmail, 
-          {
+          .post("/api/v1/resetpassword/" + this.resetFromEmail, {
             password: this.password,
             confirmPassword: this.confirmPassword
-          }
-          )
+          })
           .then(response => {
-            this.resetSuccesful = true;
+            this.resetSuccessful = true;
 
             console.log(response);
             console.log(response.data);
@@ -169,7 +154,7 @@ export default {
             this.passwordSubmitted = false;
 
             setTimeout(() => {
-                this.$router.push("/login");
+              this.$router.push("/login");
             }, this.$store.state.snackBarDuration + 2000);
           })
           .catch(error => {

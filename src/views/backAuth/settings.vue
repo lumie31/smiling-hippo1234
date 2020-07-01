@@ -37,136 +37,7 @@
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
               >Card</v-tab>
 
-              <!-- Account -->
-              <v-tab-item class="transparent legalbox-body-text">
-                <v-card flat class="transparent">
-                  <v-card-text class="transparent px-12 py-8">
-                    <!-- Plan Up -->
-                    <v-form>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Change Subscription Plan</p>
-                          <p class="caption">Upgrade or downgrade your subscription here</p>
-                        </v-col>
-                        <v-col cols="12" sm="8">
-                          <span v-for="plan in plans" :key="plan.name">
-                            <input type="radio" name="plans" value="plan.name" />
-                            <span class="ml-2 mr-12">{{ plan.name }}</span>
-                          </span>
-                          <br />
-                          <v-btn class="mt-4 accent">Update Subscription</v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-form>
-                    <!-- Change Password -->
-                    <v-form>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Password</p>
-                          <p class="caption">Update the password to your account here</p>
-                        </v-col>
-                        <v-col cols="12" sm="8">
-                          <v-form action="#" ref="updatePasswordForm" @submit.prevent="updatePassword">
-                            <v-text-field
-                              v-model="oldPassword"
-                              class="login-input"
-                              :rules="[rules.required]"
-                              outlined
-                              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                              :type="show1 ? 'text' : 'password'"
-                              label="Old Password"
-                              @click:append="show1 = !show1"
-                            ></v-text-field>
-                            <v-text-field
-                              v-model="password"
-                              class="login-input"
-                              :rules="[rules.required, rules.password]"
-                              outlined
-                              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                              :type="show2 ? 'text' : 'password'"
-                              label="New Password"
-                              @click:append="show2 = !show2"
-                            ></v-text-field>
-                            <v-text-field
-                              v-model="confirmPassword"
-                              class="login-input"
-                              outlined
-                              :rules="[rules.required, rules.passwordMatch]"
-                              :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                              :type="show3 ? 'text' : 'password'"
-                              label="Confirm Old Password"
-                              @click:append="show3 = !show3"
-                            ></v-text-field>
-
-                            <v-btn
-                            class="accent"
-                            @click="updatePassword"
-                            :loading="updatePasswordLoader"
-                            :disabled="DisableUpdatePassword"
-                          >Update Password</v-btn>
-                          </v-form>
-
-                          
-                        </v-col>
-                      </v-row>
-                    </v-form>
-                    <v-form>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Upload/Change Signature</p>
-                          <p class="caption">
-                            Update your signature here
-                            <br />
-                            <b>File Specification:</b> Transparent PNG file
-                            <br />
-                            <b>Max. File Size:</b> 100KB
-                            <br />
-                            <b>Ink Color:</b> Black
-                          </p>
-                        </v-col>
-                        <v-col cols="12" sm="8" class="d-flex align-center">
-                          <div class="uploadItemParent">
-                            <image-uploader
-                              id="userSignature"
-                              :preview="false"
-                              :maxSize="0.2"
-                              :className="[
-                                'fileinput',
-                                { 'fileinput--loaded': companyHasImage }
-                              ]"
-                              capture="environment"
-                              :debug="1"
-                              doNotResize="gif"
-                              :autoRotate="true"
-                              outputFormat="verbose"
-                              @input="setUserSignature"
-                            >
-                              <label for="userSignature" slot="upload-label">
-                                <figure>
-                                  <div
-                                    class="uploadItem userSignatureHolder"
-                                    :style="[userSignatureHasImage ? {
-                                      backgroundImage:
-                                        'url(' + userSignature  + ')'
-                                    } : {
-                                      backgroundImage:
-                                        'url(' + storedUserSignature + ')'
-                                    }]"
-                                  ></div>
-                                </figure>
-                              </label>
-                            </image-uploader>
-                            <div>RR</div>
-                          </div>
-                          <v-btn class="ml-12 accent" @click="uploadUserSignature">
-                            <span>Update Signature</span>
-                          </v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
+              
               <!-- Profile -->
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
@@ -174,7 +45,7 @@
                     <v-form ref="updateProfilePass" @submit.prevent="updateUserProfile">
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
-                          <pre class="testFloat">{{ storedUserDetails }}</pre>
+                          <!-- <pre class="testFloat">{{ storedUserDetails }}</pre> -->
                           <p class="headline">Profile Picture</p>
                           <p class="caption">
                             The avatar on your profile.
@@ -437,6 +308,136 @@
                               <b>x</b>
                             </v-btn>
                           </v-snackbar>-->
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+
+              <!-- Account -->
+              <v-tab-item class="transparent legalbox-body-text">
+                <v-card flat class="transparent">
+                  <v-card-text class="transparent px-12 py-8">
+                    <!-- Plan Up -->
+                    <v-form>
+                      <v-row class="justify-start">
+                        <v-col cols="12" sm="4">
+                          <p class="headline">Change Subscription Plan</p>
+                          <p class="caption">Upgrade or downgrade your subscription here</p>
+                        </v-col>
+                        <v-col cols="12" sm="8">
+                          <span v-for="plan in plans" :key="plan.name">
+                            <input type="radio" name="plans" value="plan.name" />
+                            <span class="ml-2 mr-12">{{ plan.name }}</span>
+                          </span>
+                          <br />
+                          <v-btn class="mt-4 accent">Update Subscription</v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                    <!-- Change Password -->
+                    <v-form>
+                      <v-row class="justify-start">
+                        <v-col cols="12" sm="4">
+                          <p class="headline">Password</p>
+                          <p class="caption">Update the password to your account here</p>
+                        </v-col>
+                        <v-col cols="12" sm="8">
+                          <v-form action="#" ref="updatePasswordForm" @submit.prevent="updatePassword">
+                            <v-text-field
+                              v-model="oldPassword"
+                              class="login-input"
+                              :rules="[rules.required]"
+                              outlined
+                              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show1 ? 'text' : 'password'"
+                              label="Old Password"
+                              @click:append="show1 = !show1"
+                            ></v-text-field>
+                            <v-text-field
+                              v-model="password"
+                              class="login-input"
+                              :rules="[rules.required, rules.password]"
+                              outlined
+                              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show2 ? 'text' : 'password'"
+                              label="New Password"
+                              @click:append="show2 = !show2"
+                            ></v-text-field>
+                            <v-text-field
+                              v-model="confirmPassword"
+                              class="login-input"
+                              outlined
+                              :rules="[rules.required, rules.passwordMatch]"
+                              :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show3 ? 'text' : 'password'"
+                              label="Confirm Old Password"
+                              @click:append="show3 = !show3"
+                            ></v-text-field>
+
+                            <v-btn
+                            class="accent"
+                            @click="updatePassword"
+                            :loading="updatePasswordLoader"
+                            :disabled="DisableUpdatePassword"
+                          >Update Password</v-btn>
+                          </v-form>
+
+                          
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                    <v-form>
+                      <v-row class="justify-start">
+                        <v-col cols="12" sm="4">
+                          <p class="headline">Upload/Change Signature</p>
+                          <p class="caption">
+                            Update your signature here
+                            <br />
+                            <b>File Specification:</b> Transparent PNG file
+                            <br />
+                            <b>Max. File Size:</b> 100KB
+                            <br />
+                            <b>Ink Color:</b> Black
+                          </p>
+                        </v-col>
+                        <v-col cols="12" sm="8" class="d-flex align-center">
+                          <div class="uploadItemParent">
+                            <image-uploader
+                              id="userSignature"
+                              :preview="false"
+                              :maxSize="0.2"
+                              :className="[
+                                'fileinput',
+                                { 'fileinput--loaded': companyHasImage }
+                              ]"
+                              capture="environment"
+                              :debug="1"
+                              doNotResize="gif"
+                              :autoRotate="true"
+                              outputFormat="verbose"
+                              @input="setUserSignature"
+                            >
+                              <label for="userSignature" slot="upload-label">
+                                <figure>
+                                  <div
+                                    class="uploadItem userSignatureHolder"
+                                    :style="[userSignatureHasImage ? {
+                                      backgroundImage:
+                                        'url(' + userSignature  + ')'
+                                    } : {
+                                      backgroundImage:
+                                        'url(' + storedUserSignature + ')'
+                                    }]"
+                                  ></div>
+                                </figure>
+                              </label>
+                            </image-uploader>
+                          </div>
+                          <v-btn class="ml-12 accent" @click="uploadUserSignature">
+                            <span>Update Signature</span>
+                          </v-btn>
                         </v-col>
                       </v-row>
                     </v-form>

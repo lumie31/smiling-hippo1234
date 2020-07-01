@@ -121,7 +121,7 @@ export default new Vuex.Store({
         childName: "Documents",
         info: "",
         lastOpened: "",
-        route: "",
+        route: "#",
         subMenu: [
           {
             menu: "Business Documents",
@@ -167,12 +167,14 @@ export default new Vuex.Store({
       {
         childName: "Advisory",
         info: "",
+        comingSoon: true,
         lastOpened: "",
         route: "/docs/general/advisory"
       },
       {
         childName: "Compliance",
         info: "",
+        comingSoon: true,
         lastOpened: "",
         route: "/docs/general/compliance"
       }

@@ -17,17 +17,17 @@
       <v-container class="legalbox-tabs-parent">
         <v-row>
           <v-col
-            v-for="doc in generalLegalboxParent"
+            v-for="(doc, index) in generalLegalboxParent"
             :key="doc.childName"
             cols="12"
             sm="4"
             class="legalbox-wrapper"
+            :class="doc.comingSoon == true ? 'legalbox-wrapper-coming-soon' : ''"
           >
-            <router-link :to="doc.route">
               <v-card class="legalbox-tabs d-flex flex-column justify-center">
                 <v-card-title class="headline">{{ doc.childName }}</v-card-title>
 
-                <v-menu offset-x :close-on-content-click="false">
+                <v-menu offset-x :close-on-content-click="false" v-if="index == 0">
                   <template v-slot:activator="{ on }">
                     <div class="trigger-legalbox-submenu" v-on="on"></div>
                   </template>
@@ -60,8 +60,8 @@
                   </v-list>
                 </v-menu>
                 <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle>
+                <span class="overline show-coming-soon" v-if="index > 0">Coming Soon</span>
               </v-card>
-            </router-link>
           </v-col>
         </v-row>
         <products-footer></products-footer>
