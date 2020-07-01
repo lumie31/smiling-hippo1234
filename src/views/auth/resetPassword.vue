@@ -118,7 +118,6 @@ export default {
         this.passwordResetSnackbar.text = response.data.message;
         this.passwordResetSnackbar.color = "success";
         this.resetLoader = false;
-        this.resetSubmitted = false;
 
       })
       .catch(error =>{
