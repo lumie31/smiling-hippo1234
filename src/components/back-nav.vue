@@ -12,6 +12,8 @@
         <v-container></v-container>
       </v-card>
     </v-dialog>
+
+    <div class="testFloat">{{ userDocuments }}</div>
     <nav>
       <v-toolbar height="200" class="nav-tool back-nav" elevation="3 ">
         <router-link to="/dashboard">
@@ -212,12 +214,17 @@
         </v-col>
       </v-row>
     </v-container>
+    <div class="scrollUpDown">
+      <v-icon class="scrollUpDownButton" id="scrollUp">keyboard_arrow_up</v-icon>
+      <v-icon class="scrollUpDownButton" id="scrollDown">keyboard_arrow_down</v-icon>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
+import { documentCreation } from '../assets/js/script'
 
 export default {
   data() {
@@ -368,6 +375,7 @@ export default {
     }
   },
   mounted() {
+    documentCreation();
     this.pageLoader = this.userDetailsReady;
     if (this.userDetailsReady == "pending") {
       this.pageLoader = true;

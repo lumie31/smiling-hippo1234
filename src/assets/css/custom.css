@@ -351,6 +351,23 @@ a{
     box-shadow: 0 0 5px #888888;
 }
 /* Backend */
+
+.scrollUpDown {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    right: 3.5%;
+    top: 50%
+}
+.createEditDocument .scrollUpDown {
+    display: flex;
+}
+
+#scrollUp,
+#scrollDown {
+    cursor: pointer;
+}
+
 #user-menu{
     width: 160px !important;
 }
@@ -573,10 +590,26 @@ a{
 .wideGrey {
     background-color: #F2F2F2;
 }
-.submit-document{
+.submit-document.sendOnly{
+    font-size: 1.4vw !important;
+    letter-spacing: 0 !important;
+    padding: 31px 40px !important;
+    text-transform: capitalize !important;
+
+}
+.submit-document.saveOnly{
     position: fixed !important;
-    top: 40%;
+    height: 80px !important;
+    width: 80px;
+    box-shadow: 0 2px 5px rgba(128, 128, 128, 0.94);
+    border-radius: 100%;
+    top: 30%;
     right: 2%;
+}
+.submit-document.saveOnly::after{
+    content: "";
+    display: block;
+    background-image: url(../user-hero-box.png);
 }
 .receiptInvoice .receiptFigures input,
 .receiptInvoice .receiptFigures textarea{

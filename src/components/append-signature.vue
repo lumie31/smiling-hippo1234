@@ -1,26 +1,34 @@
 <template>
   <v-row class="contractParties">
-    <div class="text-center my-12" style="width: 100%;">
+    <!-- <div class="text-center my-12" style="width: 100%;">
       <b>SIGNATURE COMPONENT GOES HERE</b>
-    </div>
+    </div> -->
+    <!-- <pre class="testFloat">{{ partySignatories }}</pre> -->
+
     <v-col cols="6" class="">
       <div class="formSectionTitle">Signatures (First Party)</div>
-      <div class="d-flex justify-center">
-        <div class="d-flex align-center mr-6">
-          <input type="radio" name="firstPartyCompany" value="Person" id="firstPartyCompany" />
-          <label for="form.radioId1" class="ml-2">Company</label>
+        <div class="d-flex justify-center">
+          <v-radio-group v-model="partySignatories.firstParty.mode" row>
+              <v-radio
+                label="Company"
+                color="accent"
+                value="company"
+              ></v-radio>
+              <span class="mx-4"></span>
+              <v-radio
+                label="Person"
+                color="accent"
+                value="person"
+              ></v-radio>
+            </v-radio-group>
         </div>
-        <div class="d-flex align-center">
-          <input type="radio" name="firstPartyPerson" value="Person" id="firstPartyPerson" />
-          <label for="form.radioId1" class="ml-2">Person</label>
-        </div>
-      </div>
       <v-text-field
+        v-if="partySignatories.firstParty.mode == 'company'"
         height="155"
-        disabled
+        label="Company Name"
         background-color="white"
-        :value="storedUserDetails.firstName + ' ' + storedUserDetails.lastName"
-        class="name mt-4"
+        v-model="partySignatories.firstParty.name"
+        class="partyName mt-4 text-center"
         flat
         solo
       ></v-text-field>
@@ -54,7 +62,7 @@
             </label>
           </image-uploader>
         </div>
-        <v-btn class="mt-12 accent" @click="emitDocumentSignature()" :loading="uploadSignatureLoader">
+        <v-btn class="mt-12 accent" @click="emitDocumentSignature" :loading="uploadSignatureLoader">
           <span>Update Signature</span>
         </v-btn>
         <span class="mx-4"></span>
@@ -67,21 +75,27 @@
     <v-col cols="6" class="">
       <div class="formSectionTitle">Signatures (Second Party)</div>
       <div class="d-flex justify-center">
-        <div class="d-flex align-center mr-6">
-          <input type="radio" name="secondPartyCompany" value="Person" id="secondPartyCompany" />
-          <label for="form.radioId1" class="ml-2">Company</label>
+          <v-radio-group v-model="partySignatories.secondParty.mode"  row>
+              <v-radio
+                label="Company"
+                color="accent"
+                value="company"
+              ></v-radio>
+              <span class="mx-4"></span>
+              <v-radio
+                label="Person"
+                color="accent"
+                value="person"
+              ></v-radio>
+            </v-radio-group>
         </div>
-        <div class="d-flex align-center">
-          <input type="radio" name="secondPartyPerson" value="Person" id="secondPartyPerson" />
-          <label for="form.radioId1" class="ml-2">Person</label>
-        </div>
-      </div>
       <v-text-field
+        v-if="partySignatories.secondParty.mode == 'company'"
         height="155"
-        disabled
+        label="Company Name"
         background-color="white"
-        value="Borrower"
-        class="name mt-4"
+        v-model="partySignatories.secondParty.name"
+        class="partyName mt-4"
         flat
         solo
       ></v-text-field>
@@ -136,7 +150,19 @@ export default {
       uploadSignatureLoader: false,
       userSignatureDATA: {},
       secondPartySignatureACTIVE: false,
-      secondPartySignatureHasImage: null
+      secondPartySignatureHasImage: null,
+      partySignatories: {
+        firstParty: {
+          mode: "company",
+          name: "",
+          signature: this.$store.state.storedUserSignature
+        },
+        secondParty: {
+          mode: "company",
+          name: "",
+          signature: ""
+        }
+      }
     };
   },
   methods: {
@@ -144,16 +170,18 @@ export default {
     setUserSignature: function(output) {
       this.userSignatureHasImage = true;
       this.userSignature = output.dataUrl;
+      this.partySignatories.firstParty.signature = output.dataUrl;
       // this.image = output;
       console.log("data", output.dataUrl);
       console.log("Info", output.info);
       console.log("Exif", output.exif);
     },
     emitDocumentSignature() {
-      this.documentSignature = this.userSignature;
-      console.log(this.documentSignature);
+      // this.documentSignature = this.userSignature;
+      console.log(this.partySignatories.firstParty.signature);
+      console.log("Ran");
 
-      this.$emit("emitDocumentSignature")
+      // this.$emit("emitDocumentSignature")
     },
     updateDefaultSignature() {
       this.uploadSignatureLoader = true;
@@ -238,11 +266,19 @@ export default {
 </script>
 
 <style>
-.contractParties .name {
+.contractParties .partyName {
   width: 100%;
   text-align: center;
-  font-size: 60px;
+  font-size: 30px;
   line-height: 5;
+}
+
+.contractParties .partyName label{
+  text-align: center !important;
+  width: 100%;
+}
+.contractParties .partyName input{
+  text-align: center !important;
 }
 
 .contractParties .name input {
@@ -260,6 +296,7 @@ export default {
   box-shadow: none;
   cursor: pointer;
 }
+
 .container.contractSignatory {
   padding: 0;
 }

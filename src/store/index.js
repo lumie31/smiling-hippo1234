@@ -39,7 +39,7 @@ export default new Vuex.Store({
     isSignedIn: null,
     redirecttoEditID: "nully",
     storedUserDetails: [],
-    userDocuments: [{ a: 1 }],
+    userDocuments: "",
     plans: [
       { name: "Basic", price: 850, duration: "12", LGAmount: "Two legalboxes" },
       {
@@ -1812,9 +1812,9 @@ export default new Vuex.Store({
         .then(response => {
           // if (response.data) {}
           commit("retrieveAllUserDocuments", response.data.documents);
-          // console.log(response.data);
-          // console.log(response.status);
-          // console.log(response.headers);
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.headers);
           return response.data.data;
         })
         .catch(error => {

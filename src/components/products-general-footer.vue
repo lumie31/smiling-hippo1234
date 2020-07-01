@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row id="productFooter">
     <v-col cols="12" sm="6">
       <router-link to="/payment-history">
         <v-card class="legalbox-tabs d-flex flex-column justify-center">

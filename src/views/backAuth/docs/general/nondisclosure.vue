@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard nondisclosure page back-page">
+  <div class="dashboard createDocument createEditDocument nondisclosure page back-page">
     <back-nav></back-nav>
     <v-form ref="documentPass" @submit.prevent="submitDocument">
       <div class="bodyWrapper">
@@ -652,28 +652,31 @@
           </v-container>
 
           <v-row>
-            <v-col cols="12" sm="12" class="d-flex justify-center">
+            <v-col cols="12" sm="12" class="mb-12 py-12 d-flex justify-center">
               <!-- <v-btn large class="accent submit-document" @click="processLoop">
                 Process
               </v-btn> -->
               <v-btn
                 large
-                class="accent submit-document"
+                class="accent submit-document saveOnly"
                 @click="submitDocument('continueEdit')"
                 :disabled="disableContinue"
               >
-                Save and Continue
+              <span class=" d-flex flex-column align-center">
+              <img src="@/assets/save.png" width="20">
+              Save
+              </span>
               </v-btn>
               <v-btn
-                large
-                class="accent submit-document"
+                x-large
+                class="accent submit-document sendOnly"
                 id="saveAndSend"
                 style="top: 50%;"
                 :loading="loadingSend"
                 :disabled="disableSend"
                 @click="submitDocument('redirectMe')"
               >
-                Save and Send
+                Send Document
               </v-btn>
             </v-col>
           </v-row>

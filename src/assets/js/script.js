@@ -15,3 +15,15 @@ export function backPage() {
   console.log($);
   $("#removeInput").addClass("yyy");
 }
+export function documentCreation () {
+  // console.log($);
+  $('.scrollUpDownButton#scrollUp').bind("click", function () {
+    $("html, body").animate({ scrollTop: $(".bodyWrapper").offset().top }, 1000);
+    return false;
+  });
+  $('.scrollUpDownButton#scrollDown').bind("click", function () {
+    $("html, body").animate({ scrollTop: $(".contractsignatory").offset().top }, 1000);
+    return false;
+  });
+
+}
