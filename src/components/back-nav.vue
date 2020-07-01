@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div v-if="pageLoader" class="loader"></div>
+    <!-- <div v-if="pageLoader" class="loader"></div> -->
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="fallbackError"
       fullscreen
       hide-overlay
@@ -52,7 +52,7 @@
         <v-spacer></v-spacer>
         <div class="user-glimpse d-flex justify-center align-center">
           <span>
-            <img src="../assets/user.png" />
+            <img :src="[storedUserProfilePicture ? storedUserProfilePicture : '../assets/user.png']" />
           </span>
           <p class="ml-4">Hi {{ storedUserDetails.firstName }}</p>
           <v-menu offset-y>
@@ -277,7 +277,8 @@ export default {
       "storedUserDetails",
       "userDetailsReady",
       "getUserDetailsStatusCode",
-      "userDocuments"
+      "userDocuments",
+      "storedUserProfilePicture"
     ]),
     // documents() {
     //   return this.$store.state.userDocuments;
@@ -315,33 +316,14 @@ export default {
         console.log(response.headers);
       })
       .catch(error => {
-        console.log(error);
-        console.log(error.response);
-        console.log(error.response.data);
-        console.log(error.response.status);
+        // console.log(error);
+        // console.log(error.response);
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+
+        return error;
+
       });
-
-    axios.interceptors.request.use(
-      config => {
-        this.setLoading(true);
-        return config;
-      },
-      error => {
-        this.setLoading(false);
-        return Promise.reject(error);
-      }
-    );
-
-    axios.interceptors.response.use(
-      response => {
-        this.setLoading(false);
-        return response;
-      },
-      error => {
-        this.setLoading(false);
-        return Promise.reject(error);
-      }
-    );
   },
   watch: {
     // Check for Change state of USER DETAILS fetch
@@ -350,7 +332,7 @@ export default {
         // Close loader if user USER DETAILS has sucessfully fetched
         this.pageLoader = false;
       } else if (val === false) {
-        console.log("WATCH Ran!!");
+        console.log("Watch Fallback");
 
         // Activate fallback view if fetch states ever "CHANGES" USER DETAILS ever fails
         // If state was FALSE before (connection returns), code will not run
@@ -383,7 +365,7 @@ export default {
     if (this.userDetailsReady == "pending") {
       this.pageLoader = true;
     } else if (this.userDetailsReady == false) {
-      console.log("I ran");
+      console.log("Mounted Fallback");
 
       this.fallbackError = true;
     }

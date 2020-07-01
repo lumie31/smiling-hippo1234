@@ -46,7 +46,6 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^7.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "material-design-icons-iconfont": "^5.0.1",
     "remove-console-plugin": "0.0.1",

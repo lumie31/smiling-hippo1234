@@ -14,6 +14,8 @@ export default new Vuex.Store({
     signUpSuccessStatus: "",
     profileUpdated: false,
     userDetailsReady: "",
+    storedUserProfilePicture: "",
+    storedcompanyLogo: "",
     storedUserSignature: "",
     successMessage: "",
     documentSavedMessage: "",
@@ -1699,7 +1701,9 @@ export default new Vuex.Store({
           commit("retrieveUserDetails", response.data.data);
           // console.log(this.state.token);
 
-          this.state.storedUserSignature = response.data.data.companyLogo.url;
+          this.state.storedUserSignature = response.data.data.signature.url;
+          this.state.storedUserProfilePicture = response.data.data.profilePicture.url;
+          this.state.storedcompanyLogo = response.data.data.companyLogo.url;
 
           // Set state of USER DETAILS  to True
           this.state.userDetailsReady = true;
@@ -1714,10 +1718,12 @@ export default new Vuex.Store({
           // Fallback error screen should activate
           this.state.userDetailsReady = false;
 
-          console.log(error);
-          console.log(error.response);
-          console.log(error.response.data);
-          console.log(error.response.status);
+          // console.log(error);
+          // console.log(error.response);
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+
+          return error
         });
     },
     // User Update Profile,

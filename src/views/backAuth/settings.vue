@@ -19,28 +19,25 @@
                 loading
                 disabled
               ></v-text-field>
-            </p> -->
+            </p>-->
             <!-- <v-tabs
               fixed-tabs
               class="settings-tab py-5"
               height="90"
               v-if="!storedUserDetails.email"
-            > -->
+            >-->
             <v-tabs fixed-tabs class="settings-tab py-5" height="90">
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start first-title settings-tab-title"
-                >Profile</v-tab
-              >
+              >Profile</v-tab>
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start settings-tab-title"
-                >Account</v-tab
-              >
+              >Account</v-tab>
               <v-tab
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
-                >Card</v-tab
-              >
+              >Card</v-tab>
 
-               <!-- Account -->
+              <!-- Account -->
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
@@ -49,17 +46,11 @@
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Change Subscription Plan</p>
-                          <p class="caption">
-                            Upgrade or downgrade your subscription here
-                          </p>
+                          <p class="caption">Upgrade or downgrade your subscription here</p>
                         </v-col>
                         <v-col cols="12" sm="8">
                           <span v-for="plan in plans" :key="plan.name">
-                            <input
-                              type="radio"
-                              name="plans"
-                              value="plan.name"
-                            />
+                            <input type="radio" name="plans" value="plan.name" />
                             <span class="ml-2 mr-12">{{ plan.name }}</span>
                           </span>
                           <br />
@@ -72,36 +63,50 @@
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Password</p>
-                          <p class="caption">
-                            Update the password to your account here
-                          </p>
+                          <p class="caption">Update the password to your account here</p>
                         </v-col>
                         <v-col cols="12" sm="8">
-                          <v-text-field
-                            class="login-input"
-                            outlined
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show1 ? 'text' : 'password'"
-                            label="Old Password"
-                            @click:append="show1 = !show1"
-                          ></v-text-field>
-                          <v-text-field
-                            class="login-input"
-                            outlined
-                            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show2 ? 'text' : 'password'"
-                            label="New Password"
-                            @click:append="show2 = !show2"
-                          ></v-text-field>
-                          <v-text-field
-                            class="login-input"
-                            outlined
-                            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show3 ? 'text' : 'password'"
-                            label="Confirm Old Password"
-                            @click:append="show3 = !show3"
-                          ></v-text-field>
-                          <v-btn class="accent">Update Password</v-btn>
+                          <v-form action="#" ref="updatePasswordForm" @submit.prevent="updatePassword">
+                            <v-text-field
+                              v-model="oldPassword"
+                              class="login-input"
+                              :rules="[rules.required]"
+                              outlined
+                              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show1 ? 'text' : 'password'"
+                              label="Old Password"
+                              @click:append="show1 = !show1"
+                            ></v-text-field>
+                            <v-text-field
+                              v-model="password"
+                              class="login-input"
+                              :rules="[rules.required, rules.password]"
+                              outlined
+                              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show2 ? 'text' : 'password'"
+                              label="New Password"
+                              @click:append="show2 = !show2"
+                            ></v-text-field>
+                            <v-text-field
+                              v-model="confirmPassword"
+                              class="login-input"
+                              outlined
+                              :rules="[rules.required, rules.passwordMatch]"
+                              :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="show3 ? 'text' : 'password'"
+                              label="Confirm Old Password"
+                              @click:append="show3 = !show3"
+                            ></v-text-field>
+
+                            <v-btn
+                            class="accent"
+                            @click="updatePassword"
+                            :loading="updatePasswordLoader"
+                            :disabled="DisableUpdatePassword"
+                          >Update Password</v-btn>
+                          </v-form>
+
+                          
                         </v-col>
                       </v-row>
                     </v-form>
@@ -131,7 +136,6 @@
                               ]"
                               capture="environment"
                               :debug="1"
-                              
                               doNotResize="gif"
                               :autoRotate="true"
                               outputFormat="verbose"
@@ -139,15 +143,14 @@
                             >
                               <label for="userSignature" slot="upload-label">
                                 <figure>
-                                  
                                   <div
                                     class="uploadItem userSignatureHolder"
-                                    :style="[getUserSignature ? {
+                                    :style="[userSignatureHasImage ? {
                                       backgroundImage:
-                                        'url(' + getUserSignature  + ')'
+                                        'url(' + userSignature  + ')'
                                     } : {
                                       backgroundImage:
-                                        'url(' + userSignature + ')'
+                                        'url(' + storedUserSignature + ')'
                                     }]"
                                   ></div>
                                 </figure>
@@ -155,11 +158,8 @@
                             </image-uploader>
                             <div>RR</div>
                           </div>
-                          <v-btn
-                            class="ml-12 accent"
-                            @click="uploadUserSignature"
-                          >
-                            <span>Update Company Logo</span>
+                          <v-btn class="ml-12 accent" @click="uploadUserSignature">
+                            <span>Update Signature</span>
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -171,10 +171,7 @@
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
-                    <v-form
-                      ref="updateProfilePass"
-                      @submit.prevent="updateUserProfile"
-                    >
+                    <v-form ref="updateProfilePass" @submit.prevent="updateUserProfile">
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
                           <pre class="testFloat">{{ storedUserDetails }}</pre>
@@ -192,7 +189,7 @@
                               :maxSize="0.2"
                               :className="[
                                 'fileinput',
-                                { 'fileinput--loaded': profileHasImage }
+                                { 'fileinput--loaded': profilePictureHasImage }
                               ]"
                               capture="environment"
                               :debug="1"
@@ -205,10 +202,13 @@
                                 <figure>
                                   <div
                                     class="uploadItem profileImageHolder"
-                                    :style="{
+                                    :style="[profilePictureHasImage ? {
                                       backgroundImage:
-                                        'url(' + profilePicture + ')'
-                                    }"
+                                        'url(' + profilePicture  + ')'
+                                    } : {
+                                      backgroundImage:
+                                        'url(' + storedUserProfilePicture + ')'
+                                    }]"
                                   ></div>
                                 </figure>
                               </label>
@@ -219,7 +219,7 @@
                             :style="{
                               backgroundImage: 'url(' + profilePicture + ')'
                             }"
-                          ></div> -->
+                          ></div>-->
                           <v-btn
                             :loading="updateProfileLoader"
                             :disabled="profilePicture == null"
@@ -265,10 +265,13 @@
                                 <figure>
                                   <div
                                     class="uploadItem companyLogoHolder"
-                                    :style="{
+                                    :style="[companyHasImage ? {
                                       backgroundImage:
-                                        'url(' + companyLogo + ')'
-                                    }"
+                                        'url(' + companyLogo  + ')'
+                                    } : {
+                                      backgroundImage:
+                                        'url(' + storedcompanyLogo + ')'
+                                    }]"
                                   ></div>
                                 </figure>
                               </label>
@@ -360,10 +363,7 @@
                           <p class="caption">For birthday wishes and gifts</p>
                         </v-col>
                         <v-col cols="12" sm="8">
-                          <v-menu
-                            :close-on-content-click="false"
-                            max-width="290"
-                          >
+                          <v-menu :close-on-content-click="false" max-width="290">
                             <template v-slot:activator="{ on }">
                               <v-text-field
                                 autocomplete="off"
@@ -418,9 +418,7 @@
                             @click="updateUserProfile"
                             :loading="updateProfileLoader"
                             :disabled="updateProfileLoader"
-                          >
-                            Update Profile
-                          </v-btn>
+                          >Update Profile</v-btn>
                           <!-- <v-snackbar
                             class="snackbar"
                             :color="updatedSnackbar.color"
@@ -438,15 +436,13 @@
                             >
                               <b>x</b>
                             </v-btn>
-                          </v-snackbar> -->
+                          </v-snackbar>-->
                         </v-col>
                       </v-row>
                     </v-form>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-
-             
 
               <!-- Card Tab -->
               <v-tab-item class="transparent legalbox-body-text">
@@ -462,43 +458,20 @@
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Change Subscription Plan</p>
-                          <p class="caption">
-                            Upgrade or downgrade your subscription here
-                          </p>
+                          <p class="caption">Upgrade or downgrade your subscription here</p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex">
                           <span class="d-flex align-center">
-                            <input
-                              type="radio"
-                              name="cardType"
-                              value="verve"
-                              class="mr-4"
-                            />
-                            <img
-                              src="../../assets/Verve_Image.png"
-                              width="100"
-                            />
+                            <input type="radio" name="cardType" value="verve" class="mr-4" />
+                            <img src="../../assets/Verve_Image.png" width="100" />
                           </span>
                           <span class="d-flex align-center">
-                            <input
-                              type="radio"
-                              name="cardType"
-                              value="verve"
-                              class="mr-4"
-                            />
+                            <input type="radio" name="cardType" value="verve" class="mr-4" />
                             <img src="../../assets/visa.png" width="60" />
                           </span>
                           <span class="d-flex align-center">
-                            <input
-                              type="radio"
-                              name="cardType"
-                              value="verve"
-                              class="mr-4"
-                            />
-                            <img
-                              src="../../assets/mastercard.jpg"
-                              width="100"
-                            />
+                            <input type="radio" name="cardType" value="verve" class="mr-4" />
+                            <img src="../../assets/mastercard.jpg" width="100" />
                           </span>
                         </v-col>
                       </v-row>
@@ -507,11 +480,7 @@
                           <p class="headline">Card Number</p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field
-                            outlined
-                            label="Card Number"
-                            value="Card Number"
-                          ></v-text-field>
+                          <v-text-field outlined label="Card Number" value="Card Number"></v-text-field>
                         </v-col>
                       </v-row>
                       <v-row class="justify-start">
@@ -519,11 +488,7 @@
                           <p class="headline">Expiry Date</p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field
-                            outlined
-                            label="Expiry Date"
-                            value="Expiry Date"
-                          ></v-text-field>
+                          <v-text-field outlined label="Expiry Date" value="Expiry Date"></v-text-field>
                         </v-col>
                       </v-row>
                       <v-row class="justify-start">
@@ -531,11 +496,7 @@
                           <p class="headline">CVV Number</p>
                         </v-col>
                         <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field
-                            outlined
-                            label="CVV"
-                            value="CVV"
-                          ></v-text-field>
+                          <v-text-field outlined label="CVV" value="CVV"></v-text-field>
                         </v-col>
                       </v-row>
                       <v-row class="justify-start">
@@ -571,18 +532,20 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      profileHasImage: false,
+      profilePictureHasImage: false,
       companyHasImage: false,
-      UserSignatureHasImage: false,
+      userSignatureHasImage: false,
       // currentProfilePicture: this.storedUserDetails.profilePicture.url,
       currentUserSignature: null,
-      currentUserSignature2: "https://res.cloudinary.com/djw3g8meb/image/upload/v1593362478/l1iuhsgon30pphxujtlh.jpg",
+      currentUserSignature2:
+        "https://res.cloudinary.com/djw3g8meb/image/upload/v1593362478/l1iuhsgon30pphxujtlh.jpg",
       image: null,
       clearable: false,
       cloudName: process.env.VUE_APP_cloudinary_cloudName,
       cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
       companyLogoLoading: false,
       updateProfileLoader: false,
+      uploadSignatureLoader: false,
       previewCompanyLogo: null,
       previewUserSignature: null,
       isSrofilePictureSet: false,
@@ -593,6 +556,7 @@ export default {
       newSelectedProfilePicture: null,
       profilePicture: null,
       profilePictureDATA: {},
+      userSignatureDATA: {},
       profilePictureCloudinaryData: null,
       companyLogo: null,
       userSignature: null,
@@ -628,6 +592,8 @@ export default {
           !value || /^[a-zA-Z]+$/.test(value) || "Only alpabets are allowed",
         number: value =>
           !value || /^[0-9]*$/.test(value) || "Only numbers are allowed",
+        passwordMatch: value =>
+          value === this.password || "Password must match",
         password: value => {
           const pattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
           return (
@@ -639,48 +605,32 @@ export default {
           !value ||
           /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/.test(value) ||
           "Enter a valid phone number"
-      }
+      },
+      oldPassword: "",
+      password: "",
+      confirmPassword: "",
+      updatePasswordLoader: false,
+      DisableUpdatePassword: false
     };
   },
   methods: {
+    // Profile image
     setProfileImage: function(output) {
-      this.profileHasImage = true;
+      this.profilePictureHasImage = true;
       this.profilePicture = output.dataUrl;
       this.image = output;
       console.log("data", output.dataUrl);
       console.log("Info", output.info);
       console.log("Exif", output.exif);
     },
-    setCompanyLogo: function(output) {
-      this.companyHasImage = true;
-      this.companyLogo = output.dataUrl;
-      this.image = output;
-      console.log("data", output.dataUrl);
-      console.log("Info", output.info);
-      console.log("Exif", output.exif);
-    },
-    setUserSignature: function(output) {
-      this.UserSignatureHasImage = true;
-      this.getUserSignature = output.dataUrl;
-      this.swapSignatures();
-      this.image = output;
-      console.log("data", output.dataUrl);
-      console.log("Info", output.info);
-      console.log("Exif", output.exif);
-    },
-    swapSignatures() {
-      alert(this.userSignature)
-      this.getUserSignature = this.userSignature;
-    },
-    // Profile image
     uploadProfilePicture() {
       this.updateProfileLoader = true;
 
       if (this.profilePicture == null) {
         this.updateProfileLoader = false;
-        return alert("Breakout");
+        return alert("Break");
       }
-      console.log("Dont Breakout");
+      console.log("Continue");
 
       axios
         .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
@@ -697,7 +647,7 @@ export default {
           console.log(response.status);
           console.log(response.headers);
 
-          // Upload REPONSE to server
+          // Upload RESPONSE to server
           this.sendProfilePictureToServer();
         })
         .catch(error => {
@@ -723,7 +673,6 @@ export default {
           console.log("Profile Picture successfully sent to server!");
           console.log({ response });
 
-          this.profilePicture = null;
           this.updateProfileLoader = false;
         })
         .catch(error => {
@@ -734,15 +683,23 @@ export default {
           this.updateProfileLoader = false;
         });
     },
+
     // COMPANY LOGO UPLOAD
+    setCompanyLogo: function(output) {
+      this.companyHasImage = true;
+      this.companyLogo = output.dataUrl;
+      this.image = output;
+      console.log("data", output.dataUrl);
+      console.log("Info", output.info);
+      console.log("Exif", output.exif);
+    },
     uploadCompanyLogo() {
       this.companyLogoLoading = true;
-
       if (this.companyLogo == null) {
         this.companyLogoLoading = false;
-        return alert("Breakout");
+        return alert("Break");
       }
-      console.log("Dont Breakout");
+      console.log("Continue");
 
       axios
         .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
@@ -759,7 +716,7 @@ export default {
           console.log(response.status);
           console.log(response.headers);
 
-          // Upload REPONSE to server
+          // Upload RESPONSE to server
           this.sendCompanyLogoToServer();
         })
         .catch(error => {
@@ -785,7 +742,6 @@ export default {
           console.log("Company Logo successfully sent to server!");
           console.log({ response });
 
-          this.companyLogo = null;
           this.companyLogoLoading = false;
         })
         .catch(error => {
@@ -796,25 +752,77 @@ export default {
           this.companyLogoLoading = false;
         });
     },
+
     // User Signature
+    setUserSignature: function(output) {
+      this.userSignatureHasImage = true;
+      this.userSignature = output.dataUrl;
+      // this.swapSignatures();
+      this.image = output;
+      console.log("data", output.dataUrl);
+      console.log("Info", output.info);
+      console.log("Exif", output.exif);
+    },
     uploadUserSignature() {
-      let formData = new FormData();
-      this.companyLogo = this.$refs.signaturePicker.files[0];
+      this.uploadSignatureLoader = true;
 
-      if (this.companyLogo) {
-        // for (let file in this.profilePicture) {
-        //   formData.append("profilePicture", file);
-        // }
-        formData.append("userSignature", this.userSignature);
-
-        // this.$store.dispatch("uploadProfilePicture", {});
-
-        console.log(formData.getAll("profilePicture"));
-        console.log(this.companyLogo);
-        console.log(this.previewCompanyLogo);
-      } else {
-        console.log("there are no files.");
+      if (this.userSignature == null) {
+        this.uploadSignatureLoader = false;
+        return alert("Break");
       }
+      console.log("Continue");
+
+      axios
+        .post("https://api.cloudinary.com/v1_1/" + this.cloudName + "/upload", {
+          tags: "user signature",
+          file: this.userSignature,
+          upload_preset: this.cloudSigPath
+        })
+        .then(response => {
+          this.userSignatureDATA.url = response.data.secure_url;
+          this.userSignatureDATA.createdAt = response.data.created_at;
+          this.userSignatureDATA.id = response.data.public_id;
+
+          console.log(response.data);
+          console.log(response.data.secure_url);
+          console.log(response.status);
+          console.log(response.headers);
+
+          // Upload RESPONSE to server
+          this.sendUserSignatureToServer();
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          this.uploadSignatureLoader = false;
+        });
+    },
+    sendUserSignatureToServer() {
+      console.log("userSignatureDATA", this.userSignatureDATA);
+      axios
+        .put(
+          "/api/v1/user/update",
+          { signature: this.userSignatureDATA },
+          {
+            headers: {
+              Authorization: this.$store.state.token,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          console.log("User Signature successfully sent to server!");
+          console.log({ response });
+
+          this.uploadSignatureLoader = false;
+        })
+        .catch(error => {
+          console.log({ error });
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          this.updateProfileLoader = false;
+        });
     },
     updateUserProfile() {
       if (this.$refs.updateProfilePass.validate()) {
@@ -850,6 +858,48 @@ export default {
       console.log(newObj);
       console.log(this.storedUserDetails);
     },
+    updatePassword() {
+      if (this.$refs.updatePasswordForm.validate()) {
+        this.updatePasswordLoader = true;
+        this.DisableUpdatePassword = true;
+
+        axios
+        .post(
+          "/api/v1/changepassword",
+          {
+            oldPassword: this.oldPassword,
+            password: this.password,
+            confirmPassword: this.confirmPassword
+          },
+          { headers: { Authorization: this.$store.state.token } }
+        )
+          .then(response => {
+            this.updatedSnackbar.active = true;
+            this.updatedSnackbar.text = response.data.message;
+            this.updatedSnackbar.color = "success";
+
+            this.updatePasswordLoader = false;
+            this.DisableUpdatePassword = false;
+
+            console.log(response);
+            console.log(response.data);
+            console.log(response.status);
+          })
+          .catch(error => {
+            this.updatedSnackbar.active = true;
+            this.updatedSnackbar.text = "error.response.data.message";
+            this.updatedSnackbar.color = "error";
+
+            this.updatePasswordLoader = false;
+            this.DisableUpdatePassword = false;
+
+            console.log(error);
+            console.log(error.response);
+            console.log(error.response.data);
+            console.log(error.response.status);
+          });
+      }
+    }
   },
   computed: {
     plans() {
@@ -863,40 +913,35 @@ export default {
         ? format(parseISO(this.dob + "T00:00:00"), "do, MMMM, yyyy")
         : "";
     },
-    ...mapState(
-      ["storedUserDetails", "profileUpdated", "successMessage", "storedUserSignature"]
-    ),
+    ...mapState([
+      "storedUserDetails",
+      "profileUpdated",
+      "successMessage",
+      "storedUserSignature",
+      "storedUserProfilePicture",
+      "storedcompanyLogo"
+    ]),
     // currentProfilePicture() {
     //   let currentProfilePicture = this.storedUserDetails.profilePicture.url;
     //   console.log(currentProfilePicture);
     //   return currentProfilePicture;
     // }
-    getUserSignature: {
-      // getter
-    get: function () {
+    getUserSignature() {
       let url = this.storedUserSignature;
-      return url
-    },
-    // setter
-    set: function (newImage) {
-      var newUpload = newImage;
-      alert(this.getUserSignature)
-      return newUpload;
-    }
-      
+      return url;
     },
     fullName: {
-    // getter
-    get: function () {
-      let url = this.storedUserSignature;
-      return url
-    },
-    // setter
-    set: function (newImage) {
-      var newUpload = newImage;
-      return newUpload;
+      // getter
+      get: function() {
+        let url = this.storedUserSignature;
+        return url;
+      },
+      // setter
+      set: function(newImage) {
+        var newUpload = newImage;
+        return newUpload;
+      }
     }
-  }
   },
   watch: {
     newSelectedProfilePicture(val) {
@@ -960,7 +1005,7 @@ export default {
   mounted() {
     // this.currentUserSignature = this.storedUserDetails.signature.url
     // console.log(this.currentUserSignature)
-    console.log(this.storedUserDetails)
+    console.log(this.storedUserDetails);
     // this.currentUserSignature = this.storedUserSignature;
 
     // this.showStoredUserDetails();

@@ -162,7 +162,6 @@ export default {
             console.log(response.data);
             console.log(response.status);
 
-
             this.changePasswordSnackbar.active = true;
             this.changePasswordSnackbar.text = response.data.message;
             this.changePasswordSnackbar.color = "success";
