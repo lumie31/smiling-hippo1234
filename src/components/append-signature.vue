@@ -65,9 +65,9 @@
           <v-icon>refresh</v-icon>
         </v-btn>
         </div>
-        <v-btn class="mt-12 accent" @click="appendToFormData">
+        <!-- <v-btn class="mt-12 accent" @click="appendToFormData">
           <span>Update Signature</span>
-        </v-btn>
+        </v-btn> -->
         <span class="mx-4"></span>
         <v-btn class="mt-12 success" @click="updateDefaultSignature" v-if="userSignatureHasImage" :loading="uploadSignatureLoader">
           <span>Set As Default</span>
@@ -172,7 +172,7 @@ export default {
         firstParty: {
           mode: "company",
           name: "",
-          signature: this.$store.state.storedUserSignature
+          signature: ""
         },
         secondParty: {
           mode: "company",
@@ -197,12 +197,19 @@ export default {
       this.userSignatureHasImage = false;
       this.userSignature = null;
       this.partySignatories.firstParty.signature = this.$store.state.storedUserSignature;
+
+      // Remove emission from appended form
+      this.appendToFormData();
     },
     // User Signature
     setUserSignature: function(output) {
       this.userSignatureHasImage = true;
       this.userSignature = output.dataUrl;
       this.partySignatories.firstParty.signature = output.dataUrl;
+
+      // Emit Append function to Parent after each selection
+      this.appendToFormData();
+
       // this.image = output;
       console.log("data", output.dataUrl);
       console.log("Info", output.info);
@@ -296,6 +303,10 @@ export default {
       //   this.userDetailsReady = false;
       // }, 500);
     });
+
+    // Emit Append function to Parent on mount
+    this.partySignatories.firstParty.signature = this.$store.state.storedUserSignature;
+
   },
   watch: {
     userSignatureHasImage(val) {
@@ -309,7 +320,13 @@ export default {
     
   },
   mounted() {
-    // this.appendToFormData();
+    setTimeout(() => {
+      this.partySignatories.firstParty.signature = this.storedUserSignature;
+    }, 1000);
+
+
+    // Emit Append function to Parent on mount
+      this.appendToFormData();
   }
 };
 </script>
