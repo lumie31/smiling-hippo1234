@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     appendToFormData() {
-      this.$emit("signatoriesDATA", "Muktar")
+      this.$emit("signatoriesDATA", this.partySignatories)
     },
     // User Signature
     setUserSignature: function(output) {

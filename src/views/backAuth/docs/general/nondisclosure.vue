@@ -2,7 +2,7 @@
   <div class="dashboard createDocument createEditDocument nondisclosure page back-page">
     <back-nav></back-nav>
 
-    <div class="testFloat">{{ signatories }}</div>
+    <pre class="testFloat">{{ signatories }}</pre>
 
     <v-form ref="documentPass" @submit.prevent="submitDocument">
       <div class="bodyWrapper">
@@ -644,7 +644,7 @@
             {{ docSavedSnackbar.text }}
           </v-snackbar>
           <v-container class="contractsignatory">
-            <append-signature :signatoriesDATA="retrieveSignatoriesData"></append-signature>
+            <append-signature @signatoriesDATA="retrieveSignatoriesData"></append-signature>
           </v-container>
 
           <v-row>
