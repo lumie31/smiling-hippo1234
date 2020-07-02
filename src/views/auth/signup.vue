@@ -169,7 +169,7 @@ export default {
       show4: false,
       loading: false,
       disable: false,
-      isActivateMode: !false,
+      isActivateMode: false,
       signUpSnackbar: {
         active: false,
         text: "",
