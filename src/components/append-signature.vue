@@ -303,10 +303,6 @@ export default {
       //   this.userDetailsReady = false;
       // }, 500);
     });
-
-    // Emit Append function to Parent on mount
-    this.partySignatories.firstParty.signature = this.$store.state.storedUserSignature;
-
   },
   watch: {
     userSignatureHasImage(val) {

@@ -42,7 +42,7 @@
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
-                    <v-form ref="updateProfilePass" @submit.prevent="updateUserProfile">
+                    <v-form ref="updateProfilePass" @submit.prevent>
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
                           <!-- <pre class="testFloat">{{ storedUserDetails }}</pre> -->
@@ -322,7 +322,7 @@
                           <p class="caption">Update the password to your account here</p>
                         </v-col>
                         <v-col cols="12" sm="8">
-                          <v-form action="#" ref="updatePasswordForm" @submit.prevent="updatePassword">
+                          <v-form action="#" ref="updatePasswordForm" @submit.prevent>
                             <v-text-field
                               v-model="oldPassword"
                               class="login-input"
@@ -647,7 +647,7 @@ export default {
           this.updatedSnackbar.active = true;
           this.updatedSnackbar.text = "Oops! An error occured";
           this.updatedSnackbar.color = "error";
-          
+
           this.updateProfileLoader = false;
         });
     },

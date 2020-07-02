@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard page docMore back-page">
     <back-nav></back-nav>
+    <pre class="testFloat">{{ storedUserDetails.documents }}</pre>
+
     <div class="bodyWrapper">
       <v-container>
         <v-row>
@@ -487,7 +489,10 @@ export default {
   },
   watch: {},
   methods: {},
-  mounted() {},
+  mounted() {
+    console.log(this.storedUserDetails);
+    
+  },
   components: {
     "back-nav": Back_Navbar,
     "general-footer": General_Footer,

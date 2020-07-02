@@ -4,7 +4,7 @@
 
     <pre class="testFloat">{{ signatories }}</pre>
 
-    <v-form ref="documentPass" @submit.prevent="submitDocument">
+    <v-form ref="documentPass" @submit.prevent>
       <div class="bodyWrapper">
         <v-container>
           <v-row>
@@ -851,13 +851,13 @@ export default {
         docData.legalboxParent = this.parent;
         docData.category = this.category;
         console.log(docData);
-        this.andContinueValidator = andContinue;
+        // this.andContinueValidator = andContinue;
 
-        // this.$store.dispatch("submitDocument", docData).then(() => {
-        //   this.andContinueValidator = andContinue;
-        //   console.log(this.$store.state.redirecttoEditID);
-        //   console.log(andContinue);
-        // });
+        this.$store.dispatch("submitDocument", docData).then(() => {
+          this.andContinueValidator = andContinue;
+          console.log(this.$store.state.redirecttoEditID);
+          console.log(andContinue);
+        });
         // End of logics, submission done
       } else {
         this.invalidSubmission.active = true;
@@ -1085,7 +1085,7 @@ export default {
           this.loadingSend = true;
 
           setTimeout(() => {
-            // this.$router.push("/docs/more/" + val);
+            this.$router.push("/docs/more/" + val);
             // console.log("To MORE Page");
             this.loadingSend = false;
           }, this.$store.state.snackBarDuration);
@@ -1093,7 +1093,7 @@ export default {
           this.loadingContinue = true;
 
           setTimeout(() => {
-            // this.$router.push("/docs/edit/" + val);
+            this.$router.push("/docs/edit/" + val);
             // console.log("To EDIT Page");
             this.loadingContinue = false;
           }, this.$store.state.snackBarDuration);

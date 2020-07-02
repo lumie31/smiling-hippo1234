@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard nondisclosure page back-page">
+  <div class="dashboard editDocument createEditDocument page back-page">
     <back-nav></back-nav>
     <div class="bodyWrapper">
       <v-container v-if="!dataReady">
@@ -370,7 +370,7 @@
           <div v-if="!subOfGeneralActive">
             <v-container fluid class="docParent pb-12">
               <v-container>
-                <v-form id="myForm" @click.prevent="">
+                <v-form id="myForm" @click.prevent>
                   <v-row>
                     <v-col cols="12" sm="6">
                       <!-- {{ formOutput.formDupper }} -->

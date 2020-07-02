@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard receiptInvoice page back-page">
     <back-nav></back-nav>
-    <v-form ref="documentPass" @submit.prevent="submitDocument">
+    <v-form ref="documentPass" @submit.prevent>
       <div class="bodyWrapper">
         <v-container class="">
           <v-row>
