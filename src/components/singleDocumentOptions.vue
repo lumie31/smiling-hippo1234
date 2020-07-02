@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard page docMore back-page">
     <back-nav></back-nav>
-    <pre class="testFloat">{{ storedUserDetails.documents }}</pre>
+    <!-- <pre class="testFloat">{{ storedUserDetails.documents }}</pre> -->
 
     <div class="bodyWrapper">
       <v-container>

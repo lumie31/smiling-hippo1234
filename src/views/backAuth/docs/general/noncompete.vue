@@ -163,9 +163,9 @@
           </v-row>
 
           <!-- DUPLICATABLE Dues Figures -->
-          <pre class="testFloat">
+          <!-- <pre class="testFloat">
             {{ formOutput.payment }}
-          </pre>
+          </pre> -->
           <v-row
             style="width: 80%; margin: 0 auto;"
             v-for="(due, index) in formOutput.payment.duplicatedDues"

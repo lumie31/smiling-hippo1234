@@ -130,7 +130,7 @@ import Vue from "vue";
               </div>
 
               <div
-                v-for="(legalbox, index) in legalboxes.slice(0,3)"
+                v-for="(legalbox, index) in legalboxes.slice(0,legalboxes.length/2)"
                 :key="index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
