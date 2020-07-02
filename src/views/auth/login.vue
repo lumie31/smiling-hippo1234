@@ -135,24 +135,18 @@ export default {
             setTimeout(() => {
               this.$router
                 .push(
-                  localStorage.getItem("pathToLoadAfterLogin") || "/messages"
+                  // localStorage.getItem("pathToLoadAfterLogin") || "/messages"
+                  "/dashboard"
                 )
                 .catch(error => {
                   if (error.name != "NavigationDuplicated") {
                     throw error;
                   }
                 });
-              console.log(localStorage.getItem("pathToLoadAfterLogin"));
+              // console.log(localStorage.getItem("pathToLoadAfterLogin"));
             }, 1000);
           });
 
-        // Improve code re-structure code later
-        // if (this.signedIn === false) {
-        //   this.loginSnackbar.active = true;
-        //   this.loginSnackbar.text = this.$store.state.loginErrorMessage;
-        //   this.loginSnackbar.color = "error";
-        //   this.loginLoader = false;
-        // }
       }
     }
   },
