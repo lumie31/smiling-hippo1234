@@ -61,6 +61,9 @@
               </figure>
             </label>
           </image-uploader>
+          <v-btn text class="transparent resetSignatureSelection" @click="resetSignatureSelection" v-if="userSignatureHasImage">
+          <v-icon>refresh</v-icon>
+        </v-btn>
         </div>
         <v-btn class="mt-12 accent" @click="appendToFormData">
           <span>Update Signature</span>
@@ -134,6 +137,17 @@
         </v-btn>
       </v-container>
     </v-col> 
+    <v-snackbar
+       class="snackbar"
+       :color="updatedSnackbar.color"
+       top
+       right
+       v-model="updatedSnackbar.active"
+       :multi-line="updatedSnackbar.multiLine"
+       :timeout="updatedSnackbar.timeout"
+     >
+       {{ updatedSnackbar.text }}
+     </v-snackbar>
   </v-row>
 </template>
 
@@ -163,12 +177,24 @@ export default {
           name: "",
           signature: ""
         }
-      }
+      },
+      updatedSnackbar: {
+        active: false,
+        text: "",
+        multiLine: true,
+        color: null,
+        timeout: this.$store.state.snackBarDuration
+      },
     };
   },
   methods: {
     appendToFormData() {
       this.$emit("signatoriesDATA", this.partySignatories)
+    },
+    resetSignatureSelection() {
+      this.userSignatureHasImage = false;
+      this.userSignature = this.$store.state.storedUserSignature;
+      this.partySignatories.firstParty.signature = this.$store.state.storedUserSignature;
     },
     // User Signature
     setUserSignature: function(output) {
@@ -218,6 +244,11 @@ export default {
         .catch(error => {
           console.log(error);
           console.log(error.response);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+          
           this.uploadSignatureLoader = false;
         });
     },
@@ -238,6 +269,10 @@ export default {
           console.log("User Signature successfully sent to server!");
           console.log({ response });
 
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Profile Picture successfully updated";
+          this.updatedSnackbar.color = "success";
+
           this.uploadSignatureLoader = false;
         })
         .catch(error => {
@@ -245,6 +280,11 @@ export default {
           console.log(error.response);
           console.log(error.response.data);
           console.log(error.response.status);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+
           this.updateProfileLoader = false;
         });
     },
@@ -261,6 +301,13 @@ export default {
       //   this.userDetailsReady = false;
       // }, 500);
     });
+  },
+  watch: {
+    userSignatureHasImage(val) {
+      if (val) {
+        return val
+      }
+    }
   },
   computed: {
     ...mapState(["storedUserDetails", "userDetailsReady", "storedUserSignature"]),
@@ -306,5 +353,15 @@ export default {
 
 .container.contractSignatory {
   padding: 0;
+}
+
+.uploadItemParent {
+  position: relative;
+}
+
+.resetSignatureSelection {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>

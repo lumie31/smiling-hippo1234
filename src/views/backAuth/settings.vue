@@ -643,6 +643,11 @@ export default {
         .catch(error => {
           console.log(error);
           console.log(error.response);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+          
           this.updateProfileLoader = false;
         });
     },
@@ -721,6 +726,11 @@ export default {
         .catch(error => {
           console.log(error);
           console.log(error.response);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+
           this.companyLogoLoading = false;
         });
     },
@@ -802,6 +812,11 @@ export default {
         .catch(error => {
           console.log(error);
           console.log(error.response);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+
           this.uploadSignatureLoader = false;
         });
     },
