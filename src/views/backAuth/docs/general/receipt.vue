@@ -378,13 +378,6 @@
               :timeout="docSavedSnackbar.timeout"
             >
               {{ docSavedSnackbar.text }}
-              <v-btn
-                color="secondary"
-                text
-                @click="docSavedSnackbar.active = false"
-              >
-                <b>x</b>
-              </v-btn>
             </v-snackbar>
           </v-container>
         </v-container>
@@ -407,9 +400,6 @@
       :timeout="invalidSubmission.timeout"
     >
       {{ invalidSubmission.text }}
-      <v-btn color="secondary" text @click="invalidSubmission.active = false">
-        <b>x</b>
-      </v-btn>
     </v-snackbar>
 
     <general-footer></general-footer>

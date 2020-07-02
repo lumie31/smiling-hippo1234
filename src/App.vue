@@ -16,7 +16,7 @@ export default {
   }),
   mounted() {
     console.log = function() {};
-    console.log("Populating dropdown with cities"); // prints nothing
+    // console.log("Populating dropdown with cities"); // prints nothing
   }
 };
 </script>

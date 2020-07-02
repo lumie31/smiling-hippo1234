@@ -6,7 +6,6 @@
       </router-link>
     </v-container>
 
-    <div v-if="isActivateMode">HELLO</div>
     <v-row>
       <v-col cols="12" sm="12">
         <v-dialog
@@ -16,11 +15,8 @@
           transition="dialog-bottom-transition"
         >
           <v-card class="pt-12">
-            <!-- <v-toolbar dark color="primary">
-              <v-btn icon dark @click="dialog = false">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </v-toolbar> -->
+            <v-toolbar dark color="accent">
+            </v-toolbar>
             <v-container
               class="l-hero d-flex align-center justify-center mb-10"
             >
@@ -58,7 +54,7 @@
       >
         <h2 class="display-2 text-center my-8">Create an Account</h2>
         <div class="signup-form-parent">
-          <v-form action="#" ref="signUpPass" @submit.prevent="signUp">
+          <v-form ref="signUpPass" @submit.prevent>
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -150,9 +146,6 @@
         :timeout="signUpSnackbar.timeout"
       >
         {{ signUpSnackbar.text }}
-        <v-btn color="secondary" text @click="signUpSnackbar.active = false">
-          <b>x</b>
-        </v-btn>
       </v-snackbar>
     </div>
 
@@ -176,7 +169,7 @@ export default {
       show4: false,
       loading: false,
       disable: false,
-      isActivateMode: false,
+      isActivateMode: !false,
       signUpSnackbar: {
         active: false,
         text: "",
@@ -216,13 +209,13 @@ export default {
     signUp() {
       if (this.$refs.signUpPass.validate()) {
         this.loading = true;
-        // console.log(
-        //   this.firstName,
-        //   this.lastName,
-        //   this.email,
-        //   this.password,
-        //   this.confirmPassword
-        // );
+        console.log(
+          this.firstName,
+          this.lastName,
+          this.email,
+          this.password,
+          this.confirmPassword
+        );
         this.$store.dispatch("processSignUp", {
           firstName: this.firstName,
           lastName: this.lastName,
@@ -233,7 +226,7 @@ export default {
         // this.$router.push("/login");
       } else {
         this.signUpSnackbar.active = true;
-        this.signUpSnackbar.text = "Oops! Please fill the form approriately ";
+        this.signUpSnackbar.text = "Oops! Please fill the form appropriately ";
         this.signUpSnackbar.color = "error";
         this.signUpSnackbar.multiLine = true;
         this.signUpSnackbar.timeout = this.$store.state.snackBarDuration;

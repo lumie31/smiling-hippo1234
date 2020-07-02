@@ -34,6 +34,48 @@
                             <th>Last Opened</th>
                           </tr>
                         </thead>
+                        <tbody v-if="documents.length > 1">
+                          <tr
+                            v-for="(details, index) in documents"
+                            :key="index"
+                          >
+                            <td>
+                              <span></span>
+                              <router-link :to="'docs/more/' + details._id">
+                                <b>{{ details.title }}</b> :
+                                {{ details.category }}
+                                {{ details._id }}
+                              </router-link>
+                            </td>
+                            <td>
+                              {{ details.date }}
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody v-if="documents.length < 1">
+                          <tr class="py-8">
+                            <td>No Document</td>
+                            <td>--</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+
+              <!-- Signed Tab -->
+              <v-tab-item class="transparent legalbox-body-text">
+                <v-card flat class="transparent">
+                  <v-card-text class="transparent px-12 py-8">
+                    <div>
+                      <table class="tableUI shadow-me documentsTable">
+                        <thead>
+                          <tr>
+                            <th>Document Summary</th>
+                            <th>Last Opened</th>
+                          </tr>
+                        </thead>
                         <tbody>
                           <tr
                             v-for="(details, index) in documents"
@@ -57,16 +99,40 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item class="transparent legalbox-body-text">
-                <v-card flat class="transparent">
-                  <v-card-text class="transparent px-12 py-8"> </v-card-text>
-                </v-card>
-              </v-tab-item>
 
-              <!-- Card Tab -->
+              <!-- Sent Tab -->
               <v-tab-item class="transparent legalbox-body-text">
                 <v-card flat class="transparent">
-                  <v-card-text class="transparent px-12 py-8"> </v-card-text>
+                  <v-card-text class="transparent px-12 py-8">
+                    <div>
+                      <table class="tableUI shadow-me documentsTable">
+                        <thead>
+                          <tr>
+                            <th>Document Summary</th>
+                            <th>Last Opened</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(details, index) in documents"
+                            :key="index"
+                          >
+                            <td>
+                              <span></span>
+                              <router-link :to="'docs/more/' + details._id">
+                                <b>{{ details.title }}</b> :
+                                {{ details.category }}
+                                {{ details._id }}
+                              </router-link>
+                            </td>
+                            <td>
+                              {{ details.date }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </v-card-text>
                 </v-card>
               </v-tab-item>
             </v-tabs>

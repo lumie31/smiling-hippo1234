@@ -62,7 +62,7 @@
             </label>
           </image-uploader>
         </div>
-        <v-btn class="mt-12 accent" @click="emitDocumentSignature" :loading="uploadSignatureLoader">
+        <v-btn class="mt-12 accent" @click="appendToFormData">
           <span>Update Signature</span>
         </v-btn>
         <span class="mx-4"></span>
@@ -90,6 +90,7 @@
             </v-radio-group>
         </div>
       <v-text-field
+        disabled
         v-if="partySignatories.secondParty.mode == 'company'"
         height="155"
         label="Company Name"
@@ -129,7 +130,7 @@
         </div>
         <div class="uploadItem userSignatureHolder" v-if="!secondPartySignatureACTIVE"></div>
         <v-btn class="mt-12 accent" @click="uploadSecondPartySignature" :disabled="!secondPartySignatureACTIVE">
-          <span>Update Signature</span>
+          <span>Upload Signature</span>
         </v-btn>
       </v-container>
     </v-col> 
@@ -166,6 +167,9 @@ export default {
     };
   },
   methods: {
+    appendToFormData() {
+      this.$emit("signatoriesDATA", "Muktar")
+    },
     // User Signature
     setUserSignature: function(output) {
       this.userSignatureHasImage = true;
@@ -261,6 +265,9 @@ export default {
   computed: {
     ...mapState(["storedUserDetails", "userDetailsReady", "storedUserSignature"]),
     
+  },
+  mounted() {
+    // this.appendToFormData();
   }
 };
 </script>

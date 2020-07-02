@@ -1,6 +1,9 @@
 <template>
   <div class="dashboard createDocument createEditDocument nondisclosure page back-page">
     <back-nav></back-nav>
+
+    <div class="testFloat">{{ signatories }}</div>
+
     <v-form ref="documentPass" @submit.prevent="submitDocument">
       <div class="bodyWrapper">
         <v-container>
@@ -639,16 +642,9 @@
             :timeout="docSavedSnackbar.timeout"
           >
             {{ docSavedSnackbar.text }}
-            <v-btn
-              color="secondary"
-              text
-              @click="docSavedSnackbar.active = false"
-            >
-              <b>x</b>
-            </v-btn>
           </v-snackbar>
           <v-container class="contractsignatory">
-            <append-signature></append-signature>
+            <append-signature :signatoriesDATA="retrieveSignatoriesData"></append-signature>
           </v-container>
 
           <v-row>
@@ -659,6 +655,7 @@
               <v-btn
                 large
                 class="accent submit-document saveOnly"
+                :loading="loadingContinue"
                 @click="submitDocument('continueEdit')"
                 :disabled="disableContinue"
               >
@@ -700,9 +697,6 @@
       :timeout="invalidSubmission.timeout"
     >
       {{ invalidSubmission.text }}
-      <v-btn color="secondary" text @click="invalidSubmission.active = false">
-        <b>x</b>
-      </v-btn>
     </v-snackbar>
 
     <general-footer></general-footer>
@@ -723,6 +717,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      signatories: "RR",
       holderTemp1:
         "https://res.cloudinary.com/djw3g8meb/image/upload/v1593167822/fga2wjubbghorprszstp.gif",
       cloudName: process.env.VUE_APP_cloudinary_cloudName,
@@ -818,6 +813,9 @@ export default {
   },
 
   methods: {
+    retrieveSignatoriesData(val) {
+      this.signatories = val;
+    },
     submitIMG() {
       let obj2 = JSON.stringify(this.previewSignature);
       console.log("IMG: " + obj2);

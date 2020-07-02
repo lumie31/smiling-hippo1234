@@ -336,13 +336,6 @@
           :timeout="docSavedSnackbar.timeout"
         >
           {{ docSavedSnackbar.text }}
-          <v-btn
-            color="secondary"
-            text
-            @click="docSavedSnackbar.active = false"
-          >
-            <b>x</b>
-          </v-btn>
         </v-snackbar>
         <append-signature></append-signature>
         <v-row>

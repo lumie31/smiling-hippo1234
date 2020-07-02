@@ -284,24 +284,7 @@
                             :loading="updateProfileLoader"
                             :disabled="updateProfileLoader"
                           >Update Profile</v-btn>
-                          <!-- <v-snackbar
-                            class="snackbar"
-                            :color="updatedSnackbar.color"
-                            top
-                            right
-                            v-model="updatedSnackbar.active"
-                            :multi-line="updatedSnackbar.multiLine"
-                            :timeout="updatedSnackbar.timeout"
-                          >
-                            {{ updatedSnackbar.text }}
-                            <v-btn
-                              color="secondary"
-                              text
-                              @click="updatedSnackbar.active = false"
-                            >
-                              <b>x</b>
-                            </v-btn>
-                          </v-snackbar>-->
+                          
                         </v-col>
                       </v-row>
                     </v-form>
@@ -330,8 +313,9 @@
                         </v-col>
                       </v-row>
                     </v-form>
+
                     <!-- Change Password -->
-                    <v-form>
+                    <v-form class="mt-12">
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Password</p>
@@ -382,7 +366,7 @@
                         </v-col>
                       </v-row>
                     </v-form>
-                    <v-form>
+                    <v-form class="mt-12">
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Upload/Change Signature</p>
@@ -396,7 +380,7 @@
                             <b>Ink Color:</b> Black
                           </p>
                         </v-col>
-                        <v-col cols="12" sm="8" class="d-flex align-center">
+                        <v-col cols="12" sm="8" class="">
                           <div class="uploadItemParent">
                             <image-uploader
                               id="userSignature"
@@ -429,7 +413,7 @@
                               </label>
                             </image-uploader>
                           </div>
-                          <v-btn class="ml-12 accent" @click="uploadUserSignature">
+                          <v-btn class="mt-4 accent" @click="uploadUserSignature" :loading="uploadSignatureLoader" :disabled="userSignature == null">
                             <span>Update Signature</span>
                           </v-btn>
                         </v-col>
@@ -506,6 +490,17 @@
             </v-tabs>
           </div>
         </div>
+        <v-snackbar
+          class="snackbar"
+          :color="updatedSnackbar.color"
+          top
+          right
+          v-model="updatedSnackbar.active"
+          :multi-line="updatedSnackbar.multiLine"
+          :timeout="updatedSnackbar.timeout"
+        >
+          {{ updatedSnackbar.text }}
+        </v-snackbar>
       </v-container>
     </div>
 
@@ -667,6 +662,10 @@ export default {
         .then(response => {
           console.log("Profile Picture successfully sent to server!");
           console.log({ response });
+          
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Profile Picture successfully updated";
+          this.updatedSnackbar.color = "success";
 
           this.updateProfileLoader = false;
         })
@@ -675,6 +674,11 @@ export default {
           console.log(error.response);
           console.log(error.response.data);
           console.log(error.response.status);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+
           this.updateProfileLoader = false;
         });
     },
@@ -737,6 +741,10 @@ export default {
           console.log("Company Logo successfully sent to server!");
           console.log({ response });
 
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Company Logo successfully updated";
+          this.updatedSnackbar.color = "success";
+
           this.companyLogoLoading = false;
         })
         .catch(error => {
@@ -744,6 +752,11 @@ export default {
           console.log(error.response);
           console.log(error.response.data);
           console.log(error.response.status);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+
           this.companyLogoLoading = false;
         });
     },
@@ -807,15 +820,25 @@ export default {
         )
         .then(response => {
           console.log("User Signature successfully sent to server!");
-          console.log({ response });
 
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Signature successfully updated";
+          this.updatedSnackbar.color = "success";
+          
           this.uploadSignatureLoader = false;
+           return response;
+
         })
         .catch(error => {
           console.log({ error });
           console.log(error.response);
           console.log(error.response.data);
           console.log(error.response.status);
+
+          this.updatedSnackbar.active = true;
+          this.updatedSnackbar.text = "Oops! An error occured";
+          this.updatedSnackbar.color = "error";
+          
           this.updateProfileLoader = false;
         });
     },

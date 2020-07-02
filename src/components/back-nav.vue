@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="pageLoader" class="loader"></div>
+    <!-- <div v-if="pageLoader" class="loader"></div> -->
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="fallbackError"
       fullscreen
       hide-overlay
@@ -11,9 +11,10 @@
       <v-card class="fallbackError">
         <v-container></v-container>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
 
-    <div class="testFloat">{{ userDocuments }}</div>
+    <!-- <div class="testFloat">{{ userDocuments }}</div> -->
+    <!-- <pre class="testFloat">isActivated: {{ storedUserDetails }}</pre> -->
     <nav>
       <v-toolbar height="200" class="nav-tool back-nav" elevation="3 ">
         <router-link to="/dashboard">
@@ -116,7 +117,7 @@
       >
         <v-toolbar dark color="secondary text-right">
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="toReset = false">
+          <v-btn icon dark @click="resetSuccessful = false">
             <v-icon x-large>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
@@ -258,7 +259,7 @@ export default {
       this.resetLoader = true;
 
       axios
-        .post("/api/v1/activate/" + this.userEmail)
+        .get("/api/v1/activate/user/" + this.userEmail)
         .then(response => {
           this.resetSuccessful = true;
 
