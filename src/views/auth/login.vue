@@ -18,7 +18,7 @@
           You just successfully <br />
           logged out
         </h2> -->
-        <v-form action="#" ref="userLogin" @submit.prevent="login">
+        <v-form action="#" ref="userLogin" @submit.prevent>
           <v-text-field
             class="login-input"
             :rules="[rules.required, rules.email]"
