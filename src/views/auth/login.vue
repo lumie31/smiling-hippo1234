@@ -147,12 +147,12 @@ export default {
           });
 
         // Improve code re-structure code later
-        if (this.signedIn === false) {
-          this.loginSnackbar.active = true;
-          this.loginSnackbar.text = this.$store.state.loginErrorMessage;
-          this.loginSnackbar.color = "error";
-          this.loginLoader = false;
-        }
+        // if (this.signedIn === false) {
+        //   this.loginSnackbar.active = true;
+        //   this.loginSnackbar.text = this.$store.state.loginErrorMessage;
+        //   this.loginSnackbar.color = "error";
+        //   this.loginLoader = false;
+        // }
       }
     }
   },
