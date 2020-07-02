@@ -83,7 +83,7 @@ import Vue from "vue";
             </p>
           </div>
           <v-row class="legalboxesWrapper">
-            <v-col cols="12" sm="12" class="legalbox-subscription-halves">
+            <v-col cols="6" sm="6" class="legalbox-subscription-halves">
               <div
                 v-for="(legalbox, index) in legalboxesFilteredGeneral"
                 :key="legalbox.name + index"
@@ -111,12 +111,15 @@ import Vue from "vue";
                   </v-icon> -->
                 </div>
                 <v-container>
+                  <!-- {{ panel }} -->
                   <v-expansion-panels flat>
                     <v-expansion-panel>
                       <v-expansion-panel-header
-                        class="legalbox-info-ellipsis transparent"
+                        class="transparent"
+                        id="header"
+                        @click="hideEllipsis"
                       >
-                        more info...
+                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content class="faq-answers">
                         {{ legalbox.info }}
@@ -127,7 +130,7 @@ import Vue from "vue";
               </div>
 
               <div
-                v-for="(legalbox, index) in legalboxes"
+                v-for="(legalbox, index) in legalboxes.slice(1,4)"
                 :key="index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
@@ -156,9 +159,52 @@ import Vue from "vue";
                   <v-expansion-panels flat>
                     <v-expansion-panel>
                       <v-expansion-panel-header
-                        class="legalbox-info-ellipsis transparent"
+                        class="transparent"
                       >
-                        more info...
+                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content class="faq-answers">
+                        {{ legalbox.info }}
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-container>
+              </div>
+            </v-col>
+            <v-col cols="6" sm="6" class="legalbox-subscription-halves">
+              <div
+                v-for="(legalbox, index) in legalboxes.slice(3,legalboxes.length)"
+                :key="index"
+                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
+              >
+                <div class="d-flex align-center">
+                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                  <v-checkbox
+                    class="legalboxSubscribeCheckbox"
+                    v-model="selectedLegalbox"
+                    @change="updateSelectedLegalbox"
+                    :value="legalbox.name"
+                    :disabled="disableCheckbox"
+                  >
+                  </v-checkbox>
+                  <p class="title mt-2">{{ legalbox.name }}</p>
+                  <v-spacer></v-spacer>
+                  <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon> -->
+                </div>
+                <v-container>
+                  <v-expansion-panels flat>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header
+                        class="transparent"
+                      >
+                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content class="faq-answers">
                         {{ legalbox.info }}
@@ -237,11 +283,13 @@ import { uuid } from "vue-uuid";
 import Navbar from "@/components/Nav-Gen";
 import General_Footer from "@/components/footer";
 import { mapState } from "vuex";
+import $ from "jquery";
 import axios from "axios";
 
 export default {
   data() {
     return {
+      panel: [],
       paymentInitiated: true,
       uuid: "LB_Paystack_" + uuid.v4(),
       currentPlan: "",
@@ -255,6 +303,11 @@ export default {
     };
   },
   methods: {
+    hideEllipsis() {
+      if ($("buttton#header").hasClass(".v-expansion-panel-header--active")) {
+        $("buttton#header").children(".legalbox-info-ellipsis").hide()
+      }
+    },
     callback: function(response) {
       console.log(response);
     },
@@ -392,9 +445,17 @@ export default {
     },
     legalboxesFilteredGeneral() {
       return this.$store.state.legalboxes.filter(i => i.name == "General");
+    },
+    hideEllipsis2() {
+      let ellipsis = $(".legalbox-info-ellipsis")
+      if ($("buttton#header").hasClass(".v-expansion-panel-header--active")) {
+        ellipsis.hide()
+      }
+      return ellipsis
     }
   },
   mounted() {
+    this.hideEllipsis()
     // console.log(this.storedUserDetails)
     // let list = document.getElementsByClassName("legalboxSubscribeCheckbox");
     // console.log(list);
@@ -433,15 +494,24 @@ export default {
   transform: scale(1.5);
 }
 
-.legalbox-subscription-halves {
+/* .legalbox-subscription-halves {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
   flex-wrap: wrap;
   height: 100%;
-}
+} */
 
-.subscribe-legalbox {
+/* .subscribe-legalbox {
   width: 40%;
+} */
+
+.legalbox-info-ellipsis {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 1.625;
+    -webkit-line-clamp: 2; /* after 3 line show ... */
+    -webkit-box-orient: vertical;
 }
 </style>

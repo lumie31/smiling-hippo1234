@@ -13,7 +13,7 @@
         <h2 class="display-3 text-center my-8">
           Reset Your Password
         </h2>
-        <v-form action="#" ref="resetPassword" @submit.prevent=>
+        <v-form action="#" ref="resetPassword" @submit.prevent>
           <v-text-field
             class="login-input"
             :rules="[rules.required, rules.email]"
