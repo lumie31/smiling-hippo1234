@@ -158,6 +158,8 @@ import axios from "axios"
 export default {
   data() {
     return {
+      cloudName: process.env.VUE_APP_cloudinary_cloudName,
+      cloudSigPath: process.env.VUE_APP_cloudinary_sigPath,
       userSignature: null,
       secondPartySignature: null,
       documentSignature: null,
@@ -193,7 +195,7 @@ export default {
     },
     resetSignatureSelection() {
       this.userSignatureHasImage = false;
-      this.userSignature = this.$store.state.storedUserSignature;
+      this.userSignature = null;
       this.partySignatories.firstParty.signature = this.$store.state.storedUserSignature;
     },
     // User Signature
@@ -205,13 +207,6 @@ export default {
       console.log("data", output.dataUrl);
       console.log("Info", output.info);
       console.log("Exif", output.exif);
-    },
-    emitDocumentSignature() {
-      // this.documentSignature = this.userSignature;
-      console.log(this.partySignatories.firstParty.signature);
-      console.log("Ran");
-
-      // this.$emit("emitDocumentSignature")
     },
     updateDefaultSignature() {
       this.uploadSignatureLoader = true;
@@ -248,7 +243,7 @@ export default {
           this.updatedSnackbar.active = true;
           this.updatedSnackbar.text = "Oops! An error occured";
           this.updatedSnackbar.color = "error";
-          
+
           this.uploadSignatureLoader = false;
         });
     },
@@ -270,7 +265,7 @@ export default {
           console.log({ response });
 
           this.updatedSnackbar.active = true;
-          this.updatedSnackbar.text = "Profile Picture successfully updated";
+          this.updatedSnackbar.text = "Default Signature updated";
           this.updatedSnackbar.color = "success";
 
           this.uploadSignatureLoader = false;
