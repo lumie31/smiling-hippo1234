@@ -2,11 +2,14 @@
   "name": "legalbox",
   "version": "0.1.0",
   "private": true,
+  "description": "## Project setup ``` npm install ```",
+  "author": "",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "main": ".eslintrc.js",
   "dependencies": {
     "@mdi/font": "^5.3.45",
     "axios": "^0.19.2",
@@ -42,11 +45,15 @@
     "@vue/cli-plugin-router": "^4.4.6",
     "@vue/cli-plugin-vuex": "^4.4.6",
     "@vue/cli-service": "^4.4.6",
-    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
     "material-design-icons-iconfont": "^5.0.1",
+    "prettier": "^1.19.1",
     "remove-console-plugin": "0.0.1",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.0",
@@ -55,16 +62,13 @@
     "vuetify-loader": "^1.5.0",
     "webpack": "^4.43.0"
   },
-  "description": "## Project setup ``` npm install ```",
-  "main": ".eslintrc.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mayunited12/legalbox-front-end.git"
-  },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/mayunited12/legalbox-front-end/issues"
   },
-  "homepage": "https://github.com/mayunited12/legalbox-front-end#readme"
+  "homepage": "https://github.com/mayunited12/legalbox-front-end#readme",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayunited12/legalbox-front-end.git"
+  }
 }

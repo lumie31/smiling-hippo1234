@@ -1189,13 +1189,13 @@ export default {
     box-shadow: 0px 0px 3px 1px rgb(162, 162, 162);
 }
 
->>>.paymentChildren .v-slide-group__wrapper {
+/* >>>.paymentChildren .v-slide-group__wrapper {
   height: 85px !important;
   padding: 10px;
 }
 >>>.paymentChildren .v-item-group.v-slide-group {
   z-index: 9;
-}
+} */
 .accountTabItem {
   margin-top: 0px;
   background-color: #fafafa;
