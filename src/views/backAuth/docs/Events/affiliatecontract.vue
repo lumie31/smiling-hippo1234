@@ -21,7 +21,9 @@
           <v-row style="width: 50%; margin: 0 auto;">
             <v-col sm="12">
               <div class="formSectionTitle">EXECUTED</div>
-              <div class="text-center">This contract was made and executed on</div>
+              <div class="text-center">
+                This contract was made and executed on
+              </div>
               <v-menu
                 :close-on-content-click="false"
                 transition="scale-transition"
@@ -39,7 +41,11 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="formOutput.date" no-title @input="menu1 = false"></v-date-picker>
+                <v-date-picker
+                  v-model="formOutput.date"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
               </v-menu>
             </v-col>
           </v-row>
@@ -50,7 +56,9 @@
                 <p
                   v-for="(item, index) in fetchOwnBackgroundDetails"
                   :key="index"
-                >{{ item.background }}</p>
+                >
+                  {{ item.background }}
+                </p>
               </div>
             </v-col>
           </v-row>
@@ -59,16 +67,29 @@
               <div class="formSectionTitle">PARTIES</div>
             </v-col>
             <v-col cols="6">
-              <v-textarea min-height="110" outlined placeholder="Principal" background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                placeholder="Principal"
+                background-color="white"
+              ></v-textarea>
             </v-col>
             <v-col cols="6">
-              <v-textarea min-height="110" outlined placeholder="Affiliate" background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                placeholder="Affiliate"
+                background-color="white"
+              ></v-textarea>
             </v-col>
           </v-row>
           <v-row style="width: 80%; margin: 0 auto;">
             <v-col cols="6">
               <div class="formSectionTitle">Duration</div>
-              <div class="d-flex align-center justify-center" style="width: 50%; margin: 0 auto;">
+              <div
+                class="d-flex align-center justify-center"
+                style="width: 50%; margin: 0 auto;"
+              >
                 <v-select
                   style="width: 5%; margin: 0 auto; border-radius: 10px"
                   class="white pt-2 pl-4 mr-4"
@@ -92,13 +113,21 @@
             </v-col>
             <v-col cols="6">
               <div class="formSectionTitle">Profit Sharing</div>
-              <v-textarea min-height="110" outlined background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                background-color="white"
+              ></v-textarea>
             </v-col>
           </v-row>
           <v-row style="width: 80%; margin: 0 auto;">
             <v-col cols="12">
               <div class="formSectionTitle">Service</div>
-              <v-textarea min-height="110" outlined background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                background-color="white"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-container>
@@ -165,8 +194,8 @@ export default {
     return {
       category: "Affiliate Contract",
       tagName: "affiliatecontract",
-      origParagraphLength: this.$store.state.Events
-        .affiliateContractParagraphs.length,
+      origParagraphLength: this.$store.state.Events.affiliateContractParagraphs
+        .length,
       paragraphList: [],
       clauseList: [],
       formOutput: {

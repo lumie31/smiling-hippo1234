@@ -26,9 +26,14 @@
               <v-col cols="12" sm="9">
                 <div>
                   <h2 class="display-1 secondary--text">Subscribe</h2>
-                  <p
-                    class="subtitle-1"
-                  >You get to choose - Basic or Premium. Fashion & Beauty; Entertainment & Media; Events; E-commerce, Retail and Wholesale; Education & Consulting; or IT & Design. After that, it takes just 30 seconds. All we ask for is your name, email address and password. You can set the rest up when you sign in.</p>
+                  <p class="subtitle-1">
+                    You get to choose - Basic or Premium. Fashion & Beauty;
+                    Entertainment & Media; Events; E-commerce, Retail and
+                    Wholesale; Education & Consulting; or IT & Design. After
+                    that, it takes just 30 seconds. All we ask for is your name,
+                    email address and password. You can set the rest up when you
+                    sign in.
+                  </p>
                 </div>
               </v-col>
             </v-row>
@@ -40,9 +45,14 @@
               <v-col cols="12" sm="9">
                 <div>
                   <h2 class="display-1 secondary--text">Choose a Solution</h2>
-                  <p
-                    class="subtitle-1"
-                  >You get to choose - Basic or Premium. Fashion & Beauty; Entertainment & Media; Events; E-commerce, Retail and Wholesale; Education & Consulting; or IT & Design. After that, it takes just 30 seconds. All we ask for is your name, email address and password. You can set the rest up when you sign in.</p>
+                  <p class="subtitle-1">
+                    You get to choose - Basic or Premium. Fashion & Beauty;
+                    Entertainment & Media; Events; E-commerce, Retail and
+                    Wholesale; Education & Consulting; or IT & Design. After
+                    that, it takes just 30 seconds. All we ask for is your name,
+                    email address and password. You can set the rest up when you
+                    sign in.
+                  </p>
                 </div>
               </v-col>
             </v-row>
@@ -53,10 +63,17 @@
               </v-col>
               <v-col cols="12" sm="9">
                 <div>
-                  <h2 class="display-1 secondary--text">Get on With Your Day</h2>
-                  <p
-                    class="subtitle-1"
-                  >You get to choose - Basic or Premium. Fashion & Beauty; Entertainment & Media; Events; E-commerce, Retail and Wholesale; Education & Consulting; or IT & Design. After that, it takes just 30 seconds. All we ask for is your name, email address and password. You can set the rest up when you sign in.</p>
+                  <h2 class="display-1 secondary--text">
+                    Get on With Your Day
+                  </h2>
+                  <p class="subtitle-1">
+                    You get to choose - Basic or Premium. Fashion & Beauty;
+                    Entertainment & Media; Events; E-commerce, Retail and
+                    Wholesale; Education & Consulting; or IT & Design. After
+                    that, it takes just 30 seconds. All we ask for is your name,
+                    email address and password. You can set the rest up when you
+                    sign in.
+                  </p>
                 </div>
                 <v-btn class="mr-12" small large color="accent">
                   <router-link

@@ -25,7 +25,7 @@
               >
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
-                      <span class="display-1">{{ legalbox.name }}</span> <br>
+                    <span class="display-1">{{ legalbox.name }}</span> <br />
                     <p>{{ legalbox.info }}</p>
                   </v-card-text>
                 </v-card>

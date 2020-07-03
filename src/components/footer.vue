@@ -16,9 +16,12 @@
             <div class="white--text">Disclaimer</div>
           </v-card-title>
           <v-card-text>
-            <p
-              class="white--text"
-            >Legalbox is NOT a law firm neither do we practice, offer legal advice or consultation. We offer simple solutions to help solve your immediate business needs. If you need a lawyer, we are more than happy to give you a referral and a discount for free.</p>
+            <p class="white--text">
+              Legalbox is NOT a law firm neither do we practice, offer legal
+              advice or consultation. We offer simple solutions to help solve
+              your immediate business needs. If you need a lawyer, we are more
+              than happy to give you a referral and a discount for free.
+            </p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -26,19 +29,31 @@
       <v-col cols="12" sm="2" class="pt-12">
         <v-list-item class="mt-3 mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/about">About LegalBox</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/about"
+                >About LegalBox</router-link
+              ></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item class="mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/getting-started">Get Started</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/getting-started"
+                >Get Started</router-link
+              ></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item class="mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/contact">Contact</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/contact"
+                >Contact</router-link
+              ></v-list-item-title
+            >
             <div id="social">
               <span id="facebook">
                 <svg
@@ -130,19 +145,29 @@
       <v-col cols="12" sm="2" class="pt-12">
         <v-list-item class="mt-3 mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/faqs">FAQs</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/faqs">FAQs</router-link></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item class="mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/Terms-of-Service">Terms of Use</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/Terms-of-Service"
+                >Terms of Use</router-link
+              ></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item class="mb-n4">
           <v-list-item-content class="white--text">
-            <v-list-item-title class="title"><router-link to="/Privacy-Policy">Privacy</router-link></v-list-item-title>
+            <v-list-item-title class="title"
+              ><router-link to="/Privacy-Policy"
+                >Privacy</router-link
+              ></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
       </v-col>

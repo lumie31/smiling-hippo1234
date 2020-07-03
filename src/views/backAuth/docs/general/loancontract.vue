@@ -125,15 +125,15 @@
             </v-col>
           </v-row>
           <v-row style="width: 60%; margin: 0 auto;">
-              <v-col cols="12" sm="12">
-                  <div class="formSectionTitle">Repayment</div>
-              </v-col>
+            <v-col cols="12" sm="12">
+              <div class="formSectionTitle">Repayment</div>
+            </v-col>
             <v-col cols="12" sm="6">
-                <div class="formSectionSubtitle transparent">
+              <div class="formSectionSubtitle transparent">
                 <p class="text-left">Principal</p>
               </div>
               <div>
-              <v-text-field solo flat></v-text-field>
+                <v-text-field solo flat></v-text-field>
               </div>
             </v-col>
             <v-col cols="12" sm="6">
@@ -141,8 +141,8 @@
                 <p class="text-left">Interest</p>
               </div>
               <div class="d-flex align-start">
-              <v-text-field solo flat></v-text-field>
-              <v-select
+                <v-text-field solo flat></v-text-field>
+                <v-select
                   style="width: 50%; height: 47px; overflow: visible;"
                   class="white pt-2 pl-4 mt-0 ml-1"
                   value=""
@@ -194,7 +194,7 @@
           </v-row>
         </v-container>
         <v-container fluid paraClauseHolder>
-            <v-row>
+          <v-row>
             <v-col cols="12">
               <div class="formSectionTitle">Agreement</div>
               <div
@@ -202,12 +202,12 @@
                 v-for="(paragraph, index) in paragraphList"
                 :key="index"
               >
-                  <v-checkbox
-                    class="text-center paraCheck"
-                    color="accent"
-                    :value="paragraph"
-                    hide-details
-                  ></v-checkbox>
+                <v-checkbox
+                  class="text-center paraCheck"
+                  color="accent"
+                  :value="paragraph"
+                  hide-details
+                ></v-checkbox>
                 <div class="paragraphList">
                   <p>{{ paragraph }}</p>
                   <span class="addCTA">
@@ -220,7 +220,8 @@
                       @click="removeParagraph(index)"
                       size="30"
                       color="red"
-                    >remove_circle</v-icon>
+                      >remove_circle</v-icon
+                    >
                   </span>
                 </div>
               </div>

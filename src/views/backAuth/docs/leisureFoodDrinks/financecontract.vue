@@ -21,7 +21,9 @@
           <v-row style="width: 50%; margin: 0 auto;">
             <v-col sm="12">
               <div class="formSectionTitle">EXECUTED</div>
-              <div class="text-center">This contract was made and executed on</div>
+              <div class="text-center">
+                This contract was made and executed on
+              </div>
               <v-menu
                 :close-on-content-click="false"
                 transition="scale-transition"
@@ -39,7 +41,11 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="formOutput.date" no-title @input="menu1 = false"></v-date-picker>
+                <v-date-picker
+                  v-model="formOutput.date"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
               </v-menu>
             </v-col>
           </v-row>
@@ -50,7 +56,9 @@
                 <p
                   v-for="(item, index) in fetchOwnBackgroundDetails"
                   :key="index"
-                >{{ item.background }}</p>
+                >
+                  {{ item.background }}
+                </p>
               </div>
             </v-col>
           </v-row>
@@ -78,7 +86,10 @@
           <v-row style="width: 80%; margin: 0 auto;">
             <v-col cols="6">
               <div class="formSectionTitle">Duration</div>
-              <div class="d-flex align-center justify-center" style="width: 50%; margin: 0 auto;">
+              <div
+                class="d-flex align-center justify-center"
+                style="width: 50%; margin: 0 auto;"
+              >
                 <v-select
                   style="width: 5%; margin: 0 auto; border-radius: 10px"
                   class="white pt-2 pl-4 mr-4"
@@ -102,7 +113,11 @@
             </v-col>
             <v-col cols="6">
               <div class="formSectionTitle">Purpose</div>
-              <v-textarea min-height="110" outlined background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                background-color="white"
+              ></v-textarea>
             </v-col>
           </v-row>
           <v-row style="width: 80%; margin: 0 auto;">
@@ -168,14 +183,14 @@
                     <span class="mx-2"></span>
                     <v-icon size="30">comment</v-icon>
                     <span class="mx-2"></span>
-                  <v-icon
-                    v-if="index > origParagraphLength - 1"
-                    @click="removeParagraph(index)"
-                    size="30"
-                    color="red"
-                  >remove_circle</v-icon>
+                    <v-icon
+                      v-if="index > origParagraphLength - 1"
+                      @click="removeParagraph(index)"
+                      size="30"
+                      color="red"
+                      >remove_circle</v-icon
+                    >
                   </span>
-                  
                 </div>
               </div>
               <p class="addRemoveButtons">
@@ -251,7 +266,7 @@ export default {
   components: {
     "back-nav": Back_Navbar,
     "general-footer": General_Footer,
-    "products-footer": Products_Footer,
+    "products-footer": Products_Footer
     // "v-runtime-template": VRuntimeTemplate
     // "append-signature": Append_Signature
   },

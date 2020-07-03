@@ -21,7 +21,9 @@
           <v-row style="width: 50%; margin: 0 auto;">
             <v-col sm="12">
               <div class="formSectionTitle">EXECUTED</div>
-              <div class="text-center">This contract was made and executed on</div>
+              <div class="text-center">
+                This contract was made and executed on
+              </div>
               <v-menu
                 :close-on-content-click="false"
                 transition="scale-transition"
@@ -39,7 +41,11 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="formOutput.date" no-title @input="menu1 = false"></v-date-picker>
+                <v-date-picker
+                  v-model="formOutput.date"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
               </v-menu>
             </v-col>
           </v-row>
@@ -50,7 +56,9 @@
                 <p
                   v-for="(item, index) in fetchOwnBackgroundDetails"
                   :key="index"
-                >{{ item.background }}</p>
+                >
+                  {{ item.background }}
+                </p>
               </div>
             </v-col>
           </v-row>
@@ -78,7 +86,11 @@
           <v-row style="width: 50%; margin: 0 auto;">
             <v-col cols="12">
               <div class="formSectionTitle">Project</div>
-              <v-textarea min-height="110" outlined background-color="white"></v-textarea>
+              <v-textarea
+                min-height="110"
+                outlined
+                background-color="white"
+              ></v-textarea>
             </v-col>
           </v-row>
           <v-row style="width: 80%; margin: 0 auto;">
@@ -192,8 +204,8 @@ export default {
     return {
       category: "Founder's Contract",
       tagName: "founderscontract",
-      origParagraphLength: this.$store.state.Events
-        .foundersContractParagraphs.length,
+      origParagraphLength: this.$store.state.Events.foundersContractParagraphs
+        .length,
       paragraphList: [],
       clauseList: [],
       formOutput: {
@@ -228,7 +240,7 @@ export default {
   components: {
     "back-nav": Back_Navbar,
     "general-footer": General_Footer,
-    "products-footer": Products_Footer,
+    "products-footer": Products_Footer
     // "v-runtime-template": VRuntimeTemplate
     // "append-signature": Append_Signature
   },

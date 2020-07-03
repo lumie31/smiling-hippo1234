@@ -6,9 +6,18 @@
       </router-link>
     </v-container>
 
-    <v-container class="text-center" style="margin: 130px auto 200px auto;" v-if="responseNotReady">
+    <v-container
+      class="text-center"
+      style="margin: 130px auto 200px auto;"
+      v-if="responseNotReady"
+    >
       Veryifying.....
-      <v-text-field style="width: 40%; margin: 0 auto;" color="success" loading disabled></v-text-field>
+      <v-text-field
+        style="width: 40%; margin: 0 auto;"
+        color="success"
+        loading
+        disabled
+      ></v-text-field>
     </v-container>
 
     <div class="bodyWrapper" v-if="!responseNotReady">
@@ -52,7 +61,8 @@
                   class="accent"
                   @click="resendActivationMail"
                   :loading="loading"
-                >Resend Activation Mail</v-btn>
+                  >Resend Activation Mail</v-btn
+                >
               </v-form>
             </div>
             <div v-if="resetSuccessful">

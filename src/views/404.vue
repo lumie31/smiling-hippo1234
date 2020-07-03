@@ -35,7 +35,7 @@ export default {
   background: #fbfbfb;
 }
 .pagenotfound img.eee {
-    width: 40%;
+  width: 40%;
   /* min-width: 10%; */
 }
 

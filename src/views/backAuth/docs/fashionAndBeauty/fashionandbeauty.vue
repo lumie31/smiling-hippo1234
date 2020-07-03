@@ -33,24 +33,23 @@
             sm="6"
             class="legalbox-wrapper"
           >
-          <router-link :to="doc.route">
-            <v-card class="legalbox-tabs d-flex flex-column justify-center">
+            <router-link :to="doc.route">
+              <v-card class="legalbox-tabs d-flex flex-column justify-center">
                 <v-card-title class="headline"
                   >{{ doc.childName }}
                 </v-card-title>
-  
-              <v-menu offset-x :close-on-content-click="false">
-                <template v-slot:activator="{ on }">
-                  <div class="trigger-legalbox-submenu" v-on="on"></div>
-                </template>
-                <v-list>
-                  <v-menu
+
+                <v-menu offset-x :close-on-content-click="false">
+                  <template v-slot:activator="{ on }">
+                    <div class="trigger-legalbox-submenu" v-on="on"></div>
+                  </template>
+                  <v-list>
+                    <v-menu
                       offset-x
                       v-for="(item, index) in doc.subMenu"
                       :key="index"
                       open-on-hover
-                  >
-                  
+                    >
                       <template v-slot:activator="{ on }" internal-activator>
                         <div
                           class="d-flex subMenuChild"
@@ -65,9 +64,9 @@
                             src="require('~@/assets/logo.svg')"
                             alt="Legalbox Logo"
                           /> -->
-                      </div>
-                    </template>
-                    <v-list>
+                        </div>
+                      </template>
+                      <v-list>
                         <v-list
                           class="d-flex"
                           v-for="(item2, index) in item.subMenuChild"
@@ -75,27 +74,24 @@
                           @click.stop
                           internal-activator
                         >
-                      <router-link :to="item2.route">
-                        <v-list class="subMenuChildMenu">
-                          {{ item2.subMenuChildMenu }}
+                          <router-link :to="item2.route">
+                            <v-list class="subMenuChildMenu">
+                              {{ item2.subMenuChildMenu }}
+                            </v-list>
+                          </router-link>
                         </v-list>
-                      </router-link>
-                        
                       </v-list>
-                    </v-list>
-                  </v-menu>
-                </v-list>
-              </v-menu>
+                    </v-menu>
+                  </v-list>
+                </v-menu>
                 <v-card-subtitle class="caption pl-5 grey--text"
                   >Last Opened:</v-card-subtitle
                 >
-            </v-card>
-          </router-link>
-            
+              </v-card>
+            </router-link>
           </v-col>
         </v-row>
-          <products-footer></products-footer>
-        
+        <products-footer></products-footer>
       </v-container>
     </div>
 
@@ -126,7 +122,7 @@ export default {
     showUploader: function() {
       var list = document.getElementsByClassName("div");
       if (list.innerHTML == " Upload Document ") {
-        alert("Got it")
+        alert("Got it");
       }
     }
   },

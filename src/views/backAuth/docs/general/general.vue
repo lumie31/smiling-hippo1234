@@ -22,46 +22,65 @@
             cols="12"
             sm="4"
             class="legalbox-wrapper"
-            :class="doc.comingSoon == true ? 'legalbox-wrapper-coming-soon' : ''"
+            :class="
+              doc.comingSoon == true ? 'legalbox-wrapper-coming-soon' : ''
+            "
           >
-              <v-card class="legalbox-tabs d-flex flex-column justify-center">
-                <v-card-title class="headline">{{ doc.childName }}</v-card-title>
+            <v-card class="legalbox-tabs d-flex flex-column justify-center">
+              <v-card-title class="headline">{{ doc.childName }}</v-card-title>
 
-                <v-menu offset-x :close-on-content-click="false" v-if="index == 0">
-                  <template v-slot:activator="{ on }">
-                    <div class="trigger-legalbox-submenu" v-on="on"></div>
-                  </template>
-                  <v-list>
-                    <v-menu
-                      offset-x
-                      v-for="(item, index) in doc.subMenu"
-                      :key="index"
-                      open-on-hover
-                    >
-                      <template v-slot:activator="{ on }" internal-activator>
-                        <div class="d-flex subMenuChild" color="primary" dark v-on="on">
-                          <router-link :to="item.route">{{ item.menu }}</router-link>
-                        </div>
-                      </template>
-                      <v-list>
-                        <v-list
-                          class="d-flex"
-                          v-for="(item2, index) in item.subMenuChild"
-                          :key="index"
-                          @click.stop
-                          internal-activator
-                        >
-                          <router-link :to="item2.route">
-                            <v-list class="subMenuChildMenu">{{ item2.subMenuChildMenu }}</v-list>
-                          </router-link>
-                        </v-list>
+              <v-menu
+                offset-x
+                :close-on-content-click="false"
+                v-if="index == 0"
+              >
+                <template v-slot:activator="{ on }">
+                  <div class="trigger-legalbox-submenu" v-on="on"></div>
+                </template>
+                <v-list>
+                  <v-menu
+                    offset-x
+                    v-for="(item, index) in doc.subMenu"
+                    :key="index"
+                    open-on-hover
+                  >
+                    <template v-slot:activator="{ on }" internal-activator>
+                      <div
+                        class="d-flex subMenuChild"
+                        color="primary"
+                        dark
+                        v-on="on"
+                      >
+                        <router-link :to="item.route">{{
+                          item.menu
+                        }}</router-link>
+                      </div>
+                    </template>
+                    <v-list>
+                      <v-list
+                        class="d-flex"
+                        v-for="(item2, index) in item.subMenuChild"
+                        :key="index"
+                        @click.stop
+                        internal-activator
+                      >
+                        <router-link :to="item2.route">
+                          <v-list class="subMenuChildMenu">{{
+                            item2.subMenuChildMenu
+                          }}</v-list>
+                        </router-link>
                       </v-list>
-                    </v-menu>
-                  </v-list>
-                </v-menu>
-                <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle>
-                <span class="overline show-coming-soon" v-if="index > 0">Coming Soon</span>
-              </v-card>
+                    </v-list>
+                  </v-menu>
+                </v-list>
+              </v-menu>
+              <v-card-subtitle class="caption pl-5 grey--text"
+                >Last Opened:</v-card-subtitle
+              >
+              <span class="overline show-coming-soon" v-if="index > 0"
+                >Coming Soon</span
+              >
+            </v-card>
           </v-col>
         </v-row>
         <products-footer></products-footer>

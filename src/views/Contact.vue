@@ -10,17 +10,31 @@
     <div class="bodyWrapper">
       <v-container class="form-container">
         <div>
-          <h3
-            class="headline"
-          >We are here for you and would love to hear from you. Tell us how we can help you. Share how your experience with Legalbox has been. We love feedback. It is how we both grow and better satisfy you.</h3>
+          <h3 class="headline">
+            We are here for you and would love to hear from you. Tell us how we
+            can help you. Share how your experience with Legalbox has been. We
+            love feedback. It is how we both grow and better satisfy you.
+          </h3>
         </div>
 
         <v-form id="contact-form">
           <v-row>
             <v-col cols="12" sm="12">
-              <v-text-field label="Your Name" height="80" outlined></v-text-field>
-              <v-text-field label="Your Email" height="80" outlined></v-text-field>
-              <v-textarea label="Your Details" height="300" outlined></v-textarea>
+              <v-text-field
+                label="Your Name"
+                height="80"
+                outlined
+              ></v-text-field>
+              <v-text-field
+                label="Your Email"
+                height="80"
+                outlined
+              ></v-text-field>
+              <v-textarea
+                label="Your Details"
+                height="300"
+                outlined
+              ></v-textarea>
               <v-btn label="Submit" color="accent" height="100" width="100%">
                 <span class="text-capitalize display-1">Submit</span>
               </v-btn>

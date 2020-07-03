@@ -11,20 +11,18 @@
             sm="6"
             class="legalbox-wrapper"
           >
-          <router-link :to="legalbox.route">
-            <v-card class="legalbox-tabs d-flex flex-column justify-center">
-              <v-card-title>
-                <img :src="legalbox.icon" class="legalbox-icons" width="40" />
-              </v-card-title>
-              <v-card-text class="headline">{{ legalbox.name }}</v-card-text>
-              <!-- <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle> -->
-            </v-card>
-          </router-link>
-            
+            <router-link :to="legalbox.route">
+              <v-card class="legalbox-tabs d-flex flex-column justify-center">
+                <v-card-title>
+                  <img :src="legalbox.icon" class="legalbox-icons" width="40" />
+                </v-card-title>
+                <v-card-text class="headline">{{ legalbox.name }}</v-card-text>
+                <!-- <v-card-subtitle class="caption pl-5 grey--text">Last Opened:</v-card-subtitle> -->
+              </v-card>
+            </router-link>
           </v-col>
         </v-row>
-          <products-footer></products-footer>
-
+        <products-footer></products-footer>
       </v-container>
     </div>
 
