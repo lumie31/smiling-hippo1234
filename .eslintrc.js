@@ -1,5 +1,5 @@
 module.exports = {
-  env: ["eslint:recommended", "plugin:vue/essential", "@vue/prettier"],
+  // env: ["eslint:recommended", "plugin:vue/essential", "@vue/prettier"],
 
   extends: [
     "plugin:vue/essential",
@@ -7,15 +7,12 @@ module.exports = {
     "eslint:recommended"
   ],
 
-  parserOptions: {
-    ecmaVersion: 11,
-    sourceType: "module"
-  },
+  // parserOptions: {
+  //   ecmaVersion: 11,
+  //   sourceType: "module"
+  // },
 
   plugins: ["vue"],
-
-  rules: {},
-
   root: true,
 
   env: {

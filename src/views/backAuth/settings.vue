@@ -29,36 +29,281 @@
             <v-tabs fixed-tabs class="settings-tab py-5" height="90">
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start first-title settings-tab-title"
-              >Profile</v-tab>
+                >Profile</v-tab
+              >
               <v-tab
                 class="display-1 white--text text-capitalize text-center justify-start settings-tab-title"
-              >Account</v-tab>
+                >Account</v-tab
+              >
               <v-tab
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
-              >Card</v-tab>
-
+                >Card</v-tab
+              >
 
               <!-- Card Tab -->
               <v-tab-item class="transparent setting-parent-tab-item">
-
                 <!-- Bank Details and Cards -->
-                <v-tabs class="paymentChildren mt-12" background-color="transparent" centered>
+                <v-tabs
+                  class="paymentChildren mt-12"
+                  background-color="transparent"
+                  centered
+                >
                   <div class="tabWrapper">
-                    <v-tab class="paymentChild paymentChild1 white text-capitalize" active-class="white--text secondary radiusAllCorner">Bank Accounts</v-tab>
-                    <v-tab class="paymentChild white text-capitalize" active-class="white--text secondary radiusAllCorner">Cards</v-tab>
+                    <v-tab
+                      class="paymentChild paymentChild1 white text-capitalize"
+                      active-class="white--text secondary radiusAllCorner"
+                      >Bank Accounts</v-tab
+                    >
+                    <v-tab
+                      class="paymentChild white text-capitalize"
+                      active-class="white--text secondary radiusAllCorner"
+                      >Cards</v-tab
+                    >
                   </div>
 
-                  
-                  
+                  <!-- Bank Details -->
+                  <v-tab-item class="accountTabItem">
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <div
+                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
+                        >
+                          <div
+                            v-for="(acc, index) in bankAccounts"
+                            :key="index"
+                            class="shadow-me-light bankAccounts"
+                          >
+                            <div class="bankLogo"></div>
+                            <div class="accDetails">
+                              <div>
+                                {{
+                                  acc.nuban.slice(0, 4) +
+                                    acc.nuban.slice(4, 8).replace(/./g, "*") +
+                                    acc.nuban.slice(
+                                      acc.nuban.length - 2,
+                                      acc.nuban.length
+                                    )
+                                }}
+                              </div>
+                              <div>{{ acc.name }}</div>
+                              <div>{{ acc.bank.bankName }}</div>
+                            </div>
+                          </div>
+
+                          <!-- Add New Bank Details -->
+                          <div
+                            class="shadow-me-light bankAccounts text-center accent"
+                            @click="
+                              addBankAccountActive = !addBankAccountActive
+                            "
+                          >
+                            <v-icon dark size="40">add_circle_outline</v-icon>
+                            <div class="white--text">
+                              Add a New Bank Account
+                            </div>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+
+                    <v-card flat class="white" v-if="addBankAccountActive">
+                      <v-card-text class="transparent px-12 py-8">
+                        <v-form class="width60-center" @submit.prevent>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <p class="headline">Bank</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-select
+                                label="select your bank"
+                                v-model="bank"
+                                @change="updateCurrentPlan"
+                                :items="nigerianBanks"
+                                item-text="name"
+                                outlined
+                                offset-y
+                              ></v-select>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-center">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <p class="headline">Account Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                :rules="[rules.number]"
+                                label="Account Number"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <v-btn class="accent text-capitalize pa-7"
+                                >Add Bank Account</v-btn
+                              >
+                            </v-col>
+                          </v-row>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+
+                  <!-- Credit Card -->
+                  <v-tab-item class="accountTabItem">
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <div
+                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
+                        >
+                          <div
+                            v-for="(card, index) in creditCards"
+                            :key="index"
+                            class="shadow-me-light bankAccounts"
+                          >
+                            <div class="bankLogo">
+                              <img
+                                src="../../assets/Verve_Image.png"
+                                width="50"
+                                v-if="card.cardType == 'verve'"
+                              />
+                              <img
+                                src="../../assets/visa.png"
+                                width="50"
+                                v-if="card.cardType == 'visa'"
+                              />
+                              <img
+                                src="../../assets/mastercard.jpg"
+                                width="50"
+                                v-if="card.cardType == 'mastercard'"
+                              />
+                            </div>
+                            <div class="headline">
+                              <div>
+                                {{
+                                  card.cardNumber.slice(0, 4) +
+                                    " " +
+                                    card.cardNumber
+                                      .slice(4, 12)
+                                      .replace(/./g, "*") +
+                                    " " +
+                                    card.cardNumber.slice(
+                                      card.cardNumber.length - 4,
+                                      card.cardNumber.length
+                                    )
+                                }}
+                              </div>
+                              <!-- <div>{{ card.name }}</div>
+                            <div>{{ card.bankName }}</div> -->
+                            </div>
+                          </div>
+
+                          <!-- Add New Bank Details -->
+                          <div
+                            class="shadow-me-light bankAccounts text-center accent"
+                            @click="addCardActive = !addCardActive"
+                          >
+                            <v-icon dark size="40">add_circle_outline</v-icon>
+                            <div class="white--text">Add a New Card</div>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+
+                    <v-card flat class="white" v-if="addCardActive">
+                      <v-card-text class="transparent px-12 py-8">
+                        <v-form>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Change Subscription Plan</p>
+                              <p class="caption">
+                                Upgrade or downgrade your subscription here
+                              </p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <span class="d-flex align-center">
+                                <input
+                                  type="radio"
+                                  name="cardType"
+                                  value="verve"
+                                  class="mr-4"
+                                />
+                                <img
+                                  src="../../assets/Verve_Image.png"
+                                  width="100"
+                                />
+                              </span>
+                              <span class="d-flex align-center">
+                                <input
+                                  type="radio"
+                                  name="cardType"
+                                  value="verve"
+                                  class="mr-4"
+                                />
+                                <img src="../../assets/visa.png" width="60" />
+                              </span>
+                              <span class="d-flex align-center">
+                                <input
+                                  type="radio"
+                                  name="cardType"
+                                  value="verve"
+                                  class="mr-4"
+                                />
+                                <img
+                                  src="../../assets/mastercard.jpg"
+                                  width="100"
+                                />
+                              </span>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Card Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                label="Card Number"
+                                value="Card Number"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Expiry Date</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                label="Expiry Date"
+                                value="Expiry Date"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">CVV Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                label="CVV"
+                                value="CVV"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <v-btn class="accent">Add Card</v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
                 </v-tabs>
               </v-tab-item>
-                  
 
-                  
-
-                  
-
-              
               <!-- Profile -->
               <v-tab-item class="transparent setting-parent-tab-item">
                 <v-card flat class="transparent">
@@ -94,13 +339,19 @@
                                 <figure>
                                   <div
                                     class="uploadItem profileImageHolder"
-                                    :style="[profilePictureHasImage ? {
-                                      backgroundImage:
-                                        'url(' + profilePicture  + ')'
-                                    } : {
-                                      backgroundImage:
-                                        'url(' + storedUserProfilePicture + ')'
-                                    }]"
+                                    :style="[
+                                      profilePictureHasImage
+                                        ? {
+                                            backgroundImage:
+                                              'url(' + profilePicture + ')'
+                                          }
+                                        : {
+                                            backgroundImage:
+                                              'url(' +
+                                              storedUserProfilePicture +
+                                              ')'
+                                          }
+                                    ]"
                                   ></div>
                                 </figure>
                               </label>
@@ -151,13 +402,17 @@
                                 <figure>
                                   <div
                                     class="uploadItem companyLogoHolder"
-                                    :style="[companyHasImage ? {
-                                      backgroundImage:
-                                        'url(' + companyLogo  + ')'
-                                    } : {
-                                      backgroundImage:
-                                        'url(' + storedcompanyLogo + ')'
-                                    }]"
+                                    :style="[
+                                      companyHasImage
+                                        ? {
+                                            backgroundImage:
+                                              'url(' + companyLogo + ')'
+                                          }
+                                        : {
+                                            backgroundImage:
+                                              'url(' + storedcompanyLogo + ')'
+                                          }
+                                    ]"
                                   ></div>
                                 </figure>
                               </label>
@@ -249,7 +504,10 @@
                           <p class="caption">For birthday wishes and gifts</p>
                         </v-col>
                         <v-col cols="12" sm="8">
-                          <v-menu :close-on-content-click="false" max-width="290">
+                          <v-menu
+                            :close-on-content-click="false"
+                            max-width="290"
+                          >
                             <template v-slot:activator="{ on }">
                               <v-text-field
                                 autocomplete="off"
@@ -304,8 +562,8 @@
                             @click="updateUserProfile"
                             :loading="updateProfileLoader"
                             :disabled="updateProfileLoader"
-                          >Update Profile</v-btn>
-                          
+                            >Update Profile</v-btn
+                          >
                         </v-col>
                       </v-row>
                     </v-form>
@@ -322,11 +580,17 @@
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Change Subscription Plan</p>
-                          <p class="caption">Upgrade or downgrade your subscription here</p>
+                          <p class="caption">
+                            Upgrade or downgrade your subscription here
+                          </p>
                         </v-col>
                         <v-col cols="12" sm="8">
                           <span v-for="plan in plans" :key="plan.name">
-                            <input type="radio" name="plans" value="plan.name" />
+                            <input
+                              type="radio"
+                              name="plans"
+                              value="plan.name"
+                            />
                             <span class="ml-2 mr-12">{{ plan.name }}</span>
                           </span>
                           <br />
@@ -340,10 +604,16 @@
                       <v-row class="justify-start">
                         <v-col cols="12" sm="4">
                           <p class="headline">Password</p>
-                          <p class="caption">Update the password to your account here</p>
+                          <p class="caption">
+                            Update the password to your account here
+                          </p>
                         </v-col>
                         <v-col cols="12" sm="8">
-                          <v-form action="#" ref="updatePasswordForm" @submit.prevent>
+                          <v-form
+                            action="#"
+                            ref="updatePasswordForm"
+                            @submit.prevent
+                          >
                             <v-text-field
                               v-model="oldPassword"
                               class="login-input"
@@ -376,14 +646,13 @@
                             ></v-text-field>
 
                             <v-btn
-                            class="accent"
-                            @click="updatePassword"
-                            :loading="updatePasswordLoader"
-                            :disabled="DisableUpdatePassword"
-                          >Update Password</v-btn>
+                              class="accent"
+                              @click="updatePassword"
+                              :loading="updatePasswordLoader"
+                              :disabled="DisableUpdatePassword"
+                              >Update Password</v-btn
+                            >
                           </v-form>
-
-                          
                         </v-col>
                       </v-row>
                     </v-form>
@@ -422,19 +691,28 @@
                                 <figure>
                                   <div
                                     class="uploadItem userSignatureHolder"
-                                    :style="[userSignatureHasImage ? {
-                                      backgroundImage:
-                                        'url(' + userSignature  + ')'
-                                    } : {
-                                      backgroundImage:
-                                        'url(' + storedUserSignature + ')'
-                                    }]"
+                                    :style="[
+                                      userSignatureHasImage
+                                        ? {
+                                            backgroundImage:
+                                              'url(' + userSignature + ')'
+                                          }
+                                        : {
+                                            backgroundImage:
+                                              'url(' + storedUserSignature + ')'
+                                          }
+                                    ]"
                                   ></div>
                                 </figure>
                               </label>
                             </image-uploader>
                           </div>
-                          <v-btn class="mt-4 accent" @click="uploadUserSignature" :loading="uploadSignatureLoader" :disabled="userSignature == null">
+                          <v-btn
+                            class="mt-4 accent"
+                            @click="uploadUserSignature"
+                            :loading="uploadSignatureLoader"
+                            :disabled="userSignature == null"
+                          >
                             <span>Update Signature</span>
                           </v-btn>
                         </v-col>
@@ -443,7 +721,6 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-
             </v-tabs>
           </div>
         </div>
@@ -490,7 +767,7 @@ export default {
             bankName: "Guaranty Trust Bank",
             bankNameShort: "GTBank",
             icon: ""
-          }  
+          }
         },
         {
           name: "Y Dami",
@@ -498,7 +775,7 @@ export default {
           bank: {
             bankName: "Polaris Bank",
             icon: ""
-          }  
+          }
         },
         {
           name: "Y Dami",
@@ -506,7 +783,7 @@ export default {
           bank: {
             bankName: "Polaris Bank",
             icon: ""
-          }  
+          }
         },
         {
           name: "Y Dami",
@@ -514,7 +791,7 @@ export default {
           bank: {
             bankName: "Polaris Bank",
             icon: ""
-          }  
+          }
         }
       ],
       creditCards: [
@@ -685,7 +962,7 @@ export default {
         .then(response => {
           console.log("Profile Picture successfully sent to server!");
           console.log({ response });
-          
+
           this.updatedSnackbar.active = true;
           this.updatedSnackbar.text = "Profile Picture successfully updated";
           this.updatedSnackbar.color = "success";
@@ -857,10 +1134,9 @@ export default {
           this.updatedSnackbar.active = true;
           this.updatedSnackbar.text = "Signature successfully updated";
           this.updatedSnackbar.color = "success";
-          
-          this.uploadSignatureLoader = false;
-           return response;
 
+          this.uploadSignatureLoader = false;
+          return response;
         })
         .catch(error => {
           console.log({ error });
@@ -871,7 +1147,7 @@ export default {
           this.updatedSnackbar.active = true;
           this.updatedSnackbar.text = "Oops! An error occured";
           this.updatedSnackbar.color = "error";
-          
+
           this.updateProfileLoader = false;
         });
     },
@@ -915,15 +1191,15 @@ export default {
         this.DisableUpdatePassword = true;
 
         axios
-        .post(
-          "/api/v1/changepassword",
-          {
-            oldPassword: this.oldPassword,
-            password: this.password,
-            confirmPassword: this.confirmPassword
-          },
-          { headers: { Authorization: this.$store.state.token } }
-        )
+          .post(
+            "/api/v1/changepassword",
+            {
+              oldPassword: this.oldPassword,
+              password: this.password,
+              confirmPassword: this.confirmPassword
+            },
+            { headers: { Authorization: this.$store.state.token } }
+          )
           .then(response => {
             this.updatedSnackbar.active = true;
             this.updatedSnackbar.text = response.data.message;
@@ -1183,19 +1459,19 @@ export default {
 }
 
 .tabWrapper {
-    background-color: #fff;
-    display: flex;
-    border-radius: 12px !important;
-    box-shadow: 0px 0px 3px 1px rgb(162, 162, 162);
+  background-color: #fff;
+  display: flex;
+  border-radius: 12px !important;
+  box-shadow: 0px 0px 3px 1px rgb(162, 162, 162);
 }
 
-/* >>>.paymentChildren .v-slide-group__wrapper {
+>>> .paymentChildren .v-slide-group__wrapper {
   height: 85px !important;
   padding: 10px;
 }
->>>.paymentChildren .v-item-group.v-slide-group {
-  z-index: 9;
-} */
+>>> .paymentChildren .v-item-group.v-slide-group {
+  z-index: 1;
+}
 .accountTabItem {
   margin-top: 0px;
   background-color: #fafafa;
