@@ -5,6 +5,13 @@
     src: url(../fonts/NeuePlakRegular.otf);
   }
 
+
+  :root {
+    --primary: "#3f51b5";
+    --secondary: "#19647E";
+    --accent: "#1CA092";
+    --error: "#b71c1c";
+}
   #app{
       font-family: NeuePlak;
       color: #707070;
@@ -67,6 +74,10 @@
 }
 .width80-center {
     width: 80%;
+    margin: 0 auto;
+}
+.width60-center {
+    width: 60%;
     margin: 0 auto;
 }
 .width50-center {
@@ -569,6 +580,29 @@ a{
 }
 .settings-tab .v-tabs-slider{
     display: none;
+}
+
+.bankAccountWrapper {
+    width: 80%;
+    /* border: 1px solid; */
+    margin:  0 auto;
+}
+
+.bankAccounts {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 100px 40px 20px;
+    width: 46%;
+    margin-bottom: 50px;
+}
+.bankAccounts:last-child {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 100px;
+    width: 46%;
+    margin-bottom: 50px;
+    font-size: 1.200rem;
+    cursor: pointer;
 }
 
 /* User Default */

@@ -37,9 +37,30 @@
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
               >Card</v-tab>
 
+
+              <!-- Card Tab -->
+              <v-tab-item class="transparent setting-parent-tab-item">
+
+                <!-- Bank Details and Cards -->
+                <v-tabs class="paymentChildren mt-12" background-color="transparent" centered>
+                  <div class="tabWrapper">
+                    <v-tab class="paymentChild paymentChild1 white text-capitalize" active-class="white--text secondary radiusAllCorner">Bank Accounts</v-tab>
+                    <v-tab class="paymentChild white text-capitalize" active-class="white--text secondary radiusAllCorner">Cards</v-tab>
+                  </div>
+
+                  
+                  
+                </v-tabs>
+              </v-tab-item>
+                  
+
+                  
+
+                  
+
               
               <!-- Profile -->
-              <v-tab-item class="transparent legalbox-body-text">
+              <v-tab-item class="transparent setting-parent-tab-item">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
                     <v-form ref="updateProfilePass" @submit.prevent>
@@ -293,7 +314,7 @@
               </v-tab-item>
 
               <!-- Account -->
-              <v-tab-item class="transparent legalbox-body-text">
+              <v-tab-item class="transparent setting-parent-tab-item">
                 <v-card flat class="transparent">
                   <v-card-text class="transparent px-12 py-8">
                     <!-- Plan Up -->
@@ -423,70 +444,6 @@
                 </v-card>
               </v-tab-item>
 
-              <!-- Card Tab -->
-              <v-tab-item class="transparent legalbox-body-text">
-                <v-tabs class="paymentChildren">
-                  <v-tab class="text-capitalize">Bank Accounts</v-tab>
-                  <v-tab class="text-capitalize">Cards</v-tab>
-                  <v-tab-item>a</v-tab-item>
-                  <v-tab-item>b</v-tab-item>
-                </v-tabs>
-                <v-card flat class="transparent">
-                  <v-card-text class="transparent px-12 py-8">
-                    <v-form>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Change Subscription Plan</p>
-                          <p class="caption">Upgrade or downgrade your subscription here</p>
-                        </v-col>
-                        <v-col cols="12" sm="8" class="d-flex">
-                          <span class="d-flex align-center">
-                            <input type="radio" name="cardType" value="verve" class="mr-4" />
-                            <img src="../../assets/Verve_Image.png" width="100" />
-                          </span>
-                          <span class="d-flex align-center">
-                            <input type="radio" name="cardType" value="verve" class="mr-4" />
-                            <img src="../../assets/visa.png" width="60" />
-                          </span>
-                          <span class="d-flex align-center">
-                            <input type="radio" name="cardType" value="verve" class="mr-4" />
-                            <img src="../../assets/mastercard.jpg" width="100" />
-                          </span>
-                        </v-col>
-                      </v-row>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Card Number</p>
-                        </v-col>
-                        <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field outlined label="Card Number" value="Card Number"></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">Expiry Date</p>
-                        </v-col>
-                        <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field outlined label="Expiry Date" value="Expiry Date"></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <p class="headline">CVV Number</p>
-                        </v-col>
-                        <v-col cols="12" sm="8" class="d-flex">
-                          <v-text-field outlined label="CVV" value="CVV"></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row class="justify-start">
-                        <v-col cols="12" sm="4">
-                          <v-btn class="accent">Add Card</v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
             </v-tabs>
           </div>
         </div>
@@ -522,6 +479,67 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      addBankAccountActive: false,
+      addCardActive: false,
+      bank: !false,
+      bankAccounts: [
+        {
+          name: "Dami Y",
+          nuban: "1234567890",
+          bank: {
+            bankName: "Guaranty Trust Bank",
+            bankNameShort: "GTBank",
+            icon: ""
+          }  
+        },
+        {
+          name: "Y Dami",
+          nuban: "1234567890",
+          bank: {
+            bankName: "Polaris Bank",
+            icon: ""
+          }  
+        },
+        {
+          name: "Y Dami",
+          nuban: "1234567890",
+          bank: {
+            bankName: "Polaris Bank",
+            icon: ""
+          }  
+        },
+        {
+          name: "Y Dami",
+          nuban: "1234567890",
+          bank: {
+            bankName: "Polaris Bank",
+            icon: ""
+          }  
+        }
+      ],
+      creditCards: [
+        {
+          cardType: "mastercard",
+          cardNumber: "2345989745905412",
+          expiryDate: "",
+          pin: "",
+          cvv: ""
+        },
+        {
+          cardType: "visa",
+          cardNumber: "2345989745905412",
+          expiryDate: "",
+          pin: "",
+          cvv: ""
+        },
+        {
+          cardType: "verve",
+          cardNumber: "2345989745905412",
+          expiryDate: "",
+          pin: "",
+          cvv: ""
+        }
+      ],
       profilePictureHasImage: false,
       companyHasImage: false,
       userSignatureHasImage: false,
@@ -935,6 +953,9 @@ export default {
     }
   },
   computed: {
+    nigerianBanks() {
+      return this.$store.state.nigerianBanks;
+    },
     plans() {
       return this.$store.state.plans;
     },
@@ -1137,5 +1158,51 @@ export default {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+.radiusAllCorner {
+  border-radius: 12px;
+}
+.paymentChild {
+  padding: 30px;
+}
+
+.paymentChild1 {
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  box-shadow: -3px 0px 3px -1px rgb(162, 162, 162);
+}
+.paymentChildren .v-tab.v-tab:last-child {
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  box-shadow: 3px 0px 3px -1px rgb(162, 162, 162);
+}
+
+.setting-parent-tab-item {
+  min-height: 300px;
+}
+
+.tabWrapper {
+    background-color: #fff;
+    display: flex;
+    border-radius: 12px !important;
+    box-shadow: 0px 0px 3px 1px rgb(162, 162, 162);
+}
+
+>>>.paymentChildren .v-slide-group__wrapper {
+  height: 85px !important;
+  padding: 10px;
+}
+>>>.paymentChildren .v-item-group.v-slide-group {
+  z-index: 9;
+}
+.accountTabItem {
+  margin-top: 0px;
+  background-color: #fafafa;
+  padding-top: 90px;
+  z-index: -9999;
+}
+.paymentChildren .v-slide-group__content {
+  padding: 10px;
 }
 </style>
