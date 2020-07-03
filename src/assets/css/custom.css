@@ -1,8 +1,36 @@
 /* Typefaces */
 
 @font-face {
-    font-family: NeuePlak;
+    font-family: NeuePlak-Regular;
     src: url(../fonts/NeuePlakRegular.otf);
+  }
+@font-face {
+    font-family: NeuePlak-Bold;
+    src: url(../fonts/NeuePlakBold.otf);
+  }
+@font-face {
+    font-family: NeuePlak-Light;
+    src: url(../fonts/NeuePlakLight.otf);
+  }
+@font-face {
+    font-family: NeuePlak-SemiBold;
+    src: url(../fonts/NeuePlakSemiBold.otf);
+  }
+@font-face {
+    font-family: NeuePlak-Thin;
+    src: url(../fonts/NeuePlakThin.otf);
+  }
+@font-face {
+    font-family: Glosa-Black;
+    src: url(../fonts/GlosaDisplay-Black.ttf);
+  }
+@font-face {
+    font-family: Glosa-Roman;
+    src: url(../fonts/GlosaDisplay-Roman.ttf);
+  }
+@font-face {
+    font-family: Glosa-Medium;
+    src: url(../fonts/GlosaDisplay_Medium.ttf);
   }
 
 
@@ -12,10 +40,80 @@
     --accent: "#1CA092";
     --error: "#b71c1c";
 }
-  #app{
-      font-family: NeuePlak;
+
+  .v-application .body-1,
+  .v-application .body-2,
+  .v-application .title,
+  .v-application .caption,
+  .v-application .display,
+  .v-application .display-1,
+  .v-application .display-2,
+  .v-application .display-3 {
+      font-family: NeuePlak-Regular !important;
+  }
+
+  .lineHeight1-1{
+    line-height: 1.1;
+  }
+
+ .subtitle1 {
+      font-size: 1rem !important;
+}
+
+ .display2 {
+      font-size: 3rem !important
+}
+ .display3 {
+      font-size: 3.75rem !important
+}
+
+.neueplak-regular {
+    font-family: NeuePlak-Regular !important;
+}
+
+.neueplak-bold {
+    font-family: NeuePlak-Bold !important;
+}
+
+.neueplak-light {
+    font-family: NeuePlak-Light !important;
+}
+
+.neueplak-semibold {
+    font-family: NeuePlak-SemiBold !important;
+}
+
+.neueplak-thin {
+    font-family: NeuePlak-Thin !important;
+}
+
+.glosa-black {
+    font-family: Glosa-Black !important;
+}
+
+.glosa-roman {
+    font-family: Glosa-Roman !important;
+}
+
+.glosa-medium {
+    font-family: Glosa-Medium !important;
+}
+
+#section-1 .display-2 {
+    font-family: Glosa-Bold !important;
+    font-weight: bold;
+}
+
+.nav-tool.v-toolbar {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.18) !important;
+}
+
+  #app,
+  .application {
+      font-family: NeuePlak-Regular;
       color: #707070;
   }
+
 
   body {
       position: relative;
@@ -35,6 +133,7 @@
 
 .l-rounded-card{
     border-radius: 20px !important;
+    height: 60px;
 }
 .l-rounded-button{
     border-radius: 10px;

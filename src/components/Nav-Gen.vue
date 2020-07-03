@@ -1,11 +1,11 @@
 <template>
   <nav>
-    <v-toolbar height="200" class="nav-tool" elevation="3 ">
+    <v-toolbar height="200" class="nav-tool" flat>
       <router-link to="/"
         ><img width="220" alt="Legalbox logo" src="../assets/logo.svg"
       /></router-link>
       <v-spacer></v-spacer>
-      <v-btn class="mr-12" small large color="accent">
+      <v-btn class="mr-12" small x-large color="accent py-4 px-6">
         <router-link v-if="!isSignedIn" to="/login" class="white--text">
           <span class="title">Login/Sign Up</span>
         </router-link>

@@ -40,270 +40,6 @@
                 >Card</v-tab
               >
 
-              <!-- Card Tab -->
-              <v-tab-item class="transparent setting-parent-tab-item">
-                <!-- Bank Details and Cards -->
-                <v-tabs
-                  class="paymentChildren mt-12"
-                  background-color="transparent"
-                  centered
-                >
-                  <div class="tabWrapper">
-                    <v-tab
-                      class="paymentChild paymentChild1 white text-capitalize"
-                      active-class="white--text secondary radiusAllCorner"
-                      >Bank Accounts</v-tab
-                    >
-                    <v-tab
-                      class="paymentChild white text-capitalize"
-                      active-class="white--text secondary radiusAllCorner"
-                      >Cards</v-tab
-                    >
-                  </div>
-
-                  <!-- Bank Details -->
-                  <v-tab-item class="accountTabItem">
-                    <v-row>
-                      <v-col cols="12" sm="12">
-                        <div
-                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
-                        >
-                          <div
-                            v-for="(acc, index) in bankAccounts"
-                            :key="index"
-                            class="shadow-me-light bankAccounts"
-                          >
-                            <div class="bankLogo"></div>
-                            <div class="accDetails">
-                              <div>
-                                {{
-                                  acc.nuban.slice(0, 4) +
-                                    acc.nuban.slice(4, 8).replace(/./g, "*") +
-                                    acc.nuban.slice(
-                                      acc.nuban.length - 2,
-                                      acc.nuban.length
-                                    )
-                                }}
-                              </div>
-                              <div>{{ acc.name }}</div>
-                              <div>{{ acc.bank.bankName }}</div>
-                            </div>
-                          </div>
-
-                          <!-- Add New Bank Details -->
-                          <div
-                            class="shadow-me-light bankAccounts text-center accent"
-                            @click="
-                              addBankAccountActive = !addBankAccountActive
-                            "
-                          >
-                            <v-icon dark size="40">add_circle_outline</v-icon>
-                            <div class="white--text">
-                              Add a New Bank Account
-                            </div>
-                          </div>
-                        </div>
-                      </v-col>
-                    </v-row>
-
-                    <v-card flat class="white" v-if="addBankAccountActive">
-                      <v-card-text class="transparent px-12 py-8">
-                        <v-form class="width60-center" @submit.prevent>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4" class="align-self-center">
-                              <p class="headline">Bank</p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <v-select
-                                label="select your bank"
-                                v-model="bank"
-                                @change="updateCurrentPlan"
-                                :items="nigerianBanks"
-                                item-text="name"
-                                outlined
-                                offset-y
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-center">
-                            <v-col cols="12" sm="4" class="align-self-center">
-                              <p class="headline">Account Number</p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <v-text-field
-                                outlined
-                                :rules="[rules.number]"
-                                label="Account Number"
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4" class="align-self-center">
-                              <v-btn class="accent text-capitalize pa-7"
-                                >Add Bank Account</v-btn
-                              >
-                            </v-col>
-                          </v-row>
-                        </v-form>
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-
-                  <!-- Credit Card -->
-                  <v-tab-item class="accountTabItem">
-                    <v-row>
-                      <v-col cols="12" sm="12">
-                        <div
-                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
-                        >
-                          <div
-                            v-for="(card, index) in creditCards"
-                            :key="index"
-                            class="shadow-me-light bankAccounts"
-                          >
-                            <div class="bankLogo">
-                              <img
-                                src="../../assets/Verve_Image.png"
-                                width="50"
-                                v-if="card.cardType == 'verve'"
-                              />
-                              <img
-                                src="../../assets/visa.png"
-                                width="50"
-                                v-if="card.cardType == 'visa'"
-                              />
-                              <img
-                                src="../../assets/mastercard.jpg"
-                                width="50"
-                                v-if="card.cardType == 'mastercard'"
-                              />
-                            </div>
-                            <div class="headline">
-                              <div>
-                                {{
-                                  card.cardNumber.slice(0, 4) +
-                                    " " +
-                                    card.cardNumber
-                                      .slice(4, 12)
-                                      .replace(/./g, "*") +
-                                    " " +
-                                    card.cardNumber.slice(
-                                      card.cardNumber.length - 4,
-                                      card.cardNumber.length
-                                    )
-                                }}
-                              </div>
-                              <!-- <div>{{ card.name }}</div>
-                            <div>{{ card.bankName }}</div> -->
-                            </div>
-                          </div>
-
-                          <!-- Add New Bank Details -->
-                          <div
-                            class="shadow-me-light bankAccounts text-center accent"
-                            @click="addCardActive = !addCardActive"
-                          >
-                            <v-icon dark size="40">add_circle_outline</v-icon>
-                            <div class="white--text">Add a New Card</div>
-                          </div>
-                        </div>
-                      </v-col>
-                    </v-row>
-
-                    <v-card flat class="white" v-if="addCardActive">
-                      <v-card-text class="transparent px-12 py-8">
-                        <v-form>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4">
-                              <p class="headline">Change Subscription Plan</p>
-                              <p class="caption">
-                                Upgrade or downgrade your subscription here
-                              </p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <span class="d-flex align-center">
-                                <input
-                                  type="radio"
-                                  name="cardType"
-                                  value="verve"
-                                  class="mr-4"
-                                />
-                                <img
-                                  src="../../assets/Verve_Image.png"
-                                  width="100"
-                                />
-                              </span>
-                              <span class="d-flex align-center">
-                                <input
-                                  type="radio"
-                                  name="cardType"
-                                  value="verve"
-                                  class="mr-4"
-                                />
-                                <img src="../../assets/visa.png" width="60" />
-                              </span>
-                              <span class="d-flex align-center">
-                                <input
-                                  type="radio"
-                                  name="cardType"
-                                  value="verve"
-                                  class="mr-4"
-                                />
-                                <img
-                                  src="../../assets/mastercard.jpg"
-                                  width="100"
-                                />
-                              </span>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4">
-                              <p class="headline">Card Number</p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <v-text-field
-                                outlined
-                                label="Card Number"
-                                value="Card Number"
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4">
-                              <p class="headline">Expiry Date</p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <v-text-field
-                                outlined
-                                label="Expiry Date"
-                                value="Expiry Date"
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4">
-                              <p class="headline">CVV Number</p>
-                            </v-col>
-                            <v-col cols="12" sm="8" class="d-flex">
-                              <v-text-field
-                                outlined
-                                label="CVV"
-                                value="CVV"
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                          <v-row class="justify-start">
-                            <v-col cols="12" sm="4">
-                              <v-btn class="accent">Add Card</v-btn>
-                            </v-col>
-                          </v-row>
-                        </v-form>
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                </v-tabs>
-              </v-tab-item>
-
               <!-- Profile -->
               <v-tab-item class="transparent setting-parent-tab-item">
                 <v-card flat class="transparent">
@@ -670,7 +406,7 @@
                             <b>Ink Color:</b> Black
                           </p>
                         </v-col>
-                        <v-col cols="12" sm="8" class="">
+                        <v-col cols="12" sm="8" class>
                           <div class="uploadItemParent">
                             <image-uploader
                               id="userSignature"
@@ -721,6 +457,273 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+
+              <!-- Card Tab -->
+              <v-tab-item class="transparent setting-parent-tab-item">
+                <!-- Bank Details and Cards -->
+                <v-tabs
+                  class="paymentChildren mt-12"
+                  background-color="transparent"
+                  centered
+                >
+                  <div class="tabWrapper">
+                    <v-tab
+                      class="paymentChild paymentChild1 white text-capitalize"
+                      active-class="white--text secondary radiusAllCorner"
+                      >Bank Accounts</v-tab
+                    >
+                    <v-tab
+                      class="paymentChild white text-capitalize"
+                      active-class="white--text secondary radiusAllCorner"
+                      >Cards</v-tab
+                    >
+                  </div>
+
+                  <!-- Bank Details -->
+                  <v-tab-item class="accountTabItem">
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <div
+                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
+                        >
+                          <div
+                            v-for="(acc, index) in bankAccounts"
+                            :key="index"
+                            class="shadow-me-light bankAccounts"
+                          >
+                            <div class="bankLogo"></div>
+                            <div class="accDetails">
+                              <div>
+                                {{
+                                  acc.nuban.slice(0, 4) +
+                                    acc.nuban.slice(4, 8).replace(/./g, "*") +
+                                    acc.nuban.slice(
+                                      acc.nuban.length - 2,
+                                      acc.nuban.length
+                                    )
+                                }}
+                              </div>
+                              <div>{{ acc.name }}</div>
+                              <div>{{ acc.bank.bankName }}</div>
+                            </div>
+                          </div>
+
+                          <!-- Add New Bank Details -->
+                          <div
+                            class="shadow-me-light bankAccounts text-center accent"
+                            @click="
+                              addBankAccountActive = !addBankAccountActive
+                            "
+                          >
+                            <v-icon dark size="40">add_circle_outline</v-icon>
+                            <div class="white--text">
+                              Add a New Bank Account
+                            </div>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+
+                    <v-card flat class="white" v-if="addBankAccountActive">
+                      <v-card-text class="transparent px-12 py-8">
+                        <v-form class="width60-center" @submit.prevent>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <p class="headline">Bank</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-select
+                                label="select your bank"
+                                v-model="bank"
+                                @change="updateCurrentPlan"
+                                :items="nigerianBanks"
+                                item-text="name"
+                                outlined
+                                offset-y
+                              ></v-select>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-center">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <p class="headline">Account Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                :rules="[rules.number]"
+                                label="Account Number"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4" class="align-self-center">
+                              <v-btn class="accent text-capitalize pa-7"
+                                >Add Bank Account</v-btn
+                              >
+                            </v-col>
+                          </v-row>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+
+                  <!-- Credit Card -->
+                  <v-tab-item class="accountTabItem">
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <div
+                          class="bankAccountWrapper d-flex flex-wrap justify-space-between"
+                        >
+                          <div
+                            v-for="(card, index) in creditCards"
+                            :key="index"
+                            class="shadow-me-light bankAccounts"
+                          >
+                            <div class="bankLogo">
+                              <img
+                                src="../../assets/Verve_Image.png"
+                                width="50"
+                                v-if="card.cardType == 'verve'"
+                              />
+                              <img
+                                src="../../assets/visa.png"
+                                width="50"
+                                v-if="card.cardType == 'visa'"
+                              />
+                              <img
+                                src="../../assets/mastercard.png"
+                                width="50"
+                                v-if="card.cardType == 'mastercard'"
+                              />
+                            </div>
+                            <div class="headline">
+                              <div>
+                                {{
+                                  card.cardNumber.slice(0, 4) +
+                                    " " +
+                                    card.cardNumber
+                                      .slice(4, 12)
+                                      .replace(/./g, "*") +
+                                    " " +
+                                    card.cardNumber.slice(
+                                      card.cardNumber.length - 4,
+                                      card.cardNumber.length
+                                    )
+                                }}
+                              </div>
+                              <!-- <div>{{ card.name }}</div>
+                              <div>{{ card.bankName }}</div>-->
+                            </div>
+                          </div>
+
+                          <!-- Add New Bank Details -->
+                          <div
+                            class="shadow-me-light bankAccounts text-center accent"
+                            @click="addCardActive = !addCardActive"
+                          >
+                            <v-icon dark size="40">add_circle_outline</v-icon>
+                            <div class="white--text">Add a New Card</div>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+
+                    <v-card flat class="white" v-if="addCardActive">
+                      <v-card-text class="transparent px-12 py-8">
+                        <v-form ref="addCardForm">
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Card Type</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-radio-group
+                                class="mt-0 pt-0"
+                                v-model="cardType"
+                                row
+                              >
+                                <span class="d-flex">
+                                  <v-radio
+                                    color="accent"
+                                    class="mr-n3"
+                                  ></v-radio>
+                                  <img
+                                    src="../../assets/Verve_Image.png"
+                                    width="100"
+                                  />
+                                </span>
+                                <span class="mx-3"></span>
+                                <span class="d-flex">
+                                  <v-radio
+                                    color="accent"
+                                    class="mr-n3"
+                                  ></v-radio>
+                                  <img
+                                    src="../../assets/visa.png"
+                                    width="100"
+                                  />
+                                </span>
+                                <span class="mx-3"></span>
+                                <span class="d-flex">
+                                  <v-radio
+                                    color="accent"
+                                    class="mr-n3"
+                                  ></v-radio>
+                                  <img
+                                    src="../../assets/mastercard.png"
+                                    width="100"
+                                  />
+                                </span>
+                              </v-radio-group>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Card Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                v-stripspaces="'cardNumber'"
+                                outlined
+                                label="Card Number"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">Expiry Date</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field
+                                outlined
+                                label="Expiry Date"
+                                value="Expiry Date"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <p class="headline">CVV Number</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="d-flex">
+                              <v-text-field outlined value="CVV"></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row class="justify-start">
+                            <v-col cols="12" sm="4">
+                              <v-btn
+                                class="accent text-capitalize py-4 px-6"
+                                x-large
+                                @click="appendCard"
+                                >Add Card</v-btn
+                              >
+                            </v-col>
+                          </v-row>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+                </v-tabs>
+              </v-tab-item>
             </v-tabs>
           </div>
         </div>
@@ -732,9 +735,8 @@
           v-model="updatedSnackbar.active"
           :multi-line="updatedSnackbar.multiLine"
           :timeout="updatedSnackbar.timeout"
+          >{{ updatedSnackbar.text }}</v-snackbar
         >
-          {{ updatedSnackbar.text }}
-        </v-snackbar>
       </v-container>
     </div>
 
@@ -794,6 +796,11 @@ export default {
           }
         }
       ],
+      cardType: "",
+      cardNumber: "",
+      expiry: "",
+      pin: "",
+      cvv: "",
       creditCards: [
         {
           cardType: "mastercard",
@@ -873,6 +880,7 @@ export default {
           "Avatar size should not be more than 100kb!",
         min2: value => value.length >= 2 || "Min 2 characters",
         min11: value => value.length >= 11 || "Min 11 digits",
+        cardNumLength: value => value.length === 16 || "Invalid Card Number",
         alphabet: value =>
           !value || /^[a-zA-Z]+$/.test(value) || "Only alpabets are allowed",
         number: value =>
@@ -899,6 +907,17 @@ export default {
     };
   },
   methods: {
+    appendCard() {
+      if (this.$refs.addCardForm.validate()) {
+        this.creditCards.push({
+          cardType: "mastercard",
+          cardNumber: "2345989745905412",
+          expiryDate: "",
+          pin: "",
+          cvv: ""
+        });
+      }
+    },
     // Profile image
     setProfileImage: function(output) {
       this.profilePictureHasImage = true;

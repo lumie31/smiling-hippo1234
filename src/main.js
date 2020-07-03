@@ -15,6 +15,14 @@ import axios from "axios";
 
 Vue.config.productionTip = false;
 Vue.component("VImageInput", VImageInput);
+Vue.directive("stripspaces", {
+  // eslint-disable-next-line no-unused-vars
+  bind(el, binding, vnode) {
+    if (binding.value == "cardNumber") {
+      binding.value.replace(/./g, "*");
+    }
+  }
+});
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

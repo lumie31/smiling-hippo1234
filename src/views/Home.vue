@@ -8,12 +8,12 @@
         <v-row class="pad-top">
           <v-col cols="12" sm="6">
             <v-card flat class="mt-12" color="transparent">
-              <v-card-text>
-                <div class="display-2 text--white">
+              <v-card-text style="width: 67%; font-family: NeuePlak-Light">
+                <div class="display-2 secondary--text glosa-roman">
                   Simple Solutions
                   <br />For Everyday <br />Transactions.
                 </div>
-                <p>
+                <p class="body-1 text-justify mt-4">
                   Connect with your customers, protect your businesses and
                   collect your payments with just the click of a button.
                 </p>
@@ -45,12 +45,13 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="12">
-              <h2
-                class="to-top display-3 font-weight-normal text-center mt-12 white--text"
+              <div
+                class="lineHeight1-1 display3 font-weight-normal text-center my-12 white--text"
+                style="font-family: Glosa-Black"
               >
                 We are making business
-                <br />simple and cool
-              </h2>
+                <br />simple and cool.
+              </div>
             </v-col>
           </v-row>
 
@@ -63,10 +64,10 @@
                     width="55"
                     src="../assets/connect-icon.png"
                   />
-                  <p class="display-2 text--secondary">
+                  <p class="display2 glosa-medium text--secondary my-7">
                     <router-link to="/signup">Connect</router-link>
                   </p>
-                  <p class="subtitle-1 text--secondary">
+                  <p class="subtitle1 text--secondary neueplak-light">
                     Documents are about connection. Whether it is a letter, a
                     contract, a policy, a receipt or an invoice, there is a
                     customer waiting for you to reach them with your offer,
@@ -94,12 +95,12 @@
                   <img
                     alt="connect icon"
                     width="55"
-                    src="../assets/connect-icon.png"
+                    src="../assets/protect-icon.png"
                   />
-                  <p class="display-2 text--secondary">
-                    <router-link to="/signup">Connect</router-link>
+                  <p class="display2 glosa-medium text--secondary my-7">
+                    <router-link to="/signup">Protect</router-link>
                   </p>
-                  <p class="subtitle-1 text--secondary">
+                  <p class="subtitle1 text--secondary neueplak-light">
                     Documents are about connection. Whether it is a letter, a
                     contract, a policy, a receipt or an invoice, there is a
                     customer waiting for you to reach them with your offer,
@@ -110,7 +111,7 @@
                   <v-btn
                     x-large
                     color="deep-purple accent l-rounded-button px-12"
-                    ><router-link to="/signup">Start Today</router-link></v-btn
+                    ><router-link to="/signup">Click Here</router-link></v-btn
                   >
                 </v-card-actions>
               </v-card>
@@ -124,10 +125,10 @@
                     width="55"
                     src="../assets/collect-icon.png"
                   />
-                  <p class="display-2 text--secondary">
+                  <p class="display2 glosa-medium text--secondary my-7">
                     <router-link to="/signup">Collect</router-link>
                   </p>
-                  <p class="subtitle-1 text--secondary">
+                  <p class="subtitle1 text--secondary neueplak-light">
                     Our digital payments feature allows your customers pay
                     directly to your account immediately they sign contracts
                     online. You can also set up payment plans with your contract
