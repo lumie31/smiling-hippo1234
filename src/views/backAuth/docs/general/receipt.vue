@@ -215,9 +215,7 @@
                 ></v-text-field>
 
                 <div class="d-flex align-start justify-center">
-                  <label
-                    class="overline d-flex align-center"
-                  >
+                  <label class="overline d-flex align-center">
                     <input
                       type="radio"
                       class="mr-1"
@@ -369,7 +367,7 @@
             </v-row>
 
             <v-snackbar
-      class="snackbar"
+              class="snackbar"
               :color="docSavedSnackbar.color"
               top
               right
@@ -571,7 +569,7 @@ export default {
       if (typeof val == "number") {
         console.log(val);
         console.log("Gets here");
-        
+
         this.docSavedSnackbar.active = this.docSubmittedSuccessfuly.active;
         this.docSavedSnackbar.text = this.docSubmittedSuccessfuly.text;
         this.docSavedSnackbar.color = this.docSubmittedSuccessfuly.color;
@@ -580,7 +578,6 @@ export default {
 
         console.log("Re-Route");
         if (this.andContinueValidator === "redirectMe") {
-
           this.loadingSend = true;
 
           setTimeout(() => {

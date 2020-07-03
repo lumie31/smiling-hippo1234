@@ -7,21 +7,13 @@
 
     <v-col cols="6" class="">
       <div class="formSectionTitle">Signatures (First Party)</div>
-        <div class="d-flex justify-center">
-          <v-radio-group v-model="partySignatories.firstParty.mode" row>
-              <v-radio
-                label="Company"
-                color="accent"
-                value="company"
-              ></v-radio>
-              <span class="mx-4"></span>
-              <v-radio
-                label="Person"
-                color="accent"
-                value="person"
-              ></v-radio>
-            </v-radio-group>
-        </div>
+      <div class="d-flex justify-center">
+        <v-radio-group v-model="partySignatories.firstParty.mode" row>
+          <v-radio label="Company" color="accent" value="company"></v-radio>
+          <span class="mx-4"></span>
+          <v-radio label="Person" color="accent" value="person"></v-radio>
+        </v-radio-group>
+      </div>
       <v-text-field
         v-if="partySignatories.firstParty.mode == 'company'"
         height="155"
@@ -38,7 +30,10 @@
             id="setUserSignature"
             :preview="false"
             :maxSize="0.2"
-            :className="['fileinput', { 'fileinput--loaded': userSignatureHasImage }]"
+            :className="[
+              'fileinput',
+              { 'fileinput--loaded': userSignatureHasImage }
+            ]"
             capture="environment"
             :debug="1"
             doNotResize="gif"
@@ -50,26 +45,38 @@
               <figure>
                 <div
                   class="uploadItem userSignatureHolder"
-                  :style="[userSignatureHasImage ? {
-                      backgroundImage:
-                        'url(' + userSignature  + ')'
-                    } : {
-                      backgroundImage:
-                        'url(' + storedUserSignature + ')'
-                    }]"
+                  :style="[
+                    userSignatureHasImage
+                      ? {
+                          backgroundImage: 'url(' + userSignature + ')'
+                        }
+                      : {
+                          backgroundImage: 'url(' + storedUserSignature + ')'
+                        }
+                  ]"
                 ></div>
               </figure>
             </label>
           </image-uploader>
-          <v-btn text class="transparent resetSignatureSelection" @click="resetSignatureSelection" v-if="userSignatureHasImage">
-          <v-icon>refresh</v-icon>
-        </v-btn>
+          <v-btn
+            text
+            class="transparent resetSignatureSelection"
+            @click="resetSignatureSelection"
+            v-if="userSignatureHasImage"
+          >
+            <v-icon>refresh</v-icon>
+          </v-btn>
         </div>
         <!-- <v-btn class="mt-12 accent" @click="appendToFormData">
           <span>Update Signature</span>
         </v-btn> -->
         <span class="mx-4"></span>
-        <v-btn class="mt-12 success" @click="updateDefaultSignature" v-if="userSignatureHasImage" :loading="uploadSignatureLoader">
+        <v-btn
+          class="mt-12 success"
+          @click="updateDefaultSignature"
+          v-if="userSignatureHasImage"
+          :loading="uploadSignatureLoader"
+        >
           <span>Set As Default</span>
         </v-btn>
       </v-container>
@@ -78,20 +85,12 @@
     <v-col cols="6" class="">
       <div class="formSectionTitle">Signatures (Second Party)</div>
       <div class="d-flex justify-center">
-          <v-radio-group v-model="partySignatories.secondParty.mode"  row>
-              <v-radio
-                label="Company"
-                color="accent"
-                value="company"
-              ></v-radio>
-              <span class="mx-4"></span>
-              <v-radio
-                label="Person"
-                color="accent"
-                value="person"
-              ></v-radio>
-            </v-radio-group>
-        </div>
+        <v-radio-group v-model="partySignatories.secondParty.mode" row>
+          <v-radio label="Company" color="accent" value="company"></v-radio>
+          <span class="mx-4"></span>
+          <v-radio label="Person" color="accent" value="person"></v-radio>
+        </v-radio-group>
+      </div>
       <v-text-field
         disabled
         v-if="partySignatories.secondParty.mode == 'company'"
@@ -103,15 +102,18 @@
         flat
         solo
       ></v-text-field>
-      
+
       <v-container class="contractSignatory text-center">
         <div class="uploadItemParent" v-if="secondPartySignatureACTIVE">
           <image-uploader
-          disabled
+            disabled
             id="secondPartySignature"
             :preview="false"
             :maxSize="0.2"
-            :className="['fileinput', { 'fileinput--loaded': secondPartySignatureHasImage }]"
+            :className="[
+              'fileinput',
+              { 'fileinput--loaded': secondPartySignatureHasImage }
+            ]"
             capture="environment"
             :debug="1"
             doNotResize="gif"
@@ -131,29 +133,36 @@
             </label>
           </image-uploader>
         </div>
-        <div class="uploadItem userSignatureHolder" v-if="!secondPartySignatureACTIVE"></div>
-        <v-btn class="mt-12 accent" @click="uploadSecondPartySignature" :disabled="!secondPartySignatureACTIVE">
+        <div
+          class="uploadItem userSignatureHolder"
+          v-if="!secondPartySignatureACTIVE"
+        ></div>
+        <v-btn
+          class="mt-12 accent"
+          @click="uploadSecondPartySignature"
+          :disabled="!secondPartySignatureACTIVE"
+        >
           <span>Upload Signature</span>
         </v-btn>
       </v-container>
-    </v-col> 
+    </v-col>
     <v-snackbar
-       class="snackbar"
-       :color="updatedSnackbar.color"
-       top
-       right
-       v-model="updatedSnackbar.active"
-       :multi-line="updatedSnackbar.multiLine"
-       :timeout="updatedSnackbar.timeout"
-     >
-       {{ updatedSnackbar.text }}
-     </v-snackbar>
+      class="snackbar"
+      :color="updatedSnackbar.color"
+      top
+      right
+      v-model="updatedSnackbar.active"
+      :multi-line="updatedSnackbar.multiLine"
+      :timeout="updatedSnackbar.timeout"
+    >
+      {{ updatedSnackbar.text }}
+    </v-snackbar>
   </v-row>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   data() {
@@ -186,12 +195,12 @@ export default {
         multiLine: true,
         color: null,
         timeout: this.$store.state.snackBarDuration
-      },
+      }
     };
   },
   methods: {
     appendToFormData() {
-      this.$emit("signatoriesDATA", this.partySignatories)
+      this.$emit("signatoriesDATA", this.partySignatories);
     },
     resetSignatureSelection() {
       this.userSignatureHasImage = false;
@@ -294,7 +303,6 @@ export default {
     // Second Party Signature
     uploadSecondPartySignature() {
       console.log("CTA for Second Party");
-      
     }
   },
   created() {
@@ -307,22 +315,24 @@ export default {
   watch: {
     userSignatureHasImage(val) {
       if (val) {
-        return val
+        return val;
       }
     }
   },
   computed: {
-    ...mapState(["storedUserDetails", "userDetailsReady", "storedUserSignature"]),
-    
+    ...mapState([
+      "storedUserDetails",
+      "userDetailsReady",
+      "storedUserSignature"
+    ])
   },
   mounted() {
     setTimeout(() => {
       this.partySignatories.firstParty.signature = this.storedUserSignature;
     }, 1000);
 
-
     // Emit Append function to Parent on mount
-      this.appendToFormData();
+    this.appendToFormData();
   }
 };
 </script>
@@ -335,11 +345,11 @@ export default {
   line-height: 5;
 }
 
-.contractParties .partyName label{
+.contractParties .partyName label {
   text-align: center !important;
   width: 100%;
 }
-.contractParties .partyName input{
+.contractParties .partyName input {
   text-align: center !important;
 }
 

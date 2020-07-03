@@ -65,7 +65,7 @@
 
 <script>
 import General_Footer from "@/components/footer";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   components: {
@@ -103,40 +103,36 @@ export default {
   },
   methods: {
     submitPasswordReset() {
-
       if (this.$refs.resetPassword.validate()) {
         this.resetLoader = true;
         this.resetSubmitted = true;
 
-        axios.post("/api/v1/resetpassword", {email: this.email}).then(response => {
-        console.log(response);
-          console.log(response.data);
-          console.log(response.status);
+        axios
+          .post("/api/v1/resetpassword", { email: this.email })
+          .then(response => {
+            console.log(response);
+            console.log(response.data);
+            console.log(response.status);
 
+            this.passwordResetSnackbar.active = true;
+            this.passwordResetSnackbar.text = response.data.message;
+            this.passwordResetSnackbar.color = "success";
+            this.resetLoader = false;
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+            console.log(error.response.data);
+            console.log(error.response.data.message);
+            console.log(error.response.status);
 
-        this.passwordResetSnackbar.active = true;
-        this.passwordResetSnackbar.text = response.data.message;
-        this.passwordResetSnackbar.color = "success";
-        this.resetLoader = false;
-
-      })
-      .catch(error =>{
-        console.log(error);
-        console.log(error.response);
-        console.log(error.response.data);
-        console.log(error.response.data.message);
-        console.log(error.response.status);
-
-        this.passwordResetSnackbar.active = true;
-        this.passwordResetSnackbar.text = error.response.data.message;
-        this.passwordResetSnackbar.color = "error";
-        this.resetLoader = false;
-        this.resetSubmitted = false;
-
-      })
+            this.passwordResetSnackbar.active = true;
+            this.passwordResetSnackbar.text = error.response.data.message;
+            this.passwordResetSnackbar.color = "error";
+            this.resetLoader = false;
+            this.resetSubmitted = false;
+          });
       }
-      
-      
     }
   },
   computed: {},

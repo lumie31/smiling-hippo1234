@@ -119,7 +119,9 @@ import Vue from "vue";
                         id="header"
                         @click="hideEllipsis"
                       >
-                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
+                        <span class="legalbox-info-ellipsis">{{
+                          legalbox.info
+                        }}</span>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content class="faq-answers">
                         {{ legalbox.info }}
@@ -130,7 +132,10 @@ import Vue from "vue";
               </div>
 
               <div
-                v-for="(legalbox, index) in legalboxes.slice(0,legalboxes.length/2)"
+                v-for="(legalbox, index) in legalboxes.slice(
+                  0,
+                  legalboxes.length / 2
+                )"
                 :key="index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
@@ -158,10 +163,10 @@ import Vue from "vue";
                 <v-container>
                   <v-expansion-panels flat>
                     <v-expansion-panel>
-                      <v-expansion-panel-header
-                        class="transparent"
-                      >
-                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
+                      <v-expansion-panel-header class="transparent">
+                        <span class="legalbox-info-ellipsis">{{
+                          legalbox.info
+                        }}</span>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content class="faq-answers">
                         {{ legalbox.info }}
@@ -173,7 +178,10 @@ import Vue from "vue";
             </v-col>
             <v-col cols="6" sm="6" class="legalbox-subscription-halves">
               <div
-                v-for="(legalbox, index) in legalboxes.slice(3,legalboxes.length)"
+                v-for="(legalbox, index) in legalboxes.slice(
+                  3,
+                  legalboxes.length
+                )"
                 :key="index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
@@ -201,10 +209,10 @@ import Vue from "vue";
                 <v-container>
                   <v-expansion-panels flat>
                     <v-expansion-panel>
-                      <v-expansion-panel-header
-                        class="transparent"
-                      >
-                        <span class="legalbox-info-ellipsis">{{ legalbox.info }}</span>
+                      <v-expansion-panel-header class="transparent">
+                        <span class="legalbox-info-ellipsis">{{
+                          legalbox.info
+                        }}</span>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content class="faq-answers">
                         {{ legalbox.info }}
@@ -305,7 +313,9 @@ export default {
   methods: {
     hideEllipsis() {
       if ($("buttton#header").hasClass(".v-expansion-panel-header--active")) {
-        $("buttton#header").children(".legalbox-info-ellipsis").hide()
+        $("buttton#header")
+          .children(".legalbox-info-ellipsis")
+          .hide();
       }
     },
     callback: function(response) {
@@ -447,15 +457,15 @@ export default {
       return this.$store.state.legalboxes.filter(i => i.name == "General");
     },
     hideEllipsis2() {
-      let ellipsis = $(".legalbox-info-ellipsis")
+      let ellipsis = $(".legalbox-info-ellipsis");
       if ($("buttton#header").hasClass(".v-expansion-panel-header--active")) {
-        ellipsis.hide()
+        ellipsis.hide();
       }
-      return ellipsis
+      return ellipsis;
     }
   },
   mounted() {
-    this.hideEllipsis()
+    this.hideEllipsis();
     // console.log(this.storedUserDetails)
     // let list = document.getElementsByClassName("legalboxSubscribeCheckbox");
     // console.log(list);
@@ -508,10 +518,10 @@ export default {
 
 .legalbox-info-ellipsis {
   overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    line-height: 1.625;
-    -webkit-line-clamp: 2; /* after 3 line show ... */
-    -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 1.625;
+  -webkit-line-clamp: 2; /* after 3 line show ... */
+  -webkit-box-orient: vertical;
 }
 </style>

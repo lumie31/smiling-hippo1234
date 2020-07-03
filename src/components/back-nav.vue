@@ -55,7 +55,13 @@
         <v-spacer></v-spacer>
         <div class="user-glimpse d-flex justify-center align-center">
           <span>
-            <img :src="[storedUserProfilePicture ? storedUserProfilePicture : '/img/user.0f16ef6a.png']" />
+            <img
+              :src="[
+                storedUserProfilePicture
+                  ? storedUserProfilePicture
+                  : '/img/user.0f16ef6a.png'
+              ]"
+            />
           </span>
           <p class="ml-4">Hi {{ storedUserDetails.firstName }}</p>
           <v-menu offset-y>
@@ -104,7 +110,9 @@
             avoid stories that touch in future.
           </v-col>
           <v-col class="shrink">
-            <v-btn @click="verifyEmail" :loading="resetLoader">Verify Email</v-btn>
+            <v-btn @click="verifyEmail" :loading="resetLoader"
+              >Verify Email</v-btn
+            >
           </v-col>
         </v-row>
       </v-alert>
@@ -216,8 +224,12 @@
       </v-row>
     </v-container>
     <div class="scrollUpDown">
-      <v-icon class="scrollUpDownButton" id="scrollUp">keyboard_arrow_up</v-icon>
-      <v-icon class="scrollUpDownButton" id="scrollDown">keyboard_arrow_down</v-icon>
+      <v-icon class="scrollUpDownButton" id="scrollUp"
+        >keyboard_arrow_up</v-icon
+      >
+      <v-icon class="scrollUpDownButton" id="scrollDown"
+        >keyboard_arrow_down</v-icon
+      >
     </div>
   </div>
 </template>
@@ -225,7 +237,7 @@
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
-import { documentCreation } from '../assets/js/script'
+import { documentCreation } from "../assets/js/script";
 
 export default {
   data() {
@@ -337,7 +349,6 @@ export default {
         // console.log(error.response.status);
 
         return error;
-
       });
   },
   watch: {

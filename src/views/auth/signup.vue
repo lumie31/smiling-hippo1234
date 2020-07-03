@@ -15,8 +15,7 @@
           transition="dialog-bottom-transition"
         >
           <v-card class="pt-12">
-            <v-toolbar dark color="accent">
-            </v-toolbar>
+            <v-toolbar dark color="accent"> </v-toolbar>
             <v-container
               class="l-hero d-flex align-center justify-center mb-10"
             >

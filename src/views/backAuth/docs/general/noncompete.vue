@@ -327,7 +327,7 @@
           </v-row>
         </v-container>
         <v-snackbar
-      class="snackbar"
+          class="snackbar"
           :color="docSavedSnackbar.color"
           top
           right

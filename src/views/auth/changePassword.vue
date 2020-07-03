@@ -6,9 +6,18 @@
       </router-link>
     </v-container>
 
-    <v-container class="text-center" style="margin: 130px auto 200px auto;" v-if="responseNotReady">
+    <v-container
+      class="text-center"
+      style="margin: 130px auto 200px auto;"
+      v-if="responseNotReady"
+    >
       Veryifying.....
-      <v-text-field style="width: 40%; margin: 0 auto;" color="success" loading disabled></v-text-field>
+      <v-text-field
+        style="width: 40%; margin: 0 auto;"
+        color="success"
+        loading
+        disabled
+      ></v-text-field>
     </v-container>
 
     <div class="bodyWrapper" v-if="!responseNotReady">
@@ -53,7 +62,8 @@
                   @click="changePassword"
                   :loading="passwordSubmitted"
                   :disabled="disableForm"
-                >Reset Password</v-btn>
+                  >Reset Password</v-btn
+                >
               </v-form>
             </div>
             <v-snackbar
@@ -64,10 +74,15 @@
               v-model="changePasswordSnackbar.active"
               :multi-line="changePasswordSnackbar.multiLine"
               :timeout="changePasswordSnackbar.timeout"
-            >{{ changePasswordSnackbar.text }}</v-snackbar>
+              >{{ changePasswordSnackbar.text }}</v-snackbar
+            >
 
             <!-- FAILED ACTIVATION -->
-            <div v-if="activationNotSuccessful == 'failed' && resetSuccessful === false">
+            <div
+              v-if="
+                activationNotSuccessful == 'failed' && resetSuccessful === false
+              "
+            >
               <h1 class="display-3">Oops</h1>
               <h1 class="title py-5">
                 <em>{{ responseText }}</em>

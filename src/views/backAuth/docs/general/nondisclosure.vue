@@ -1,5 +1,7 @@
 <template>
-  <div class="dashboard createDocument createEditDocument nondisclosure page back-page">
+  <div
+    class="dashboard createDocument createEditDocument nondisclosure page back-page"
+  >
     <back-nav></back-nav>
 
     <!-- <pre class="testFloat">{{ signatories }}</pre> -->
@@ -644,7 +646,9 @@
             {{ docSavedSnackbar.text }}
           </v-snackbar>
           <v-container class="contractsignatory">
-            <append-signature @signatoriesDATA="retrieveSignatoriesData"></append-signature>
+            <append-signature
+              @signatoriesDATA="retrieveSignatoriesData"
+            ></append-signature>
           </v-container>
 
           <v-row>
@@ -659,10 +663,10 @@
                 @click="submitDocument('continueEdit')"
                 :disabled="disableContinue"
               >
-              <span class=" d-flex flex-column align-center">
-              <img src="@/assets/save.png" width="20">
-              Save
-              </span>
+                <span class=" d-flex flex-column align-center">
+                  <img src="@/assets/save.png" width="20" />
+                  Save
+                </span>
               </v-btn>
               <v-btn
                 x-large

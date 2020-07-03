@@ -491,7 +491,6 @@ export default {
   methods: {},
   mounted() {
     console.log(this.storedUserDetails);
-    
   },
   components: {
     "back-nav": Back_Navbar,
