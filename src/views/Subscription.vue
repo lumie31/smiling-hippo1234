@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 <template>
   <div class="subscription page" id="">
     <nav-one></nav-one>
@@ -10,6 +8,73 @@ import Vue from "vue";
     </div>
 
     <div class="bodyWrapper">
+      <v-container>
+        <v-dialog
+          v-model="returnedPayment"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <!-- <v-toolbar dark flat solo color="white text-right">
+            <v-spacer></v-spacer>
+            <v-btn icon dark @click="resetSuccessful = false">
+              <v-icon x-large>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar> -->
+          <v-card class="d-flex flex-column align-center justify-center">
+            <!-- <v-container class="l-hero d-flex align-center justify-center mb-10">
+            <router-link to="/">
+              <img width="420" alt="Legalbox logo" src="@/assets/logo.svg" />
+            </router-link>
+          </v-container> -->
+
+            <v-container
+              class="d-flex flex-column align center"
+              v-if="paymentLoading"
+            >
+              <v-text-field
+                style="width: 40%; margin: 0 auto;"
+                color="success"
+                loading
+                disabled
+              ></v-text-field
+            ></v-container>
+
+            <v-container
+              class="d-flex flex-column align center"
+              v-if="!paymentLoading && paymentSuccessful"
+            >
+              <v-icon size="250" color="green">check_circle</v-icon>
+              <h2 class="text-center display2 secondary--text">
+                Payment Successful
+              </h2>
+              <div class="width50-center text-center body-1 accent--text">
+                <p>
+                  Thank you for your payment. You are all set to go now
+                </p>
+                <!-- <v-btn class="accent">Goto Dashboard</v-btn> -->
+              </div>
+            </v-container>
+
+            <v-container
+              class="d-flex flex-column align center"
+              v-if="!paymentLoading && paymentFailed"
+            >
+              <v-icon size="250" color="red">error</v-icon>
+              <h2 class="text-center display2 red--text">
+                Payment UnSuccessful
+              </h2>
+              <div class="width50-center text-center body-1 accent--text">
+                <p>
+                  Sorry! We couldnt process your payment
+                </p>
+                <!-- <v-btn class="accent">Goto Dashboard</v-btn> -->
+              </div>
+            </v-container>
+          </v-card>
+        </v-dialog>
+      </v-container>
+
       <v-container fluid id="section-8">
         <div id="plan-parent">
           <h2 class="display-2 text-center secondary--text">
@@ -234,6 +299,7 @@ import Vue from "vue";
               <span class="headline text-capitalize">Start 14 Days Trial</span>
               <!-- <span class="headline text-capitalize">Subscribe & Pay</span> -->
             </v-btn>
+            <div>{{ storedUserEmail }}</div>
             <p class="mt-2">
               By clicking on ‘Subscribe & Pay’, you have agreed to our
               <router-link to="/terms-of-service">terms of service </router-link
@@ -285,12 +351,15 @@ import Vue from "vue";
   </div>
 </template>
 
+<script src="topbar.js"></script>
+
 <script>
 // import Paystack from "vue-paystack";
 import { uuid } from "vue-uuid";
 import Navbar from "@/components/Nav-Gen";
 import General_Footer from "@/components/footer";
 import { mapState } from "vuex";
+// import { store } from "../store";
 import $ from "jquery";
 import axios from "axios";
 
@@ -304,9 +373,14 @@ export default {
       disableCheckbox: false,
       disableSubscribeButton: true,
       selectedLegalbox: ["General"],
+      paymentRef: "",
+      returnedPayment: false,
+      paymentLoading: true,
+      paymentSuccessful: false,
+      paymentFailed: false,
+      paymentInvalid: false,
+      paystackSecretKey: process.env.VUE_APP_paystack_secretKey,
       paystackkey: process.env.VUE_APP_paystack_publicKey,
-      amount: 10000,
-      email: "mayor@email.com",
       reference: "LB_Paystack_" + uuid.v4()
     };
   },
@@ -367,16 +441,17 @@ export default {
     // }
     callOnPaystack() {
       // this.paymentInitiated = true;
+      console.log(this.$store.state.storedUserEmail);
 
       axios
         .post(
           "https://api.paystack.co/transaction/initialize",
           {
-            email: this.email,
+            email: this.storedUserEmail,
             reference: this.reference,
             amount: this.amount,
             plan: "PLN_37fzyfh8920h35f",
-            callback_url: "https://blog.legalbox.ng"
+            callback_url: "https://dev.legalbox.ng/subscription"
           },
           {
             headers: {
@@ -428,19 +503,67 @@ export default {
         }
       }
     }
-    // storedUserDetails(val) {
-    //   if (val.length > 0) {
-    //     console.log(val);
-    //   }
-    // }
   },
   components: {
     // paystack: Paystack,
     "nav-one": Navbar,
     "general-footer": General_Footer
   },
+  created() {
+    this.$store.dispatch("getUserDetails").then(() => {});
+
+    this.paymentRef = this.$route.query.reference;
+    if (this.paymentRef) {
+      this.returnedPayment = true;
+      this.paymentLoading = true;
+
+      axios
+        .get("https://api.paystack.co/transaction/verify/" + this.paymentRef, {
+          headers: { Authorization: `Bearer ${this.paystackSecretKey}` }
+        })
+        .then(response => {
+          if (response.data.status === true) {
+            this.paymentLoading = false;
+
+            console.log(response.data);
+            if (response.data.data.status == "success") {
+              this.paymentSuccessful = true;
+
+              setTimeout(() => {
+                this.$router.push("/dashboard");
+              }, 5000);
+            }
+          }
+
+          console.log(response);
+          console.log(response.data);
+          console.log(response.data.status);
+          console.log(response.status);
+          console.log(response.headers);
+        })
+        .catch(error => {
+          this.paymentLoading = false;
+
+          if (error.response.status != 200) {
+            this.paymentFailed = true;
+
+            setTimeout(() => {
+              this.$router.push("/subscription");
+            }, 5000);
+          }
+
+          console.log(error);
+          console.log(error.response);
+          console.log(error.response.data);
+          console.log(error.response.data.message);
+          // console.log(error.response.data.data.message);
+          console.log(error.response.status);
+        });
+    }
+  },
+
   computed: {
-    ...mapState(["storedUserDetails"]),
+    ...mapState(["storedUserDetails", "storedUserEmail"]),
     currentLegalboxSelection() {
       return this.selectedLegalbox;
     },

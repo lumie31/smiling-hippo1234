@@ -25,6 +25,8 @@ Vue.directive("stripspaces", {
 });
 
 router.beforeEach((to, from, next) => {
+  // use from to catch where route is coming from
+  console.log(from);
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // check for valid auth token
     axios

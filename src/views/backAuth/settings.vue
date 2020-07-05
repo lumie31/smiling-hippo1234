@@ -37,7 +37,7 @@
               >
               <v-tab
                 class="display-1 white--text text-capitalize text-left justify-start last-title settings-tab-title"
-                >Card</v-tab
+                >Payment</v-tab
               >
 
               <!-- Profile -->

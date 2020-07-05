@@ -17,7 +17,7 @@
       <v-text-field
         v-if="partySignatories.firstParty.mode == 'company'"
         height="155"
-        label="Company Name"
+        label="Your Name"
         background-color="white"
         v-model="partySignatories.firstParty.name"
         class="partyName mt-4 text-center"
@@ -95,7 +95,7 @@
         disabled
         v-if="partySignatories.secondParty.mode == 'company'"
         height="155"
-        label="Company Name"
+        label="Your Name"
         background-color="white"
         v-model="partySignatories.secondParty.name"
         class="partyName mt-4"

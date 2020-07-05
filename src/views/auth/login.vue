@@ -135,16 +135,11 @@ export default {
           })
           .then(() => {
             setTimeout(() => {
-              this.$router
-                .push(
-                  // localStorage.getItem("pathToLoadAfterLogin") || "/messages"
-                  "/dashboard"
-                )
-                .catch(error => {
-                  if (error.name != "NavigationDuplicated") {
-                    throw error;
-                  }
-                });
+              this.$router.push("/dashboard").catch(error => {
+                if (error.name != "NavigationDuplicated") {
+                  throw error;
+                }
+              });
               // console.log(localStorage.getItem("pathToLoadAfterLogin"));
             }, 1000);
           });

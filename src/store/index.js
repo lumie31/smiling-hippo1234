@@ -9,6 +9,7 @@ axios.defaults.baseURL = "https://legalbox-api.herokuapp.com";
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem("access_token") || null,
+    emailer: "dsdsdc@yahoo.com",
     setUUID: "LB_Paystack_" + uuid.v4(),
     loginErrorMessage: "",
     signUpSuccessStatus: "",
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     userDetailsReady: "",
     storedUserProfilePicture: "",
     storedcompanyLogo: "",
+    storedUserEmail: "",
     storedUserSignature: "",
     successMessage: "",
     documentSavedMessage: "",
@@ -1646,7 +1648,7 @@ export default new Vuex.Store({
             context.commit("retrieveToken", token);
             context.commit("isSignedIn", isSignedIn);
             resolve(response);
-            console.log(response);
+            // console.log(response);
           })
           .catch(error => {
             localStorage.removeItem("access_token");
@@ -1729,6 +1731,9 @@ export default new Vuex.Store({
           // console.log(this.state.token);
 
           this.state.storedUserSignature = response.data.data.signature.url;
+          this.state.storedUserEmail = response.data.data.email;
+          console.log(this.state.storedUserEmail);
+
           this.state.storedUserProfilePicture =
             response.data.data.profilePicture.url;
           this.state.storedcompanyLogo = response.data.data.companyLogo.url;

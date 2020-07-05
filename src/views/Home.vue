@@ -77,13 +77,12 @@
                 <v-card-actions>
                   <v-btn
                     x-large
+                    class="margin-center"
                     color="deep-purple accent l-rounded-button px-12"
                   >
-                    <router-link to="/signup"
-                      ><router-link to="/signup"
-                        >Start Today</router-link
-                      ></router-link
-                    >
+                    <router-link to="/signup">
+                      Start Today
+                    </router-link>
                   </v-btn>
                 </v-card-actions>
               </v-card>

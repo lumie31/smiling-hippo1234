@@ -133,7 +133,7 @@
 
 .l-rounded-card{
     border-radius: 20px !important;
-    height: 60px;
+    height: 100%;
 }
 .l-rounded-button{
     border-radius: 10px;
@@ -171,6 +171,11 @@
 .pad-top{
     padding-top: 150px;
 }
+
+.margin-center {
+    margin: 0 auto;
+}
+
 .width80-center {
     width: 80%;
     margin: 0 auto;
@@ -900,7 +905,7 @@ input[type=checkbox] {
 }
 
 .uploadItem.userSignatureHolder {
-    background-color: transparent;
+    background-color: #ffffff;
 }
 .uploadItem.userSignatureHolder:after {
     content: "Click to append";
