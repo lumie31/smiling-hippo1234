@@ -18,7 +18,7 @@ export default {
   //   console.log(this.$router);
   // },
   mounted() {
-    // console.log = function() {};
+    console.log = function() {};
     // console.log("Populating dropdown with cities"); // prints nothing
   }
 };
