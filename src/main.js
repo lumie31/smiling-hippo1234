@@ -1,3 +1,5 @@
+process.env.NODE_ENV === "development" ? null : (console.log = () => {});
+
 import Vue from "vue";
 import App from "./App.vue";
 import UUID from "vue-uuid";

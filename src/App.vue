@@ -18,7 +18,7 @@ export default {
   //   console.log(this.$router);
   // },
   mounted() {
-    console.log = function() {};
+    // process.env.NODE_ENV === "production" ? null : (console.log = () => {});
     // console.log("Populating dropdown with cities"); // prints nothing
   }
 };

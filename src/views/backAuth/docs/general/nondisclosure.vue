@@ -174,7 +174,7 @@
             <!-- DUPLICATABLE Dues Figures -->
             <!-- <pre class="testFloat">
             {{ formOutput.payment }}
-          </pre -->
+            </pre-->
             >
             <v-row
               style="width: 80%; margin: 0 auto;"
@@ -225,17 +225,13 @@
                 </v-menu>
               </v-col>
               <v-col cols="12" sm="3" class="d-flex align-center justify-end">
-                <span
-                  class="addRemoveButtons"
-                  @click="addDues"
-                  v-if="index < 1"
+                <span class="addRemoveButtons" @click="addDues" v-if="index < 1"
+                  >+</span
                 >
-                  +
-                </span>
                 <span class="mx-2"></span>
-                <span class="addRemoveButtons" @click="removeDues(index)">
-                  -
-                </span>
+                <span class="addRemoveButtons" @click="removeDues(index)"
+                  >-</span
+                >
               </v-col>
             </v-row>
           </v-container>
@@ -257,7 +253,7 @@
           <!-- <div v-for="(item, index) in allInfos" :key="index">
             <h2>Info:</h2>
             <pre class="testFloat">{{ item }}</pre>
-          </div> -->
+          </div>-->
           <!-- <pre class="testFloat">{{ testData }}</pre> -->
 
           <v-container fluid paraClauseHolder>
@@ -306,7 +302,7 @@
                             <v-icon size="30">info</v-icon>
                           </v-btn>
                         </template>
-                        <span> {{ item.info }}</span>
+                        <span>{{ item.info }}</span>
                       </v-tooltip>
                       <span class="mx-2"></span>
                       <v-tooltip
@@ -328,7 +324,7 @@
                             <v-icon size="30">comment</v-icon>
                           </v-btn>
                         </template>
-                        <span> {{ item.comment }}</span>
+                        <span>{{ item.comment }}</span>
                       </v-tooltip>
                       <!-- <v-icon
                       v-if="index > origParagraphLength - 1"
@@ -337,7 +333,7 @@
                       color="red"
                     >
                       remove_circle
-                    </v-icon> -->
+                      </v-icon>-->
                     </span>
                   </div>
                 </div>
@@ -345,27 +341,26 @@
                   <span
                     class="addRemoveButtons"
                     @click="addOwnParagraphDialog = true"
+                    >+</span
                   >
-                    +
-                  </span>
                 </p>
               </v-col>
 
-              <v-dialog v-model="addCommentINIT" width="700">
+              <v-dialog persistent v-model="addCommentINIT" width="700">
                 <v-card>
-                  <v-card-title class="headline secondary white--text">
-                    Add/Change Comment
-                  </v-card-title>
+                  <v-card-title class="headline secondary white--text"
+                    >Add/Change Comment</v-card-title
+                  >
 
                   <v-card-text>
                     <v-textarea
                       v-model="addOwnClauseParagraphCommentInfo"
                       class="mt-8"
-                      auto-grow=""
+                      auto-grow
                       label="Comment"
                       min-height="110"
                       outlined
-                      ref=""
+                      ref
                     ></v-textarea>
                   </v-card-text>
 
@@ -376,27 +371,26 @@
                       text
                       class="accent"
                       @click="addClauseParagraphComment()"
+                      >Add</v-btn
                     >
-                      Add
-                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <v-dialog v-model="addInfoINIT" width="700">
+              <v-dialog persistent v-model="addInfoINIT" width="700">
                 <v-card>
-                  <v-card-title class="headline secondary white--text">
-                    Add/Change Information
-                  </v-card-title>
+                  <v-card-title class="headline secondary white--text"
+                    >Add/Change Information</v-card-title
+                  >
 
                   <v-card-text>
                     <v-textarea
                       v-model="addOwnClauseParagraphCommentInfo"
                       class="mt-8"
-                      auto-grow=""
+                      auto-grow
                       label="Information"
                       min-height="110"
                       outlined
-                      ref=""
+                      ref
                     ></v-textarea>
                   </v-card-text>
 
@@ -407,9 +401,8 @@
                       text
                       class="accent"
                       @click="addClauseParagraphInfo()"
+                      >Add</v-btn
                     >
-                      Add
-                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -418,39 +411,43 @@
             <!-- PARAPGRAPH DIALOG -->
             <template>
               <div class="text-center">
-                <v-dialog v-model="addOwnParagraphDialog" width="700">
+                <v-dialog
+                  persistent
+                  v-model="addOwnParagraphDialog"
+                  width="700"
+                >
                   <v-card>
-                    <v-card-title class="headline secondary white--text">
-                      Add Paragraph
-                    </v-card-title>
+                    <v-card-title class="headline secondary white--text"
+                      >Add Paragraph</v-card-title
+                    >
 
                     <v-card-text>
                       <v-textarea
                         v-model="ownParagraph"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Paragraph"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                       <v-textarea
                         v-model="ownParagraphInfo"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Information"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                       <v-textarea
                         v-model="ownParagraphComment"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Comment"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                     </v-card-text>
 
@@ -463,17 +460,15 @@
                         text
                         class="accent"
                         @click="addNewParagraph()"
+                        >Add</v-btn
                       >
-                        Add
-                      </v-btn>
                       <v-btn
                         color="white"
                         text
                         class="accent"
                         @click="cancelDialog()"
+                        >Cancel</v-btn
                       >
-                        Cancel
-                      </v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -526,7 +521,7 @@
                             <v-icon size="30">info</v-icon>
                           </v-btn>
                         </template>
-                        <span> {{ clause.info }}</span>
+                        <span>{{ clause.info }}</span>
                       </v-tooltip>
                       <span class="mx-2"></span>
                       <v-tooltip
@@ -548,7 +543,7 @@
                             <v-icon size="30">comment</v-icon>
                           </v-btn>
                         </template>
-                        <span> {{ clause.comment }}</span>
+                        <span>{{ clause.comment }}</span>
                       </v-tooltip>
                     </span>
                   </div>
@@ -564,47 +559,47 @@
             </v-row>
             <template>
               <div class="text-center">
-                <v-dialog v-model="addOwnClauseDialog" width="700">
+                <v-dialog persistent v-model="addOwnClauseDialog" width="700">
                   <v-card>
-                    <v-card-title class="headline secondary white--text">
-                      Add Clause
-                    </v-card-title>
+                    <v-card-title class="headline secondary white--text"
+                      >Add Clause</v-card-title
+                    >
 
                     <v-card-text>
                       <v-text-field
                         v-model="ownClauseTitle"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Title"
                         outlined
-                        ref=""
+                        ref
                       ></v-text-field>
                       <v-textarea
                         v-model="ownClauseDetail"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Detail"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                       <v-textarea
                         v-model="ownClauseInfo"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Information"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                       <v-textarea
                         v-model="ownClauseComment"
                         class="mt-8"
-                        auto-grow=""
+                        auto-grow
                         label="Comment"
                         min-height="110"
                         outlined
-                        ref=""
+                        ref
                       ></v-textarea>
                     </v-card-text>
 
@@ -617,17 +612,15 @@
                         text
                         class="accent"
                         @click="addNewClause()"
+                        >Add</v-btn
                       >
-                        Add
-                      </v-btn>
                       <v-btn
                         color="white"
                         text
                         class="accent"
                         @click="cancelDialog()"
+                        >Cancel</v-btn
                       >
-                        Cancel
-                      </v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -642,9 +635,8 @@
             v-model="docSavedSnackbar.active"
             :multi-line="docSavedSnackbar.multiLine"
             :timeout="docSavedSnackbar.timeout"
+            >{{ docSavedSnackbar.text }}</v-snackbar
           >
-            {{ docSavedSnackbar.text }}
-          </v-snackbar>
           <v-container class="contractsignatory">
             <append-signature
               @signatoriesDATA="retrieveSignatoriesData"
@@ -655,7 +647,7 @@
             <v-col cols="12" sm="12" class="mb-12 py-12 d-flex justify-center">
               <!-- <v-btn large class="accent submit-document" @click="processLoop">
                 Process
-              </v-btn> -->
+              </v-btn>-->
               <v-btn
                 large
                 class="accent submit-document saveOnly"
@@ -663,7 +655,7 @@
                 @click="submitDocument('continueEdit')"
                 :disabled="disableContinue"
               >
-                <span class=" d-flex flex-column align-center">
+                <span class="d-flex flex-column align-center">
                   <img src="@/assets/save.png" width="20" />
                   Save
                 </span>
@@ -676,9 +668,8 @@
                 :loading="loadingSend"
                 :disabled="disableSend"
                 @click="submitDocument('redirectMe')"
+                >Send Document</v-btn
               >
-                Send Document
-              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -699,9 +690,8 @@
       v-model="invalidSubmission.active"
       :multi-line="invalidSubmission.multiLine"
       :timeout="invalidSubmission.timeout"
+      >{{ invalidSubmission.text }}</v-snackbar
     >
-      {{ invalidSubmission.text }}
-    </v-snackbar>
 
     <general-footer></general-footer>
   </div>

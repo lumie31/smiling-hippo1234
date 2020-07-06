@@ -47,7 +47,7 @@
                     <v-form ref="updateProfilePass" @submit.prevent>
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
-                          <!-- <pre class="testFloat">{{ storedUserDetails }}</pre> -->
+                          <pre class="testFloat">{{ storedUserDetails }}</pre>
                           <p class="headline">Profile Picture</p>
                           <p class="caption">
                             The avatar on your profile.
@@ -986,6 +986,8 @@ export default {
           this.updatedSnackbar.text = "Profile Picture successfully updated";
           this.updatedSnackbar.color = "success";
 
+          this.$store.dispatch("getUserDetails").then(() => {});
+
           this.updateProfileLoader = false;
         })
         .catch(error => {
@@ -1045,6 +1047,7 @@ export default {
           this.updatedSnackbar.text = "Oops! An error occured";
           this.updatedSnackbar.color = "error";
 
+          this.$store.dispatch("getUserDetails").then(() => {});
           this.companyLogoLoading = false;
         });
     },
@@ -1154,6 +1157,7 @@ export default {
           this.updatedSnackbar.text = "Signature successfully updated";
           this.updatedSnackbar.color = "success";
 
+          this.$store.dispatch("getUserDetails").then(() => {});
           this.uploadSignatureLoader = false;
           return response;
         })
@@ -1347,9 +1351,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("getUserDetails").then(() => {
-      // alert(this.storedUserDetails);
-    });
+    this.$store.dispatch("getUserDetails").then(() => {});
   },
   mounted() {
     // this.currentUserSignature = this.storedUserDetails.signature.url

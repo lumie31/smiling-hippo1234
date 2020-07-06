@@ -56,6 +56,7 @@ export default new Vuex.Store({
       {
         name: "General",
         icon: require("../assets/general-icon.png"),
+        lbID: "LB001",
         info:
           "1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -64,6 +65,7 @@ export default new Vuex.Store({
       {
         name: "Education, Training & Consultancy",
         icon: require("../assets/edu-train-con-icon.png"),
+        lbID: "LB002",
         info:
           "2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -72,6 +74,7 @@ export default new Vuex.Store({
       {
         name: "E-commerce, Wholesale & Retail",
         icon: require("../assets/ecommerce.png"),
+        lbID: "LB003",
         info:
           "3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -80,6 +83,7 @@ export default new Vuex.Store({
       {
         name: "Entertainment & Media",
         icon: require("../assets/entertainment.png"),
+        lbID: "LB004",
         info:
           "4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -88,6 +92,7 @@ export default new Vuex.Store({
       {
         name: "Events",
         icon: require("../assets/events.png"),
+        lbID: "LB005",
         info:
           "4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -96,6 +101,7 @@ export default new Vuex.Store({
       {
         name: "Fashion & Beauty",
         icon: require("../assets/fashion-and-beauty-icon.png"),
+        lbID: "LB006",
         info:
           "5 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -104,6 +110,7 @@ export default new Vuex.Store({
       {
         name: "IT & Design",
         icon: require("../assets/it-and-design-icon.png"),
+        lbID: "LB007",
         info:
           "6 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -112,6 +119,7 @@ export default new Vuex.Store({
       {
         name: "Leisure, Food & Drinks",
         icon: require("../assets/leisure.png"),
+        lbID: "LB008",
         info:
           "7 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         lastOpened: "",
@@ -1657,14 +1665,14 @@ export default new Vuex.Store({
             context.commit("isSignedIn", isSignedIn);
 
             if (error.response.data.message) {
-              console.log("Error oooo");
+              // console.log("Error oooo");
               const errorMessage = error.response.data.message;
               console.log("errorMessage", errorMessage);
 
               this.state.loginErrorMessage = errorMessage;
 
               console.log("loginErrorMessage", this.state.loginErrorMessage);
-            } else if (error.response && !error.response.data.message) {
+            } else {
               this.state.loginErrorMessage = "Oops! Something went wrong";
             }
 

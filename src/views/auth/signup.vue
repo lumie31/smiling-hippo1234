@@ -1,5 +1,5 @@
 <template>
-  <div class="signup page" id="">
+  <div class="signup page" id>
     <v-container class="l-hero d-flex align-center justify-center mt-9">
       <router-link to="/">
         <img width="220" alt="Legalbox logo" src="@/assets/logo.svg" />
@@ -9,13 +9,14 @@
     <v-row>
       <v-col cols="12" sm="12">
         <v-dialog
+          persistent
           v-model="isActivateMode"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
         >
           <v-card class="pt-12">
-            <v-toolbar dark color="accent"> </v-toolbar>
+            <v-toolbar dark color="accent"></v-toolbar>
             <v-container
               class="l-hero d-flex align-center justify-center mb-10"
             >
@@ -129,8 +130,8 @@
           </p>
           <p>
             By clicking on ‘Log In’, you have agreed to our
-            <router-link to="/terms-of-service">terms of service </router-link>
-            and
+            <router-link to="/terms-of-service">terms of service</router-link
+            >and
             <router-link to="/privacy-policy">privacy policy</router-link>
           </p>
         </div>
@@ -143,9 +144,8 @@
         v-model="signUpSnackbar.active"
         :multi-line="signUpSnackbar.multiLine"
         :timeout="signUpSnackbar.timeout"
+        >{{ signUpSnackbar.text }}</v-snackbar
       >
-        {{ signUpSnackbar.text }}
-      </v-snackbar>
     </div>
 
     <general-footer></general-footer>

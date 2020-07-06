@@ -164,7 +164,7 @@ export default {
         this.loginSnackbar.text = "Welcome! You are successfully logged in";
         this.loginSnackbar.color = "success";
       } else if (val !== true) {
-        console.log("Something went wrong");
+        console.log("Something went wrong1");
         this.loginSnackbar.active = true;
         this.loginSnackbar.text = this.$store.state.loginErrorMessage;
         this.loginSnackbar.color = "error";
@@ -174,7 +174,7 @@ export default {
       console.log(val);
 
       if (val == false) {
-        console.log("Something went wrong");
+        console.log("Something went wrong2");
         this.loginSnackbar.active = true;
         this.loginSnackbar.text = this.$store.state.loginErrorMessage;
         this.loginSnackbar.color = "error";

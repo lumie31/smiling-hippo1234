@@ -1,5 +1,5 @@
 <template>
-  <div class="subscription page" id="">
+  <div class="subscription page" id>
     <nav-one></nav-one>
 
     <div class="hero d-flex justify-center align-center">
@@ -10,6 +10,7 @@
     <div class="bodyWrapper">
       <v-container>
         <v-dialog
+          persistent
           v-model="returnedPayment"
           fullscreen
           hide-overlay
@@ -20,13 +21,13 @@
             <v-btn icon dark @click="resetSuccessful = false">
               <v-icon x-large>mdi-close</v-icon>
             </v-btn>
-          </v-toolbar> -->
+          </v-toolbar>-->
           <v-card class="d-flex flex-column align-center justify-center">
             <!-- <v-container class="l-hero d-flex align-center justify-center mb-10">
             <router-link to="/">
               <img width="420" alt="Legalbox logo" src="@/assets/logo.svg" />
             </router-link>
-          </v-container> -->
+            </v-container>-->
 
             <v-container
               class="d-flex flex-column align center"
@@ -37,8 +38,8 @@
                 color="success"
                 loading
                 disabled
-              ></v-text-field
-            ></v-container>
+              ></v-text-field>
+            </v-container>
 
             <v-container
               class="d-flex flex-column align center"
@@ -49,9 +50,7 @@
                 Payment Successful
               </h2>
               <div class="width50-center text-center body-1 accent--text">
-                <p>
-                  Thank you for your payment. You are all set to go now
-                </p>
+                <p>Thank you for your payment. You are all set to go now</p>
                 <!-- <v-btn class="accent">Goto Dashboard</v-btn> -->
               </div>
             </v-container>
@@ -65,17 +64,22 @@
                 Payment UnSuccessful
               </h2>
               <div class="width50-center text-center body-1 accent--text">
-                <p>
-                  Sorry! We couldnt process your payment
-                </p>
+                <p>Sorry! We couldnt process your payment</p>
                 <!-- <v-btn class="accent">Goto Dashboard</v-btn> -->
               </div>
             </v-container>
           </v-card>
         </v-dialog>
+        <v-text-field
+          v-if="returnedPayment"
+          style="width: 40%; margin: 0 auto;"
+          color="success"
+          loading
+          disabled
+        ></v-text-field>
       </v-container>
 
-      <v-container fluid id="section-8">
+      <v-container fluid id="section-8" v-if="!returnedPayment">
         <div id="plan-parent">
           <h2 class="display-2 text-center secondary--text">
             We have a plan that
@@ -132,11 +136,12 @@
             Your Selection:
             <br />
             <b>{{ selectedLegalbox.join(", ") }}</b>
-          </p> -->
+          </p>-->
           <div class="text-center pt-8">
             <h2 class="display-2">Select Legalboxes</h2>
-            <p class="">
-              Select any 3 for (Premium) or any 2 for (Basic) <br />
+            <p class>
+              Select any 4 for (Premium) or any 2 for (Basic)
+              <br />
               <em>General is Compulsory</em>
             </p>
             <p
@@ -154,16 +159,17 @@
                 :key="legalbox.name + index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
+                <pre class="testFloat">{{ selectedLegalbox.lbID }}</pre>
+
                 <div class="d-flex align-center">
                   <!-- <p class="legalboxSubscribeCheckbox"></p> -->
                   <v-checkbox
                     class="legalboxSubscribeCheckbox"
                     v-model="selectedLegalbox"
                     @change="updateSelectedLegalbox"
-                    :value="legalbox.name"
+                    :value="legalbox.lbID"
                     disabled
-                  >
-                  </v-checkbox>
+                  ></v-checkbox>
                   <p class="title mt-2">{{ legalbox.name }}</p>
                   <v-spacer></v-spacer>
                   <!-- <v-icon
@@ -173,7 +179,7 @@
                     color="red"
                   >
                     remove_circle
-                  </v-icon> -->
+                  </v-icon>-->
                 </div>
                 <v-container>
                   <!-- {{ panel }} -->
@@ -184,13 +190,13 @@
                         id="header"
                         @click="hideEllipsis"
                       >
-                        <span class="legalbox-info-ellipsis">{{
-                          legalbox.info
-                        }}</span>
+                        <span class="legalbox-info-ellipsis">
+                          {{ legalbox.info }}
+                        </span>
                       </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">
-                        {{ legalbox.info }}
-                      </v-expansion-panel-content>
+                      <v-expansion-panel-content class="faq-answers">{{
+                        legalbox.info
+                      }}</v-expansion-panel-content>
                     </v-expansion-panel>
                   </v-expansion-panels>
                 </v-container>
@@ -204,16 +210,17 @@
                 :key="index"
                 class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
               >
+                <pre class="testFloat">{{ selectedLegalbox }}</pre>
+
                 <div class="d-flex align-center">
                   <!-- <p class="legalboxSubscribeCheckbox"></p> -->
                   <v-checkbox
                     class="legalboxSubscribeCheckbox"
                     v-model="selectedLegalbox"
                     @change="updateSelectedLegalbox"
-                    :value="legalbox.name"
+                    :value="legalbox.lbID"
                     :disabled="disableCheckbox"
-                  >
-                  </v-checkbox>
+                  ></v-checkbox>
                   <p class="title mt-2">{{ legalbox.name }}</p>
                   <v-spacer></v-spacer>
                   <!-- <v-icon
@@ -223,19 +230,19 @@
                     color="red"
                   >
                     remove_circle
-                  </v-icon> -->
+                  </v-icon>-->
                 </div>
                 <v-container>
                   <v-expansion-panels flat>
                     <v-expansion-panel>
                       <v-expansion-panel-header class="transparent">
-                        <span class="legalbox-info-ellipsis">{{
-                          legalbox.info
-                        }}</span>
+                        <span class="legalbox-info-ellipsis">
+                          {{ legalbox.info }}
+                        </span>
                       </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">
-                        {{ legalbox.info }}
-                      </v-expansion-panel-content>
+                      <v-expansion-panel-content class="faq-answers">{{
+                        legalbox.info
+                      }}</v-expansion-panel-content>
                     </v-expansion-panel>
                   </v-expansion-panels>
                 </v-container>
@@ -256,10 +263,10 @@
                     class="legalboxSubscribeCheckbox"
                     v-model="selectedLegalbox"
                     @change="updateSelectedLegalbox"
-                    :value="legalbox.name"
+                    :value="legalbox.lbID"
                     :disabled="disableCheckbox"
-                  >
-                  </v-checkbox>
+                  ></v-checkbox>
+                  <p class="title mt-2">{{ legalbox.name }}</p>
                   <p class="title mt-2">{{ legalbox.name }}</p>
                   <v-spacer></v-spacer>
                   <!-- <v-icon
@@ -269,19 +276,19 @@
                     color="red"
                   >
                     remove_circle
-                  </v-icon> -->
+                  </v-icon>-->
                 </div>
                 <v-container>
                   <v-expansion-panels flat>
                     <v-expansion-panel>
                       <v-expansion-panel-header class="transparent">
-                        <span class="legalbox-info-ellipsis">{{
-                          legalbox.info
-                        }}</span>
+                        <span class="legalbox-info-ellipsis">
+                          {{ legalbox.info }}
+                        </span>
                       </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">
-                        {{ legalbox.info }}
-                      </v-expansion-panel-content>
+                      <v-expansion-panel-content class="faq-answers">{{
+                        legalbox.info
+                      }}</v-expansion-panel-content>
                     </v-expansion-panel>
                   </v-expansion-panels>
                 </v-container>
@@ -295,53 +302,18 @@
               color="accent"
               height="80"
               style="padding: 10px 100px; border-radius: 10px;"
+              @click="callOnPaystack"
             >
-              <span class="headline text-capitalize">Start 14 Days Trial</span>
+              <!-- <span class="headline text-capitalize">Start 14 Days Trial</span> -->
+              <span class="headline text-capitalize">subscribe & Pay</span>
               <!-- <span class="headline text-capitalize">Subscribe & Pay</span> -->
             </v-btn>
-            <div>{{ storedUserEmail }}</div>
-            <p class="mt-2">
+            <p class="mt-4">
               By clicking on ‘Subscribe & Pay’, you have agreed to our
-              <router-link to="/terms-of-service">terms of service </router-link
+              <router-link to="/terms-of-service">terms of service</router-link
               >and
               <router-link to="/privacy-policy">privacy policy</router-link>
             </p>
-            <h3 class="uuid">{{ uuid }}</h3>
-            <!-- <div class="paystack-payment-wrapper">
-              <paystack
-                :amount="amount"
-                :email="email"
-                :paystackkey="paystackkey"
-                :reference="reference"
-                :callback="callback"
-                :close="close"
-                :embed="true"
-              >
-                <i class="fas fa-money-bill-alt"></i>
-                Make Payment
-              </paystack>
-            </div> -->
-
-            <v-btn
-              x-large
-              class="mt-8"
-              color="accent"
-              height="80"
-              style="padding: 10px 100px; border-radius: 10px;"
-              @click="callOnPaystack"
-            >
-              <span class="headline text-capitalize">Pay</span>
-            </v-btn>
-            <v-btn
-              x-large
-              class="mt-8"
-              color="accent"
-              height="80"
-              style="padding: 10px 100px; border-radius: 10px;"
-              @click="callOnPaystack2"
-            >
-              <span class="headline text-capitalize">Pay2</span>
-            </v-btn>
           </div>
         </div>
       </v-container>
@@ -372,7 +344,7 @@ export default {
       currentPlan: "",
       disableCheckbox: false,
       disableSubscribeButton: true,
-      selectedLegalbox: ["General"],
+      selectedLegalbox: ["LB001"],
       paymentRef: "",
       returnedPayment: false,
       paymentLoading: true,
@@ -404,7 +376,7 @@ export default {
         // alert(this.currentPlan);
         // this.updateSelectedLegalbox();
       } else if (this.currentPlan == "Premium") {
-        if (this.currentLegalboxSelection < 4) {
+        if (this.currentLegalboxSelection < 3) {
           // alert(this.currentPlan);
           this.disableSubscribeButton = true;
           this.disableCheckbox = false;
@@ -414,7 +386,7 @@ export default {
       }
     },
     updateSelectedLegalbox() {
-      if (this.selectedLegalbox.length == 3 && this.currentPlan == "Basic") {
+      if (this.selectedLegalbox.length == 2 && this.currentPlan == "Basic") {
         // alert("BASIC MODE");
         this.disableCheckbox = true;
         this.disableSubscribeButton = false;
@@ -430,7 +402,7 @@ export default {
       }
     },
     resetSelection() {
-      this.selectedLegalbox = ["General"];
+      this.selectedLegalbox = ["LB001"];
       this.currentPlan = "";
       this.disableSubscribeButton = true;
     },
@@ -495,7 +467,7 @@ export default {
           }
         } else if (val == "Basic") {
           // alert("basic 2");
-          if (this.selectedLegalbox.length > 3) {
+          if (this.selectedLegalbox.length > 2) {
             this.selectedLegalbox.pop();
             console.log(this.disableCheckbox);
             this.disableCheckbox = true;
@@ -528,9 +500,10 @@ export default {
             console.log(response.data);
             if (response.data.data.status == "success") {
               this.paymentSuccessful = true;
+              this.$store.dispatch("updateaUserProfile", {});
 
               setTimeout(() => {
-                this.$router.push("/dashboard");
+                // this.$router.push("/dashboard");
               }, 5000);
             }
           }
@@ -548,7 +521,7 @@ export default {
             this.paymentFailed = true;
 
             setTimeout(() => {
-              this.$router.push("/subscription");
+              // this.$router.push("/subscription");
             }, 5000);
           }
 

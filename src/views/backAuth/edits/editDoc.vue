@@ -35,7 +35,7 @@
       </v-container>
       <!-- <pre class="testFloat">
         {{ documentData }}
-      </pre> -->
+      </pre>-->
       <v-container fluid class="docParent pb-12">
         <p class="text-center mt-10" v-if="dataReady">
           Loading.....
@@ -88,9 +88,7 @@
                 <v-col cols="12">
                   <div class="formSectionTitle">BACKGROUND</div>
                   <div class="formSectionSubtitle">
-                    <p>
-                      {{ documentData.docContent.background }}
-                    </p>
+                    <p>{{ documentData.docContent.background }}</p>
                   </div>
                 </v-col>
               </v-row>
@@ -228,13 +226,11 @@
                   </v-menu>
                 </v-col>
                 <v-col cols="12" sm="3" class="d-flex align-center justify-end">
-                  <span class="addRemoveButtons" @click="addDues">
-                    +
-                  </span>
+                  <span class="addRemoveButtons" @click="addDues">+</span>
                   <span class="mx-2"></span>
-                  <span class="addRemoveButtons" @click="removeDues(index)">
-                    -
-                  </span>
+                  <span class="addRemoveButtons" @click="removeDues(index)"
+                    >-</span
+                  >
                 </v-col>
               </v-row>
             </v-container>
@@ -243,9 +239,7 @@
                 <v-col cols="12">
                   <div class="formSectionTitle">CONFIDENTIAL INFORMATION</div>
                   <div class="docParagraph paragraphList">
-                    <p>
-                      {{ documentData.docContent.confidentialInformation }}
-                    </p>
+                    <p>{{ documentData.docContent.confidentialInformation }}</p>
                   </div>
                 </v-col>
               </v-row>
@@ -282,7 +276,7 @@
                   </p>
                   <template>
                     <div class="text-center">
-                      <v-dialog v-model="ownParagraph" width="500">
+                      <v-dialog persistent v-model="ownParagraph" width="500">
                         <template v-slot:activator="{ on }">
                           <v-btn
                             class="mx-2"
@@ -296,19 +290,19 @@
                         </template>
 
                         <v-card>
-                          <v-card-title class="headline secondary white--text">
-                            Add Paragraph
-                          </v-card-title>
+                          <v-card-title class="headline secondary white--text"
+                            >Add Paragraph</v-card-title
+                          >
 
                           <v-card-text>
                             <v-textarea
                               class="mt-8"
-                              auto-grow=""
+                              auto-grow
                               label="Custom Paragraph"
                               hint="Add your own custom paragraph"
                               min-height="110"
                               outlined
-                              ref=""
+                              ref
                             ></v-textarea>
                           </v-card-text>
 
@@ -320,9 +314,8 @@
                               color="primary"
                               text
                               @click="ownParagraph = false"
+                              >I accept</v-btn
                             >
-                              I accept
-                            </v-btn>
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
@@ -404,8 +397,8 @@
                         "
                       ></v-text-field>
                     </v-col>
-                    {{ storedUserDetails }}
 
+                    {{ storedUserDetails }}
                     <v-col cols="12" sm="6">
                       <div class="mb-4">Your Details</div>
                       <v-text-field
@@ -701,17 +694,15 @@
                         large
                         class="accent submit-document"
                         @click="submitDocument('continueEdit')"
+                        >Save and Continue</v-btn
                       >
-                        Save and Continue
-                      </v-btn>
                       <v-btn
                         large
                         class="accent submit-document"
                         style="top: 50%;"
                         @click="submitDocument('redirectMe')"
+                        >Save and Send</v-btn
                       >
-                        Save and Send
-                      </v-btn>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -721,17 +712,16 @@
           <append-signature></append-signature>
           <v-row>
             <v-col cols="12" sm="12" class="d-flex justify-center">
-              <v-btn large class="accent submit-document" @click="saveDocument">
-                Save and Continue
-              </v-btn>
+              <v-btn large class="accent submit-document" @click="saveDocument"
+                >Save and Continue</v-btn
+              >
               <v-btn
                 large
                 class="accent submit-document"
                 style="top: 50%;"
                 @click="saveDocument"
+                >Save and Send</v-btn
               >
-                Save and Send
-              </v-btn>
             </v-col>
           </v-row>
         </v-container>

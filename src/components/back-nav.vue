@@ -3,6 +3,7 @@
     <div v-if="pageLoader" class="loader"></div>
 
     <v-dialog
+      persistent
       v-model="fallbackError"
       fullscreen
       hide-overlay
@@ -72,26 +73,26 @@
               <v-list-item>
                 <v-list-item-content>
                   <router-link to="/inbox">
-                    <v-list-item-title class="user-menu-item py-2 text-right">
-                      Inbox
-                    </v-list-item-title>
+                    <v-list-item-title class="user-menu-item py-2 text-right"
+                      >Inbox</v-list-item-title
+                    >
                   </router-link>
                   <router-link to="/legalboxes">
-                    <v-list-item-title class="user-menu-item py-2 text-right">
-                      Legalboxes
-                    </v-list-item-title>
+                    <v-list-item-title class="user-menu-item py-2 text-right"
+                      >Legalboxes</v-list-item-title
+                    >
                   </router-link>
                   <router-link to="/settings">
-                    <v-list-item-title class="user-menu-item py-2 text-right">
-                      Settings
-                    </v-list-item-title>
+                    <v-list-item-title class="user-menu-item py-2 text-right"
+                      >Settings</v-list-item-title
+                    >
                   </router-link>
                   <v-list-item-title
                     style="cursor: pointer;"
                     class="user-menu-item py-2 text-right"
                     @click="signOut"
-                    >Logout
-                  </v-list-item-title>
+                    >Logout</v-list-item-title
+                  >
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -118,6 +119,7 @@
       </v-alert>
 
       <v-dialog
+        persistent
         v-model="resetSuccessful"
         fullscreen
         hide-overlay
@@ -134,7 +136,7 @@
             <router-link to="/">
               <img width="420" alt="Legalbox logo" src="@/assets/logo.svg" />
             </router-link>
-          </v-container> -->
+          </v-container>-->
 
           <v-container class="d-flex flex-column align center">
             <h2 class="py-7 text-center display-2 secondary--text">
@@ -166,7 +168,8 @@
           <p class="display-1">
             <span v-if="!userDetailsReady"></span>
             {{ storedUserDetails.firstName }}
-            <br />{{ storedUserDetails.lastName }}
+            <br />
+            {{ storedUserDetails.lastName }}
           </p>
           <p>User Subscription Status</p>
         </v-col>
@@ -176,9 +179,9 @@
               v-for="legalbox in legalboxes.slice(0, 4)"
               :key="legalbox.index"
             >
-              <router-link :to="legalbox.route">{{
-                legalbox.name
-              }}</router-link>
+              <router-link :to="legalbox.route">
+                {{ legalbox.name }}
+              </router-link>
             </li>
           </ul>
           <v-spacer></v-spacer>
@@ -187,9 +190,9 @@
               v-for="legalbox in legalboxes.slice(4, 8)"
               :key="legalbox.index"
             >
-              <router-link :to="legalbox.route">{{
-                legalbox.name
-              }}</router-link>
+              <router-link :to="legalbox.route">
+                {{ legalbox.name }}
+              </router-link>
             </li>
           </ul>
         </v-col>
