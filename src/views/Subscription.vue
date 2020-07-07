@@ -212,7 +212,7 @@
                   :key="index"
                   class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
                 >
-                  <pre class="testFloat">{{ selectedLegalbox }}</pre>
+                  <!-- <pre class="testFloat">{{ selectedLegalbox }}</pre> -->
 
                   <div class="d-flex align-center">
                     <!-- <p class="legalboxSubscribeCheckbox"></p> -->
