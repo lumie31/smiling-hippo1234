@@ -161,7 +161,7 @@
                   :key="legalbox.name + index"
                   class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
                 >
-                  <pre class="testFloat">{{ selectedLegalbox }}</pre>
+                  <!-- <pre class="testFloat">{{ selectedLegalbox }}</pre> -->
 
                   <div class="d-flex align-center">
                     <!-- <p class="legalboxSubscribeCheckbox"></p> -->
@@ -555,7 +555,7 @@ export default {
               this.$store.dispatch("updateaUserProfile", {});
 
               setTimeout(() => {
-                // this.$router.push("/dashboard");
+                this.$router.push("/dashboard");
               }, 5000);
             }
           }
@@ -573,7 +573,7 @@ export default {
             this.paymentFailed = true;
 
             setTimeout(() => {
-              // this.$router.push("/subscription");
+              this.$router.push("/subscription");
             }, 5000);
           }
 
