@@ -462,6 +462,7 @@ export default {
               amount: this.amount,
               plan: this.paystackPlan,
               callback_url: "https://localhost:8080/subscription",
+              callback_url: "https://dev.legalbox.ng/subscription",
               metadata: {
                 custom_fields: [
                   {
