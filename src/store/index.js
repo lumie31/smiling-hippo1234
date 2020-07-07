@@ -1740,7 +1740,7 @@ export default new Vuex.Store({
 
           this.state.storedUserSignature = response.data.data.signature.url;
           this.state.storedUserEmail = response.data.data.email;
-          console.log(this.state.storedUserEmail);
+          // console.log(this.state.storedUserEmail);
 
           this.state.storedUserProfilePicture =
             response.data.data.profilePicture.url;

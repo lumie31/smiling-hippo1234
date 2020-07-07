@@ -47,7 +47,7 @@
                     <v-form ref="updateProfilePass" @submit.prevent>
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
-                          <pre class="testFloat">{{ storedUserDetails }}</pre>
+                          <!-- <pre class="testFloat">{{ storedUserDetails }}</pre> -->
                           <p class="headline">Profile Picture</p>
                           <p class="caption">
                             The avatar on your profile.
@@ -986,7 +986,9 @@ export default {
           this.updatedSnackbar.text = "Profile Picture successfully updated";
           this.updatedSnackbar.color = "success";
 
-          this.$store.dispatch("getUserDetails").then(() => {});
+          this.$store.dispatch("getUserDetails").then(() => {
+            console.log(response);
+          });
 
           this.updateProfileLoader = false;
         })

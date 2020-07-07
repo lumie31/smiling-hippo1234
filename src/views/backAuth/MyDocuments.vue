@@ -54,7 +54,7 @@
                         </tbody>
                         <tbody v-if="documents.length < 1">
                           <tr class="py-8">
-                            <td>No Document</td>
+                            <td>You have no document yet</td>
                             <td>--</td>
                           </tr>
                         </tbody>

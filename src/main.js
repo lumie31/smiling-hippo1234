@@ -29,6 +29,35 @@ Vue.directive("stripspaces", {
 router.beforeEach((to, from, next) => {
   // use from to catch where route is coming from
   // console.log(from);
+  if (to.matched.some(record => record.meta.requiresFrontPage)) {
+    console.log("Front Page");
+    // check for valid auth token
+    axios
+      .get("/api/v1/user/userdash", {
+        headers: { Authorization: store.state.token }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          // Token is valid, so continue
+          next();
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+        // console.log(error.response);
+        // console.log(error.response.data.message);
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+
+        if (error.response.status === 400) {
+          store.dispatch("destroyToken");
+          // There was an error so redirect
+          // alert("Session Expired. Please relogin");
+          // this.$router.push(this.$route.fullPath);
+        }
+      });
+  }
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // check for valid auth token
     axios

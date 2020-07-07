@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import IMG from "../components/imgPond";
 import Home from "../views/Home.vue";
 import pageNotFound from "../views/404.vue";
 import test from "../views/test";
@@ -115,12 +114,10 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
-  },
-  {
-    path: "/img",
-    name: "img",
-    component: IMG
+    component: Home,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "*",
@@ -139,39 +136,58 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/getting-started",
     name: "Getting Started",
-    component: GettingStarted
+    component: GettingStarted,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/contact",
     name: "contact",
-    component: Contact
+    component: Contact,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/terms-of-service",
     name: "TermsOfService",
-    component: TermsOfService
+    component: TermsOfService,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/privacy-policy",
     name: "PrivacyPolicy",
-    component: PrivacyPolicy
+    component: PrivacyPolicy,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/faqs",
     name: "FAQs",
-    component: FAQs
+    component: FAQs,
+    meta: {
+      requiresFrontPage: true
+    }
   },
   {
     path: "/subscription",
     name: "Subscription",
     component: Subscription,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresFrontPage: true
     }
   },
   {
@@ -193,7 +209,10 @@ const routes = [
   {
     path: "/reset/:resetpassword",
     name: "ChangePassword",
-    component: ChangePassword
+    component: ChangePassword,
+    meta: {
+      requiresVisitor: true
+    }
   },
   // {
   //   path: "/logout",
