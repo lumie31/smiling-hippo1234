@@ -28,7 +28,7 @@
           style="width: 50%; position: relative;"
           flex-column
         >
-          {{ searchDocument }}
+          <!-- {{ searchDocument }} -->
           <v-text-field
             solo
             outlined

@@ -106,216 +106,222 @@
             </div>
           </div>
         </div>
+        <v-form ref="legalboxSelectionForm">
+          <v-row
+            class="justify-center mt-12 mb-10"
+            style="width: 80%; margin: 0 auto;"
+          >
+            <v-col cols="12" sm="6">
+              <p>{{ currentPlan }}</p>
+              <v-select
+                label="Select Plan"
+                v-model="currentPlan"
+                :rules="[rules.required]"
+                @change="updateCurrentPlan"
+                :items="plans"
+                item-text="name"
+                autocomplete
+                offset-y
+              ></v-select>
+              <div class="d-flex justify-center text-center planDuration">
+                <v-radio-group v-model="duration" :rules="[rules.required]" row>
+                  <v-radio label="Monthly" value="Monthly"></v-radio>
+                  <span class="mx-4"></span>
+                  <v-radio label="Annual" value="Annual"></v-radio>
+                </v-radio-group>
+              </div>
+            </v-col>
+          </v-row>
 
-        <v-row
-          class="justify-center mt-12 mb-10"
-          style="width: 80%; margin: 0 auto;"
-        >
-          <v-col cols="12" sm="6">
-            <p>{{ currentPlan }}</p>
-            <v-select
-              label="Select Plan"
-              v-model="currentPlan"
-              @change="updateCurrentPlan"
-              :items="plans"
-              item-text="name"
-              autocomplete
-              offset-y
-            ></v-select>
-            <div class="d-flex justify-space-around durationTypeHolder">
-              <span v-for="duration in durationType" :key="duration.index">
-                <input type="radio" name="duration-type" />
-                {{ duration }}
-              </span>
-            </div>
-          </v-col>
-        </v-row>
-
-        <div id="legalboxParent">
-          <!-- <p v-if="selectedLegalbox.length">
+          <div id="legalboxParent">
+            <!-- <p v-if="selectedLegalbox.length">
             Your Selection:
             <br />
             <b>{{ selectedLegalbox.join(", ") }}</b>
           </p>-->
-          <div class="text-center pt-8">
-            <h2 class="display-2">Select Legalboxes</h2>
-            <p class>
-              Select any 4 for (Premium) or any 2 for (Basic)
-              <br />
-              <em>General is Compulsory</em>
-            </p>
-            <p
-              class="resetSelection white--text"
-              @click="resetSelection"
-              v-if="currentLegalboxSelection.length > 1"
-            >
-              Reset Selection
-            </p>
+            <div class="text-center pt-8">
+              <h2 class="display-2">Select Legalboxes</h2>
+              <p class>
+                Select any 4 for (Premium) or any 2 for (Basic)
+                <br />
+                <em>General is Compulsory</em>
+              </p>
+              <p
+                class="resetSelection white--text"
+                @click="resetSelection"
+                v-if="currentLegalboxSelection.length > 1"
+              >
+                Reset Selection
+              </p>
+            </div>
+            <v-row class="legalboxesWrapper">
+              <v-col cols="6" sm="6" class="legalbox-subscription-halves">
+                <div
+                  v-for="(legalbox, index) in legalboxesFilteredGeneral"
+                  :key="legalbox.name + index"
+                  class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
+                >
+                  <pre class="testFloat">{{ selectedLegalbox }}</pre>
+
+                  <div class="d-flex align-center">
+                    <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                    <v-checkbox
+                      class="legalboxSubscribeCheckbox"
+                      v-model="selectedLegalbox"
+                      @change="updateSelectedLegalbox"
+                      :value="compulsoryLegalbox"
+                      disabled
+                    ></v-checkbox>
+                    <p class="title mt-2">{{ legalbox.name }}</p>
+                    <v-spacer></v-spacer>
+                    <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon>-->
+                  </div>
+                  <v-container>
+                    <!-- {{ panel }} -->
+                    <v-expansion-panels flat>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header
+                          class="transparent"
+                          id="header"
+                          @click="hideEllipsis"
+                        >
+                          <span class="legalbox-info-ellipsis">
+                            {{ legalbox.info }}
+                          </span>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content class="faq-answers">{{
+                          legalbox.info
+                        }}</v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-container>
+                </div>
+
+                <div
+                  v-for="(legalbox, index) in legalboxes.slice(
+                    0,
+                    legalboxes.length / 2
+                  )"
+                  :key="index"
+                  class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
+                >
+                  <pre class="testFloat">{{ selectedLegalbox }}</pre>
+
+                  <div class="d-flex align-center">
+                    <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                    <v-checkbox
+                      class="legalboxSubscribeCheckbox"
+                      v-model="selectedLegalbox"
+                      @change="updateSelectedLegalbox"
+                      :value="legalbox"
+                      :disabled="disableCheckbox"
+                    ></v-checkbox>
+                    <p class="title mt-2">{{ legalbox.name }}</p>
+                    <v-spacer></v-spacer>
+                    <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon>-->
+                  </div>
+                  <v-container>
+                    <v-expansion-panels flat>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header class="transparent">
+                          <span class="legalbox-info-ellipsis">
+                            {{ legalbox.info }}
+                          </span>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content class="faq-answers">{{
+                          legalbox.info
+                        }}</v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-container>
+                </div>
+              </v-col>
+              <v-col cols="6" sm="6" class="legalbox-subscription-halves">
+                <div
+                  v-for="(legalbox, index) in legalboxes.slice(
+                    3,
+                    legalboxes.length
+                  )"
+                  :key="index"
+                  class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
+                >
+                  <div class="d-flex align-center">
+                    <!-- <p class="legalboxSubscribeCheckbox"></p> -->
+                    <v-checkbox
+                      class="legalboxSubscribeCheckbox"
+                      v-model="selectedLegalbox"
+                      @change="updateSelectedLegalbox"
+                      :value="legalbox"
+                      :disabled="disableCheckbox"
+                    ></v-checkbox>
+                    <p class="title mt-2">{{ legalbox.name }}</p>
+                    <v-spacer></v-spacer>
+                    <!-- <v-icon
+                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
+                    @click="removeSelection(index)"
+                    size="30"
+                    color="red"
+                  >
+                    remove_circle
+                  </v-icon>-->
+                  </div>
+                  <v-container>
+                    <v-expansion-panels flat>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header class="transparent">
+                          <span class="legalbox-info-ellipsis">
+                            {{ legalbox.info }}
+                          </span>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content class="faq-answers">{{
+                          legalbox.info
+                        }}</v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-container>
+                </div>
+              </v-col>
+            </v-row>
+            <div class="text-center">
+              <v-btn
+                x-large
+                :disabled="disableSubscribeButton"
+                color="accent"
+                height="80"
+                style="padding: 10px 100px; border-radius: 10px;"
+                @click.prevent="callOnPaystack"
+              >
+                <!-- <span class="headline text-capitalize">Start 14 Days Trial</span> -->
+                <span class="headline text-capitalize">subscribe & Pay</span>
+                <!-- <span class="headline text-capitalize">Subscribe & Pay</span> -->
+              </v-btn>
+              <p class="mt-4 red--text" v-if="formErrorMessage">
+                You have left out a required section
+              </p>
+              <p class="mt-4">
+                By clicking on ‘Subscribe & Pay’, you have agreed to our
+                <router-link to="/terms-of-service"
+                  >terms of service</router-link
+                >and
+                <router-link to="/privacy-policy">privacy policy</router-link>
+              </p>
+            </div>
           </div>
-          <v-row class="legalboxesWrapper">
-            <v-col cols="6" sm="6" class="legalbox-subscription-halves">
-              <div
-                v-for="(legalbox, index) in legalboxesFilteredGeneral"
-                :key="legalbox.name + index"
-                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
-              >
-                <pre class="testFloat">{{ selectedLegalbox.lbID }}</pre>
-
-                <div class="d-flex align-center">
-                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
-                  <v-checkbox
-                    class="legalboxSubscribeCheckbox"
-                    v-model="selectedLegalbox"
-                    @change="updateSelectedLegalbox"
-                    :value="legalbox.lbID"
-                    disabled
-                  ></v-checkbox>
-                  <p class="title mt-2">{{ legalbox.name }}</p>
-                  <v-spacer></v-spacer>
-                  <!-- <v-icon
-                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
-                    @click="removeSelection(index)"
-                    size="30"
-                    color="red"
-                  >
-                    remove_circle
-                  </v-icon>-->
-                </div>
-                <v-container>
-                  <!-- {{ panel }} -->
-                  <v-expansion-panels flat>
-                    <v-expansion-panel>
-                      <v-expansion-panel-header
-                        class="transparent"
-                        id="header"
-                        @click="hideEllipsis"
-                      >
-                        <span class="legalbox-info-ellipsis">
-                          {{ legalbox.info }}
-                        </span>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">{{
-                        legalbox.info
-                      }}</v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-container>
-              </div>
-
-              <div
-                v-for="(legalbox, index) in legalboxes.slice(
-                  0,
-                  legalboxes.length / 2
-                )"
-                :key="index"
-                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
-              >
-                <pre class="testFloat">{{ selectedLegalbox }}</pre>
-
-                <div class="d-flex align-center">
-                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
-                  <v-checkbox
-                    class="legalboxSubscribeCheckbox"
-                    v-model="selectedLegalbox"
-                    @change="updateSelectedLegalbox"
-                    :value="legalbox.lbID"
-                    :disabled="disableCheckbox"
-                  ></v-checkbox>
-                  <p class="title mt-2">{{ legalbox.name }}</p>
-                  <v-spacer></v-spacer>
-                  <!-- <v-icon
-                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
-                    @click="removeSelection(index)"
-                    size="30"
-                    color="red"
-                  >
-                    remove_circle
-                  </v-icon>-->
-                </div>
-                <v-container>
-                  <v-expansion-panels flat>
-                    <v-expansion-panel>
-                      <v-expansion-panel-header class="transparent">
-                        <span class="legalbox-info-ellipsis">
-                          {{ legalbox.info }}
-                        </span>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">{{
-                        legalbox.info
-                      }}</v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-container>
-              </div>
-            </v-col>
-            <v-col cols="6" sm="6" class="legalbox-subscription-halves">
-              <div
-                v-for="(legalbox, index) in legalboxes.slice(
-                  3,
-                  legalboxes.length
-                )"
-                :key="index"
-                class="shadow-me-light pa-3 pl-6 subscribe-legalbox"
-              >
-                <div class="d-flex align-center">
-                  <!-- <p class="legalboxSubscribeCheckbox"></p> -->
-                  <v-checkbox
-                    class="legalboxSubscribeCheckbox"
-                    v-model="selectedLegalbox"
-                    @change="updateSelectedLegalbox"
-                    :value="legalbox.lbID"
-                    :disabled="disableCheckbox"
-                  ></v-checkbox>
-                  <p class="title mt-2">{{ legalbox.name }}</p>
-                  <p class="title mt-2">{{ legalbox.name }}</p>
-                  <v-spacer></v-spacer>
-                  <!-- <v-icon
-                    v-if="selectedLegalbox.includes(legalbox.name) && index > 0"
-                    @click="removeSelection(index)"
-                    size="30"
-                    color="red"
-                  >
-                    remove_circle
-                  </v-icon>-->
-                </div>
-                <v-container>
-                  <v-expansion-panels flat>
-                    <v-expansion-panel>
-                      <v-expansion-panel-header class="transparent">
-                        <span class="legalbox-info-ellipsis">
-                          {{ legalbox.info }}
-                        </span>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content class="faq-answers">{{
-                        legalbox.info
-                      }}</v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-container>
-              </div>
-            </v-col>
-          </v-row>
-          <div class="text-center">
-            <v-btn
-              x-large
-              :disabled="disableSubscribeButton"
-              color="accent"
-              height="80"
-              style="padding: 10px 100px; border-radius: 10px;"
-              @click="callOnPaystack"
-            >
-              <!-- <span class="headline text-capitalize">Start 14 Days Trial</span> -->
-              <span class="headline text-capitalize">subscribe & Pay</span>
-              <!-- <span class="headline text-capitalize">Subscribe & Pay</span> -->
-            </v-btn>
-            <p class="mt-4">
-              By clicking on ‘Subscribe & Pay’, you have agreed to our
-              <router-link to="/terms-of-service">terms of service</router-link
-              >and
-              <router-link to="/privacy-policy">privacy policy</router-link>
-            </p>
-          </div>
-        </div>
+        </v-form>
       </v-container>
     </div>
 
@@ -339,12 +345,24 @@ export default {
   data() {
     return {
       panel: [],
+      formErrorMessage: false,
+      duration: "",
+      paystackPlan: "",
       paymentInitiated: true,
       uuid: "LB_Paystack_" + uuid.v4(),
       currentPlan: "",
+      compulsoryLegalbox: {
+        name: "General",
+        lbID: "LB001"
+      },
       disableCheckbox: false,
       disableSubscribeButton: true,
-      selectedLegalbox: ["LB001"],
+      selectedLegalbox: [
+        {
+          name: "General",
+          lbID: "LB001"
+        }
+      ],
       paymentRef: "",
       returnedPayment: false,
       paymentLoading: true,
@@ -353,7 +371,10 @@ export default {
       paymentInvalid: false,
       paystackSecretKey: process.env.VUE_APP_paystack_secretKey,
       paystackkey: process.env.VUE_APP_paystack_publicKey,
-      reference: "LB_Paystack_" + uuid.v4()
+      reference: "LB_Paystack_" + uuid.v4(),
+      rules: {
+        required: value => !!value || "Required."
+      }
     };
   },
   methods: {
@@ -402,7 +423,7 @@ export default {
       }
     },
     resetSelection() {
-      this.selectedLegalbox = ["LB001"];
+      this.selectedLegalbox = [this.compulsoryLegalbox];
       this.currentPlan = "";
       this.disableSubscribeButton = true;
     },
@@ -412,42 +433,73 @@ export default {
     //   console.log(this.selectedLegalbox);
     // }
     callOnPaystack() {
-      // this.paymentInitiated = true;
-      console.log(this.$store.state.storedUserEmail);
+      if (this.$refs.legalboxSelectionForm.validate()) {
+        if (this.currentPlan == "Basic") {
+          this.paystackPlan = "PLN_37fzyfh8920h35f";
+        } else if (this.currentPlan == "Premium") {
+          this.paystackPlan = "PLN_mt4xxitf8tl8hb9";
+        }
 
-      axios
-        .post(
-          "https://api.paystack.co/transaction/initialize",
-          {
-            email: this.storedUserEmail,
-            reference: this.reference,
-            amount: this.amount,
-            plan: "PLN_37fzyfh8920h35f",
-            callback_url: "https://dev.legalbox.ng/subscription"
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.VUE_APP_paystack_secretKey}`,
-              "Content-Type": "application/json"
-            }
-          }
-        )
-        .then(response => {
-          const auth_URL = response.data.data.authorization_url;
-          // console.log(auth_URL);
-          // this.$router.push(auth_URL);
-          window.open(auth_URL, "_blank");
-
-          console.log(response);
-          console.log(response.data);
-          console.log(response.status);
-        })
-        .catch(error => {
-          console.log(error);
-          console.log(error.response);
-          console.log(error.response.data);
-          console.log(error.response.status);
+        this.formErrorMessage = false;
+        let userSelection = this.selectedLegalbox;
+        userSelection.slice().forEach(function(selectionObj) {
+          delete selectionObj.icon;
+          delete selectionObj.info;
+          delete selectionObj.lastOpened;
+          delete selectionObj.route;
         });
+
+        this.disableSubscribeButton = true;
+
+        axios
+          .post(
+            "https://api.paystack.co/transaction/initialize",
+            {
+              email: this.storedUserEmail,
+              first_name: this.storedUserDetails.firstName,
+              last_name: this.storedUserDetails.lastName,
+              reference: this.reference,
+              amount: this.amount,
+              plan: this.paystackPlan,
+              callback_url: "https://localhost:8080/subscription",
+              metadata: {
+                custom_fields: [
+                  {
+                    subscribedLegalboxes: userSelection,
+                    duration: this.duration
+                  }
+                ]
+              }
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.VUE_APP_paystack_secretKey}`,
+                "Content-Type": "application/json"
+              }
+            }
+          )
+          .then(response => {
+            const auth_URL = response.data.data.authorization_url;
+            // console.log(auth_URL);
+            // this.$router.push(auth_URL);
+            window.open(auth_URL, "_blank");
+
+            console.log(response);
+            console.log(response.data);
+            console.log(response.status);
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+            console.log(error.response.data);
+            console.log(error.response.status);
+          });
+      } else {
+        this.formErrorMessage = true;
+        setTimeout(() => {
+          this.formErrorMessage = false;
+        }, 3000);
+      }
     },
     callOnPaystack2() {
       // const route = "https://google.com";
@@ -576,6 +628,10 @@ export default {
 </script>
 
 <style scoped>
+>>> .planDuration .v-messages__wrapper {
+  text-align: center;
+  margin-top: 10px;
+}
 .resetSelection {
   cursor: pointer;
   padding: 4px;
