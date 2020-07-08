@@ -86,7 +86,7 @@
     <v-col cols="6" class="secondPartySign">
       <div class="formSectionTitle">Signatures (Second Party)</div>
       <div class="d-flex justify-center">
-        <v-radio-group v-model="partySignatories.secondParty.mode" row>
+        <v-radio-group disabled v-model="partySignatories.secondParty.mode" row>
           <v-radio label="Company" color="accent" value="company"></v-radio>
           <span class="mx-4"></span>
           <v-radio label="Person" color="accent" value="person"></v-radio>
