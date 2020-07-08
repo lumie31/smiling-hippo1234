@@ -5,7 +5,7 @@
     </div> -->
     <!-- <pre class="testFloat">{{ partySignatories }}</pre> -->
 
-    <v-col cols="6" class="">
+    <v-col cols="6" class="firstPartySign">
       <div class="formSectionTitle">Signatures (First Party)</div>
       <div class="d-flex justify-center">
         <v-radio-group v-model="partySignatories.firstParty.mode" row>
@@ -29,6 +29,7 @@
           <image-uploader
             id="setUserSignature"
             :preview="false"
+            :maxWidth="200"
             :maxSize="0.2"
             :className="[
               'fileinput',
@@ -82,7 +83,7 @@
       </v-container>
     </v-col>
 
-    <v-col cols="6" class="">
+    <v-col cols="6" class="secondPartySign">
       <div class="formSectionTitle">Signatures (Second Party)</div>
       <div class="d-flex justify-center">
         <v-radio-group v-model="partySignatories.secondParty.mode" row>
@@ -329,7 +330,9 @@ export default {
   mounted() {
     setTimeout(() => {
       this.partySignatories.firstParty.signature = this.storedUserSignature;
-    }, 1000);
+      console.log(this.storedUserSignature);
+      console.log("STORE Signature appended");
+    }, 3000);
 
     // Emit Append function to Parent on mount
     this.appendToFormData();

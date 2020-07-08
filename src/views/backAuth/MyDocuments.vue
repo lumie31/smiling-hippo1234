@@ -34,7 +34,7 @@
                             <th>Last Opened</th>
                           </tr>
                         </thead>
-                        <tbody v-if="documents.length > 1">
+                        <tbody v-if="documents.length > 0">
                           <tr
                             v-for="(details, index) in documents"
                             :key="index"

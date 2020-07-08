@@ -31,4 +31,16 @@ export function documentCreation() {
     );
     return false;
   });
+
+  $(".saveOnly").hide();
+  $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if (scroll >= 600) {
+      $(".saveOnly").hide();
+      $(".saveOnly").show();
+    } else {
+      $(".saveOnly").show();
+      $(".saveOnly").hide();
+    }
+  });
 }

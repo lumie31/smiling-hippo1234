@@ -163,19 +163,36 @@
                 <div class="formSectionSubtitle transparent">
                   <p class="text-center">Payment Due</p>
                 </div>
-                <v-text-field
-                  solo
-                  flat
-                  v-model="formOutput.payment.due"
-                ></v-text-field>
+                <div class="d-flex">
+                  <v-select
+                    label="Currency"
+                    :disabled="formOutput.payment.due.length < 1"
+                    class="createDocCurrency"
+                    v-model="formOutput.payment.currency"
+                    :rules="
+                      formOutput.payment.due.length > 1
+                        ? [rules.required]
+                        : [rules.string]
+                    "
+                    :items="['₦', '$']"
+                    autocomplete
+                    offset-y
+                  ></v-select>
+                  <v-text-field
+                    solo
+                    flat
+                    :rules="[rules.number]"
+                    v-model="formOutput.payment.due"
+                  ></v-text-field>
+                </div>
               </v-col>
             </v-row>
 
             <!-- DUPLICATABLE Dues Figures -->
             <!-- <pre class="testFloat">
             {{ formOutput.payment }}
-            </pre-->
-            >
+            </pre>-->
+
             <v-row
               style="width: 80%; margin: 0 auto;"
               v-for="(due, index) in formOutput.payment.duplicatedDues"
@@ -702,6 +719,7 @@ import Back_Navbar from "@/components/back-nav";
 import General_Footer from "@/components/footer";
 import Products_Footer from "@/components/products-general-footer";
 import Append_Signature from "@/components/append-signature";
+import $ from "jquery";
 
 // import VRuntimeTemplate from "v-runtime-template";
 // import axios from "axios";
@@ -729,6 +747,7 @@ export default {
       origParagraphInfoLength: "",
       category: "Non Disclosure Contract",
       parent: "General",
+      lbID: "LB001",
       status: null,
       andContinueValidator: null, // if andContinue is = to this
       addOwnParagraphDialog: false,
@@ -736,7 +755,9 @@ export default {
       isParagraphInfo: false,
       addOwnClauseDialog: false,
       rules: {
-        required: value => !!value || "Required."
+        required: value => !!value || "Required.",
+        number: value => !value || /^[0-9]*$/.test(value) || "Invalid value",
+        string: value => !value || /^[A-Za-z]+$/.test(value) || "Invalid value"
       },
       tagName: "nondisclosure",
       ownParagraph: "",
@@ -775,6 +796,7 @@ export default {
         },
         purpose: "",
         payment: {
+          currency: "",
           due: "",
           duplicatedDues: [
             {
@@ -811,6 +833,34 @@ export default {
     submitDocument(andContinue) {
       // Validate before processing submission
       if (this.$refs.documentPass.validate()) {
+        console.log(this.signatories);
+
+        if (
+          this.signatories.firstParty.mode == "company" &&
+          this.signatories.firstParty.name.length <= 1
+        ) {
+          $(".firstPartySign .v-input__slot.white").css({
+            cssText: "border:1px solid red !important; height: 155px;"
+          });
+          this.docSavedSnackbar.active = true;
+          this.docSavedSnackbar.text = "Please enter your name";
+          this.docSavedSnackbar.color = "error";
+          this.docSavedSnackbar.timeout = this.$store.state.snackBarDuration;
+          return;
+        }
+
+        if (this.signatories.firstParty.signature.length <= 1) {
+          $(".firstPartySign .userSignatureHolder").css({
+            cssText: "border:1px solid red !important;"
+          });
+          this.docSavedSnackbar.active = true;
+          this.docSavedSnackbar.text =
+            "Signature missing. Please append Signature";
+          this.docSavedSnackbar.color = "error";
+          this.docSavedSnackbar.timeout = this.$store.state.snackBarDuration;
+          this.docSavedSnackbar.multiLine = true;
+          return;
+        }
         // Check What Button was clciked
         if (andContinue === "continueEdit") {
           this.loadingContinue = true;
@@ -843,6 +893,13 @@ export default {
         docData.status = "draft";
         docData.title = this.formOutput.title;
         docData.legalboxParent = this.parent;
+        docData.legalboxID = this.lbID;
+
+        if (this.formOutput.signatories.firstParty.signature.length > 5) {
+          this.formOutput.isSigned = true;
+          console.log(this.formOutput.isSigned);
+        }
+
         docData.category = this.category;
         console.log(docData);
         // this.andContinueValidator = andContinue;

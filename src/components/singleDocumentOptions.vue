@@ -30,8 +30,9 @@
                       between
                       <b>{{ documentData.docContent.parties.firstParty }}</b>
                       and
-                      <b>{{ documentData.docContent.parties.secondParty }}</b
-                      >.
+                      <b>{{
+                        documentData.docContent.parties.secondParty + "."
+                      }}</b>
                     </p>
                   </div>
                   <div class="docMoreBody">
@@ -141,8 +142,14 @@
                 </div>
                 <div class="docMoreDocData">
                   <div class="metaActions">
-                    <div class="metaChild">
+                    <div
+                      class="metaChild"
+                      v-if="documentData.docContent.payment.due.length > 0"
+                    >
                       <p class="headline">Payment Option</p>
+                      <p class="headline">
+                        {{ documentData.docContent.payment.due }} YCEE
+                      </p>
                       <div class="d-flex align-center">
                         <input
                           type="radio"
@@ -170,13 +177,6 @@
                       </div>
                     </div>
 
-                    <div class="metaChild">
-                      <p class="caption">
-                        Send again to the second party to serve as a reminder or
-                        as a request
-                      </p>
-                      <v-btn x-large outlined color="#1CA092">Resend</v-btn>
-                    </div>
                     <div
                       v-if="documentData.status === 'draft'"
                       class="metaChild"
@@ -186,6 +186,26 @@
                         signatures
                       </p>
                       <v-btn x-large outlined color="#1CA092">Share</v-btn>
+                    </div>
+                    <div
+                      v-if="documentData.status === 'draft'"
+                      class="metaChild"
+                    >
+                      <p class="caption">
+                        Make corrections and changes to this document
+                      </p>
+                      <v-btn x-large outlined color="#1CA092">Edit</v-btn>
+                    </div>
+
+                    <div
+                      class="metaChild"
+                      v-if="documentData.status === 'overdue'"
+                    >
+                      <p class="caption">
+                        Send again to the second party to serve as a reminder or
+                        as a request
+                      </p>
+                      <v-btn x-large outlined color="#1CA092">Resend</v-btn>
                     </div>
                     <div class="metaChild">
                       <p class="caption">

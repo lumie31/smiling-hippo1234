@@ -23,7 +23,7 @@ export default new Vuex.Store({
     documentSavedMessage: "",
     invalidSubmission: {
       active: false,
-      text: "Invalid Entry. Please Crosscheck",
+      text: "Required field missing. Please Crosscheck",
       color: "red",
       timeout: 3000,
       multiLine: true
@@ -1739,6 +1739,9 @@ export default new Vuex.Store({
           // console.log(this.state.token);
 
           this.state.storedUserSignature = response.data.data.signature.url;
+          // console.log("ORIGIN SIG", response.data.data.signature.url);
+          // console.log("ADJOINED SIG", this.state.storedUserSignature);
+
           this.state.storedUserEmail = response.data.data.email;
           // console.log(this.state.storedUserEmail);
 
