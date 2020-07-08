@@ -878,13 +878,12 @@ export default {
         let newFormData = JSON.parse(JSON.stringify(this.formOutput));
 
         // Append compilation to form
-        newFormData.background = this.fetchOwnBackgroundDetails[0].background;
-
-        // Reset value of currecny if input digit is empty
-        if (this.newFormData.payment.due.length <= 1) {
-          this.newFormData.payment.currency = "";
+        // Reset value of currency if input digit is empty
+        if (newFormData.payment.due.length <= 1) {
+          newFormData.payment.currency = "";
         }
 
+        newFormData.background = this.fetchOwnBackgroundDetails[0].background;
         newFormData.confidentialInformation = this.fetchOwnBackgroundDetails[0].headline;
         newFormData.paragraph = this.selectedParagraphs;
         newFormData.clause = this.selectedClauses;
@@ -895,16 +894,14 @@ export default {
 
         // Append other document metadatas
         // docData.docSummary = this.formOutput.title + " : " + this.category;
+        if (newFormData.signatories.firstParty.signature.length > 5) {
+          docData.isSigned = true;
+          console.log(docData.isSigned);
+        }
         docData.status = "draft";
         docData.title = this.formOutput.title;
         docData.legalboxParent = this.parent;
         docData.legalboxID = this.lbID;
-
-        if (this.formOutput.signatories.firstParty.signature.length > 5) {
-          this.formOutput.isSigned = true;
-          console.log(this.formOutput.isSigned);
-        }
-
         docData.category = this.category;
         console.log(docData);
         // this.andContinueValidator = andContinue;

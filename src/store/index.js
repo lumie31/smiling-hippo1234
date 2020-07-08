@@ -1738,6 +1738,7 @@ export default new Vuex.Store({
           commit("retrieveUserDetails", response.data.data);
           // console.log(this.state.token);
 
+          console.log(response.data.data);
           this.state.storedUserSignature = response.data.data.signature.url;
           // console.log("ORIGIN SIG", response.data.data.signature.url);
           // console.log("ADJOINED SIG", this.state.storedUserSignature);

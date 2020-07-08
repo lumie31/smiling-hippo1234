@@ -18,6 +18,7 @@
         v-if="partySignatories.firstParty.mode == 'company'"
         height="155"
         label="Your Name"
+        autocomplete="off"
         background-color="white"
         v-model="partySignatories.firstParty.name"
         class="partyName mt-4 text-center"
@@ -96,6 +97,7 @@
         v-if="partySignatories.secondParty.mode == 'company'"
         height="155"
         label="Your Name"
+        autocomplete="off"
         background-color="white"
         v-model="partySignatories.secondParty.name"
         class="partyName mt-4"
@@ -317,6 +319,11 @@ export default {
       if (val) {
         return val;
       }
+    },
+    storedUserSignature(val) {
+      if (val.length > 2) {
+        this.partySignatories.firstParty.signature = this.storedUserSignature;
+      }
     }
   },
   computed: {
@@ -327,12 +334,6 @@ export default {
     ])
   },
   mounted() {
-    setTimeout(() => {
-      this.partySignatories.firstParty.signature = this.storedUserSignature;
-      // console.log(this.storedUserSignature);
-      // console.log("STORE Signature appended");
-    }, 3000);
-
     // Emit Append function to Parent on mount
     this.appendToFormData();
   }

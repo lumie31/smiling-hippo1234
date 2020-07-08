@@ -171,7 +171,9 @@
             <br />
             {{ storedUserDetails.lastName }}
           </p>
-          <p>User Subscription Status</p>
+          <p class="grey--text subtitle1">
+            {{ storedUserDetails.lastSubscription.name }}
+          </p>
         </v-col>
         <v-col col="12" sm="6" class="d-flex user-hero-wrapper">
           <ul>
