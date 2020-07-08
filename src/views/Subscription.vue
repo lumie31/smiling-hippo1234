@@ -127,7 +127,7 @@
                 <v-radio-group v-model="duration" :rules="[rules.required]" row>
                   <v-radio label="Monthly" value="Monthly"></v-radio>
                   <span class="mx-4"></span>
-                  <v-radio label="Annual" value="Annual"></v-radio>
+                  <v-radio label="Annual" value="Annually"></v-radio>
                 </v-radio-group>
               </div>
             </v-col>
@@ -434,10 +434,20 @@ export default {
     // }
     callOnPaystack() {
       if (this.$refs.legalboxSelectionForm.validate()) {
-        if (this.currentPlan == "Basic") {
+        if (this.currentPlan == "Basic" && this.duration == "Monthly") {
           this.paystackPlan = "PLN_37fzyfh8920h35f";
-        } else if (this.currentPlan == "Premium") {
+        } else if (
+          this.currentPlan == "Premium" &&
+          this.duration == "Monthly"
+        ) {
           this.paystackPlan = "PLN_mt4xxitf8tl8hb9";
+        } else if (this.currentPlan == "Basic" && this.duration == "Annually") {
+          this.paystackPlan = "PLN_6bexq7ntzj5a8o3";
+        } else if (
+          this.currentPlan == "Premium" &&
+          this.duration == "Annually"
+        ) {
+          this.paystackPlan = "PLN_u2dh5ujqy3rdlt5";
         }
 
         this.formErrorMessage = false;
@@ -450,6 +460,9 @@ export default {
         });
 
         this.disableSubscribeButton = true;
+        console.log(this.storedUserEmail);
+        console.log(this.storedUserDetails.firstName);
+        console.log(this.storedUserDetails.lastName);
 
         axios
           .post(
@@ -459,7 +472,6 @@ export default {
               first_name: this.storedUserDetails.firstName,
               last_name: this.storedUserDetails.lastName,
               reference: this.reference,
-              amount: this.amount,
               plan: this.paystackPlan,
               callback_url: "https://localhost:8080/subscription",
               callback_url: "https://dev.legalbox.ng/subscription",
@@ -556,7 +568,7 @@ export default {
               this.$store.dispatch("updateaUserProfile", {});
 
               setTimeout(() => {
-                this.$router.push("/dashboard");
+                // this.$router.push("/dashboard");
               }, 5000);
             }
           }
@@ -574,7 +586,7 @@ export default {
             this.paymentFailed = true;
 
             setTimeout(() => {
-              this.$router.push("/subscription");
+              // this.$router.push("/subscription");
             }, 5000);
           }
 

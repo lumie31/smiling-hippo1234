@@ -47,9 +47,9 @@
                     <v-form ref="updateProfilePass" @submit.prevent>
                       <v-row class="d-flex align-center">
                         <v-col cols="12" sm="4">
-                          <!-- <pre class="testFloat">{{
-                            storedUserDetails.signature
-                          }}</pre> -->
+                          <pre class="testFloat">{{
+                            storedUserDetails.lastSubscription
+                          }}</pre>
                           <p class="headline">Profile Picture</p>
                           <p class="caption">
                             The avatar on your profile.

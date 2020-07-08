@@ -14,7 +14,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- <div class="testFloat">{{ userDocuments }}</div> -->
+    <div class="testFloat">{{ activeBoxes.lbID }}</div>
     <!-- <pre class="testFloat">isActivated: {{ storedUserDetails }}</pre> -->
     <nav>
       <v-toolbar height="200" class="nav-tool back-nav" elevation="3 ">
@@ -33,6 +33,7 @@
             solo
             outlined
             class="backPageSearch"
+            autocomplete="off"
             v-model="searchDocument"
             flat
             placeholder="Search By Document Title"
@@ -172,26 +173,12 @@
             {{ storedUserDetails.lastName }}
           </p>
           <p class="grey--text subtitle1">
-            {{ storedUserDetails.lastSubscription.name }}
+            {{ userCurrentPlan }}
           </p>
         </v-col>
         <v-col col="12" sm="6" class="d-flex user-hero-wrapper">
           <ul>
-            <li
-              v-for="legalbox in legalboxes.slice(0, 4)"
-              :key="legalbox.index"
-            >
-              <router-link :to="legalbox.route">
-                {{ legalbox.name }}
-              </router-link>
-            </li>
-          </ul>
-          <v-spacer></v-spacer>
-          <ul>
-            <li
-              v-for="legalbox in legalboxes.slice(4, 8)"
-              :key="legalbox.index"
-            >
+            <li v-for="legalbox in legalboxes" :key="legalbox.index">
               <router-link :to="legalbox.route">
                 {{ legalbox.name }}
               </router-link>
@@ -306,7 +293,9 @@ export default {
       "userDetailsReady",
       "getUserDetailsStatusCode",
       "userDocuments",
-      "storedUserProfilePicture"
+      "storedUserProfilePicture",
+      "userCurrentPlan",
+      "activeBoxes"
     ]),
     // documents() {
     //   return this.$store.state.userDocuments;
@@ -324,10 +313,6 @@ export default {
           return item;
         }
       });
-    },
-    userEmail() {
-      let email = this.storedUserDetails.email;
-      return email;
     }
   },
   created() {

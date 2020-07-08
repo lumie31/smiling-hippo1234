@@ -19,6 +19,8 @@ export default new Vuex.Store({
     storedcompanyLogo: "",
     storedUserEmail: "",
     storedUserSignature: "",
+    activeBoxes: "",
+    userCurrentPlan: "",
     successMessage: "",
     documentSavedMessage: "",
     invalidSubmission: {
@@ -1740,6 +1742,9 @@ export default new Vuex.Store({
 
           console.log(response.data.data);
           this.state.storedUserSignature = response.data.data.signature.url;
+          this.state.activeBoxes =
+            response.data.data.lastSubscription.activeBoxes;
+          this.state.userCurrentPlan = response.data.data.lastSubscription.name;
           // console.log("ORIGIN SIG", response.data.data.signature.url);
           // console.log("ADJOINED SIG", this.state.storedUserSignature);
 

@@ -147,9 +147,6 @@
                       v-if="documentData.docContent.payment.due.length > 0"
                     >
                       <p class="headline">Payment Option</p>
-                      <p class="headline">
-                        {{ documentData.docContent.payment.due }} YCEE
-                      </p>
                       <div class="d-flex align-center">
                         <input
                           type="radio"
