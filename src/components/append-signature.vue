@@ -29,7 +29,6 @@
           <image-uploader
             id="setUserSignature"
             :preview="false"
-            :maxWidth="200"
             :maxSize="0.2"
             :className="[
               'fileinput',
@@ -330,8 +329,8 @@ export default {
   mounted() {
     setTimeout(() => {
       this.partySignatories.firstParty.signature = this.storedUserSignature;
-      console.log(this.storedUserSignature);
-      console.log("STORE Signature appended");
+      // console.log(this.storedUserSignature);
+      // console.log("STORE Signature appended");
     }, 3000);
 
     // Emit Append function to Parent on mount

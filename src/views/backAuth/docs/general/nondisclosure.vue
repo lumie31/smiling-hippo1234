@@ -169,10 +169,9 @@
                     :disabled="formOutput.payment.due.length < 1"
                     class="createDocCurrency"
                     v-model="formOutput.payment.currency"
+                    value="₦"
                     :rules="
-                      formOutput.payment.due.length > 1
-                        ? [rules.required]
-                        : [rules.string]
+                      formOutput.payment.due.length > 1 ? [rules.required] : []
                     "
                     :items="['₦', '$']"
                     autocomplete
@@ -880,6 +879,12 @@ export default {
 
         // Append compilation to form
         newFormData.background = this.fetchOwnBackgroundDetails[0].background;
+
+        // Reset value of currecny if input digit is empty
+        if (this.newFormData.payment.due.length <= 1) {
+          this.newFormData.payment.currency = "";
+        }
+
         newFormData.confidentialInformation = this.fetchOwnBackgroundDetails[0].headline;
         newFormData.paragraph = this.selectedParagraphs;
         newFormData.clause = this.selectedClauses;
@@ -1191,6 +1196,7 @@ export default {
     }
   },
   mounted() {
+    this.formOutput.payment.currency = "₦";
     this.allInfos = this.eachParagraphInfo;
     console.log(this.eachParagraphInfo.length);
     this.origParagraphInfoLength = this.eachParagraphInfo.length;
